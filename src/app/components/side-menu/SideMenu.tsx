@@ -8,7 +8,7 @@ import { AiOutlineInstagram } from "react-icons/ai";
 
 const SideMenu = () => {
   return (
-    <div className="flex z-10 shadow-md flex-col h-screen w-full max-w-[48px] lg:max-w-[180px] bg-background-800">
+    <nav className="flex z-10 shadow-md flex-col h-screen w-full max-w-[48px] lg:max-w-[180px] bg-background-800">
       <h3 className="text-2xl py-4 text-center text-secondary-500 mb-4">
         <span className="text-primary-500">u</span>
         <span className="hidden lg:inline">noted</span>
@@ -35,7 +35,7 @@ const SideMenu = () => {
           <AiOutlineInstagram size={24} />
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
