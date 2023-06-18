@@ -30,7 +30,7 @@ const RegisterPage = () => {
             >
               Já tem uma conta?{" "}
               <Link
-                href="#"
+                href="/auth/login"
                 className="text-primary-500 transition hover:text-primary-400"
               >
                 Clique aqui!

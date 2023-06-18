@@ -27,7 +27,7 @@ const LoginPage = () => {
             >
               Ainda não tem conta?{" "}
               <Link
-                href="#"
+                href="/auth/register"
                 className="text-primary-500 transition hover:text-primary-400"
               >
                 Clique aqui!
