@@ -15,7 +15,7 @@ const MenuLink = ({ icon: Icon, path, text, isSelected }: Props) => {
       className={`flex w-full border-l-4 ${
         isSelected
           ? "border-primary-500"
-          : "border-transparent hover:pl-6 hover:text-primary-500"
+          : "border-transparent lg:hover:pl-6 lg:hover:text-primary-500"
       }  text-secondary-500 gap-3 cursor-pointer items-center justify-center lg:justify-start py-2 lg:py-0 lg:pl-4 transition-all duration-400 mb-4`}
     >
       {Icon && <Icon className="shrink-0" size={20} />}
