@@ -9,7 +9,16 @@ const CategoriesPage = () => {
   return (
     <StandardPage>
       <h2 className="pt-4 text-4xl text-secondary-500 mb-4">Notas</h2>
-      <div className="flex overflow-x-auto p-4 items-center gap-8">
+      <div className="flex overflow-x-auto p-4 items-center gap-8 mb-4">
+        <AddCategoryButton onClick={() => null} />
+        <Category name="Faculdade" color="#ff9000" onDelete={() => null} />
+        <Category name="Faculdade" color="#ff9000" onDelete={() => null} />
+        <Category name="Faculdade" color="#ff9000" onDelete={() => null} />
+        <Category name="Faculdade" color="#ff9000" onDelete={() => null} />
+        <Category name="Faculdade" color="#ff9000" onDelete={() => null} />
+      </div>
+      <h2 className="pt-4 text-4xl text-secondary-500 mb-4">Tarefas</h2>
+      <div className="flex overflow-x-auto p-4 items-center gap-8 mb-4">
         <AddCategoryButton onClick={() => null} />
         <Category name="Faculdade" color="#ff9000" onDelete={() => null} />
         <Category name="Faculdade" color="#ff9000" onDelete={() => null} />
