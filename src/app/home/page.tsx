@@ -1,5 +1,5 @@
 import "@/styles/scroll.css";
-import StandardPage from "../components/side-menu/StandardPage";
+import StandardPage from "../components/StandardPage";
 
 import { BsPlus } from "react-icons/bs";
 import CategorySelector from "../components/CategorySelector";
