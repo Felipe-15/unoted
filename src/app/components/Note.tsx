@@ -7,11 +7,15 @@ interface Props {
   title: string;
   createdAt: string;
   content: string;
+  color?: string;
 }
 
-const Note = ({ title, content, createdAt }: Props) => {
+const Note = ({ title, content, createdAt, color }: Props) => {
   return (
-    <div className="relative flex flex-col rounded-md border-t-4 border-primary-500 bg-background-700 p-4 gap-2 max-w-[280px] min-w-[240px] h-[300px] group">
+    <div
+      style={{ borderTopColor: color || "#ff9000" }}
+      className="relative flex flex-col rounded-md border-t-4 bg-background-700 p-4 gap-2 max-w-[280px] min-w-[240px] h-[300px] group"
+    >
       <div className="flex flex-col gap-2">
         <span
           className={`${openSans.className} text-sm text-gray-400 font-bold`}

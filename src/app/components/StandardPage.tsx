@@ -1,5 +1,5 @@
 import { FiUser } from "react-icons/fi";
-import SearchInput from "../SearchInput";
+import SearchInput from "./SearchInput";
 
 const StandardPage = ({ children }: { children: React.ReactNode }) => {
   return (
