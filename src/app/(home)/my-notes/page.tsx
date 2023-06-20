@@ -1,9 +1,10 @@
 import "@/styles/scroll.css";
-import StandardPage from "../components/StandardPage";
+import StandardPage from "../../components/StandardPage";
 
 import { BsPlus } from "react-icons/bs";
-import CategorySelector from "../components/CategorySelector";
-import Note from "../components/Note";
+import CategorySelector from "../../components/CategorySelector";
+import Note from "../../components/Note";
+import Link from "next/link";
 
 const HomePage = () => {
   return (
@@ -17,12 +18,15 @@ const HomePage = () => {
             <CategorySelector text="Férias" isSelected={false} />
             <CategorySelector text="Ideias" isSelected={false} />
           </div>
-          <button className="absolute bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400">
+          <Link
+            href="/my-notes/new-note"
+            className="absolute bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
+          >
             <BsPlus size={24} />
             <span className="hidden sm:inline whitespace-nowrap">
               Nova nota
             </span>
-          </button>
+          </Link>
         </div>
         <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-25vh)]">
           <Note

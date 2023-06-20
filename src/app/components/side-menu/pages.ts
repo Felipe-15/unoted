@@ -9,29 +9,29 @@ export const pages = {
     {
       icon: MdDashboard,
       text: "Minhas notas",
-      path: "#",
+      path: "/my-notes",
     },
     {
       icon: TbFolders,
       text: "Categorias",
-      path: "#",
+      path: "/categories",
     },
     {
       icon: BsListCheck,
       text: "Tarefas",
-      path: "#",
+      path: "/tasks",
     },
   ],
   secondBlockPages: [
     {
       icon: FiUser,
       text: "Perfil",
-      path: "#",
+      path: "/perfil",
     },
     {
       icon: IoMdHelp,
       text: "Ajuda",
-      path: "#",
+      path: "/help",
     },
   ],
 };
