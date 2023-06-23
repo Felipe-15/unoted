@@ -1,0 +1,25 @@
+#draw-svg path {
+  stroke: #fff; /* Cor do traço */
+  stroke-width: 1px; /* Espessura do traço */
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawStroke 1s linear forwards, drawFill 1s linear forwards;
+}
+
+@keyframes drawStroke {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes drawFill {
+  from {
+    fill-opacity: 0;
+  }
+  to {
+    fill-opacity: 1;
+  }
+}
