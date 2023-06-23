@@ -5,12 +5,18 @@ import { BsFillTrashFill } from "react-icons/bs";
 interface Props {
   name: string;
   color: string;
+  onChangeColor: (value: string) => void;
   onDelete: (id: string) => void;
 }
 
-const Category = ({ name, color, onDelete }: Props) => {
+const Category = ({ name, color, onChangeColor, onDelete }: Props) => {
   const colorRef = useRef({} as HTMLInputElement);
   const [currentColor, setCurrentColor] = useState(color);
+
+  const handleEditColor = () => {
+    setCurrentColor(colorRef.current.value);
+    onChangeColor(colorRef.current.value);
+  };
 
   return (
     <div className="flex group max-w-[260px]">
@@ -23,10 +29,10 @@ const Category = ({ name, color, onDelete }: Props) => {
           ref={colorRef}
           className="w-full h-full opacity-0 cursor-pointer"
           defaultValue={color}
-          onBlur={() => setCurrentColor(colorRef.current.value)}
+          onBlur={handleEditColor}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
-              setCurrentColor(colorRef.current.value);
+              handleEditColor();
             }
           }}
         />
