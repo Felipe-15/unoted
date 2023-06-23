@@ -3,7 +3,7 @@ interface Props {
   isSelected: boolean;
 }
 
-const CategorySelector = ({ text, isSelected }: Props) => {
+const FilterSelector = ({ text, isSelected }: Props) => {
   return (
     <div
       className={`px-3 text-secondary-500 py-2 min-w-[100px] transition flex justify-center items-center rounded-md ${
@@ -12,9 +12,9 @@ const CategorySelector = ({ text, isSelected }: Props) => {
           : "bg-transparent cursor-pointer hover:text-primary-500"
       }   text-lg`}
     >
-      <span>{text}</span>
+      <span className="whitespace-nowrap">{text}</span>
     </div>
   );
 };
 
-export default CategorySelector;
+export default FilterSelector;
