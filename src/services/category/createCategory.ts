@@ -11,7 +11,8 @@ export const createCategory = async (category: Omit<ICategory, "id">) => {
     );
 
     if (snap.exists()) {
-      return snap.data();
+      const data = snap.data();
+      return { ...data, id: snap.id };
     }
   } catch (error) {
     console.log(error);

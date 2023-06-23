@@ -5,17 +5,17 @@ import { BsFillTrashFill } from "react-icons/bs";
 interface Props {
   name: string;
   color: string;
-  onChangeColor: (value: string) => void;
+  onUpdate: (data: { color?: string; name?: string }) => void;
   onDelete: (id: string) => void;
 }
 
-const Category = ({ name, color, onChangeColor, onDelete }: Props) => {
+const Category = ({ name, color, onUpdate, onDelete }: Props) => {
   const colorRef = useRef({} as HTMLInputElement);
   const [currentColor, setCurrentColor] = useState(color);
 
   const handleEditColor = () => {
     setCurrentColor(colorRef.current.value);
-    onChangeColor(colorRef.current.value);
+    onUpdate({ color: colorRef.current.value });
   };
 
   return (
@@ -41,6 +41,16 @@ const Category = ({ name, color, onChangeColor, onDelete }: Props) => {
         placeholder="Digite..."
         defaultValue={name}
         className="bg-transparent max-w-[200px] outline-none placeholder:text-secondary-500 text-secondary-500 text-3xl mr-2"
+        onBlur={(e) => {
+          if (e.target.value !== name) {
+            onUpdate({ name: e.target.value });
+          }
+        }}
+        onKeyUp={(e) => {
+          if (e.key === "Enter" && e.currentTarget.value !== name) {
+            onUpdate({ name: e.currentTarget.value });
+          }
+        }}
       />
       <button
         onClick={(teste) => onDelete}
