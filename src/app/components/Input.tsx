@@ -8,6 +8,7 @@ import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 
 interface Props {
   registerField?: any;
+  error?: string;
   icon: IconType;
   type?: HTMLInputTypeAttribute;
   visibility?: boolean;
@@ -18,6 +19,7 @@ const Input = ({
   icon: Icon,
   type,
   visibility,
+  error,
   ...rest
 }: Props & HTMLAttributes<HTMLInputElement>) => {
   const [focus, setFocus] = useState(false);
@@ -29,11 +31,12 @@ const Input = ({
           focus
             ? "border-primary-500 shadow-primary-500/20 shadow-md "
             : "border-transparent"
-        }`}
+        } ${error && "border-danger"}`}
       >
         {Icon && <Icon className="text-primary-500" />}
         <input
           {...rest}
+          {...registerField}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           type={type === "password" && isVisible ? "text" : type || "text"}
@@ -48,7 +51,7 @@ const Input = ({
           </div>
         )}
       </div>
-      <small></small>
+      <small className="text-sm text-danger">{error}</small>
     </div>
   );
 };
