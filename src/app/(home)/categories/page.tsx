@@ -1,16 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { createCategory } from "@/services/category/createCategory";
+import {
+  createCategory,
+  getCategories,
+  updateCategory,
+  deleteCategory,
+} from "@/services/category";
 
 import { ICategory } from "@/interfaces/Category";
 
 import AddCategoryButton from "@/app/components/AddCategoryButton";
 import Category from "@/app/components/Category";
 import StandardPage from "@/app/components/StandardPage";
-import { getCategories } from "@/services/category/getCategories";
-import { updateCategory } from "@/services/category/updateCategory";
-import { deleteCategory } from "@/services/category/deleteCategory";
 
 const CategoriesPage = () => {
   const { user, setUser } = useAuth();
