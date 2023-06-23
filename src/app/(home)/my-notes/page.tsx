@@ -1,3 +1,4 @@
+"use client";
 import "@/styles/scroll.css";
 import Link from "next/link";
 
@@ -6,8 +7,11 @@ import FilterSelector from "../../components/FilterSelector";
 import Note from "../../components/Note";
 
 import { BsPlus } from "react-icons/bs";
+import { useAuth } from "@/hooks/useAuth";
 
 const HomePage = () => {
+  const { user, setUser } = useAuth();
+
   return (
     <StandardPage>
       <>

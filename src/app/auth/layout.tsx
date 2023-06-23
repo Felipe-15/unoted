@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import drawImage from "../../../public/home-draw.svg";
 

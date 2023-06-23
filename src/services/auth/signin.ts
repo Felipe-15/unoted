@@ -1,9 +1,9 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getDoc, doc } from "firebase/firestore";
-import { db } from "@/config/firebase";
+import firebase, { db } from "@/config/firebase";
 
 export const signin = async (email: string, password: string) => {
-  const auth = getAuth();
+  const auth = getAuth(firebase);
 
   const { user } = await signInWithEmailAndPassword(auth, email, password);
 
@@ -11,11 +11,13 @@ export const signin = async (email: string, password: string) => {
 
   if (snap.exists()) {
     const { name } = snap.data();
-    return {
-      id: user.uid,
-      name: name,
-      token: await user.getIdToken(),
-      photo: user.photoURL || "",
-    };
+    sessionStorage.setItem(
+      "user",
+      JSON.stringify({
+        id: user.uid,
+        name: name,
+        photo: user.photoURL || "",
+      })
+    );
   }
 };

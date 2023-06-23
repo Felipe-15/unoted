@@ -1,12 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-interface User {
-  id: string;
-  name: string;
-  token: string;
-  photo?: string;
-}
+import firebase from "@/config/firebase";
+import { User } from "@/interfaces/User";
 
 interface AuthContext {
   user: User | undefined;
@@ -19,15 +14,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    const auth = getAuth();
+    const auth = getAuth(firebase);
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const { uid, photoURL, getIdToken } = user;
+        const { uid, photoURL } = user;
 
         setUser({
           id: uid,
           name: user.displayName || "",
-          token: await getIdToken(),
           photo: photoURL || "",
         });
       }

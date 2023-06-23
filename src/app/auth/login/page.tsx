@@ -1,5 +1,8 @@
 "use client";
+
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
 
@@ -25,11 +28,13 @@ const LoginPage = () => {
     },
   });
 
+  const router = useRouter();
+
   const handleLogin = async (data: any) => {
     try {
       await signin(data.email, data.password);
 
-      console.log("Ó teu nome: ", name);
+      router.push("/my-notes");
     } catch (err) {
       console.log(err);
     }
@@ -37,8 +42,12 @@ const LoginPage = () => {
 
   const handleGoogleAuth = async () => {
     try {
-      const { token, name, photo } = await googleSignin();
-    } catch (err) {}
+      await googleSignin();
+
+      router.push("/my-notes");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

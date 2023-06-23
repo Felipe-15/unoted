@@ -1,9 +1,13 @@
 "use client";
+import { useAuth } from "@/hooks/useAuth";
+
 import AddCategoryButton from "@/app/components/AddCategoryButton";
 import Category from "@/app/components/Category";
 import StandardPage from "@/app/components/StandardPage";
 
 const CategoriesPage = () => {
+  const { user, setUser } = useAuth();
+
   return (
     <StandardPage>
       <h2 className="pt-4 text-4xl text-secondary-500 mb-4">Notas</h2>

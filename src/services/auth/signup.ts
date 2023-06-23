@@ -1,9 +1,9 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-import { db } from "@/config/firebase";
+import firebase, { db } from "@/config/firebase";
 
 export const signup = async (email: string, password: string, name: string) => {
-  const auth = getAuth();
+  const auth = getAuth(firebase);
   try {
     const { user } = await createUserWithEmailAndPassword(
       auth,
@@ -16,7 +16,14 @@ export const signup = async (email: string, password: string, name: string) => {
       photo: user.photoURL || "",
     });
 
-    return { token: await user.getIdToken(), id: user.uid };
+    sessionStorage.setItem(
+      "user",
+      JSON.stringify({
+        id: user.uid,
+        name,
+        photo: user.photoURL || "",
+      })
+    );
   } catch (err: any) {
     console.error(`${err.code}: ${err.message}`);
   }

@@ -1,8 +1,11 @@
 "use client";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
+
 import { signup } from "@/services/auth/signup";
+import { googleSignin } from "@/services/auth/googleSignin";
 
 import Input from "@/app/components/Input";
 import Button from "@/app/components/Button";
@@ -12,7 +15,6 @@ import { AiOutlineUser } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
-import { googleSignin } from "@/services/auth/googleSignin";
 
 const RegisterPage = () => {
   const {
@@ -30,14 +32,15 @@ const RegisterPage = () => {
     },
   });
 
+  const router = useRouter();
+
   const passWatch = watch("password");
 
   const handleRegister = async (data: any) => {
     try {
-      const { id, token } = await signup(data.email, data.password, data.name);
+      await signup(data.email, data.password, data.name);
 
-      console.log("Id: ", id);
-      console.log("Token: ", token);
+      router.push("/my-notes");
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +48,8 @@ const RegisterPage = () => {
 
   const handleGoogleAuth = async () => {
     try {
-      const { token, name, photo } = await googleSignin();
+      await googleSignin();
+      router.push("/my-notes");
     } catch (err) {}
   };
 

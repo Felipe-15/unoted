@@ -1,7 +1,8 @@
+import firebase from "@/config/firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 export const googleSignin = async () => {
-  const auth = getAuth();
+  const auth = getAuth(firebase);
   const provider = new GoogleAuthProvider();
 
   try {
@@ -9,13 +10,16 @@ export const googleSignin = async () => {
     if (result.user) {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
-      const { getIdToken, displayName, photoURL } = result.user;
+      const { displayName, photoURL, uid } = result.user;
 
-      return {
-        token,
-        name: displayName || "",
-        photo: photoURL || "",
-      };
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: uid,
+          name: displayName || "",
+          photo: photoURL || "",
+        })
+      );
     }
   } catch (err) {
     console.log(err);
