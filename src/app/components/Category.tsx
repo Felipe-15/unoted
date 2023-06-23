@@ -6,7 +6,7 @@ interface Props {
   name: string;
   color: string;
   onUpdate: (data: { color?: string; name?: string }) => void;
-  onDelete: (id: string) => void;
+  onDelete: () => void;
 }
 
 const Category = ({ name, color, onUpdate, onDelete }: Props) => {
@@ -53,7 +53,7 @@ const Category = ({ name, color, onUpdate, onDelete }: Props) => {
         }}
       />
       <button
-        onClick={(teste) => onDelete}
+        onClick={onDelete}
         className="flex opacity-0 peer-hover:-translate-x-6 peer-hover:opacity-0 -translate-x-6 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 items-center text-xl p-1 cursor-pointer text-secondary-500 hover:text-danger"
       >
         <BsFillTrashFill />

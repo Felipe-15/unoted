@@ -10,6 +10,7 @@ import Category from "@/app/components/Category";
 import StandardPage from "@/app/components/StandardPage";
 import { getCategories } from "@/services/category/getCategories";
 import { updateCategory } from "@/services/category/updateCategory";
+import { deleteCategory } from "@/services/category/deleteCategory";
 
 const CategoriesPage = () => {
   const { user, setUser } = useAuth();
@@ -53,6 +54,11 @@ const CategoriesPage = () => {
     } catch (error) {}
   };
 
+  const handleDeleteCategory = async (categoryId: string) => {
+    await deleteCategory(categoryId);
+    setCategories((prev) => prev.filter((c) => c.id !== categoryId));
+  };
+
   return (
     <StandardPage>
       <h2 className="pt-4 text-4xl text-secondary-500 mb-4">Notas</h2>
@@ -65,6 +71,7 @@ const CategoriesPage = () => {
               {...category}
               key={category.id}
               onUpdate={(data) => handleUpdateCategory(data, category.id)}
+              onDelete={() => handleDeleteCategory(category.id)}
             />
           );
         })}
@@ -72,6 +79,17 @@ const CategoriesPage = () => {
       <h2 className="pt-4 text-4xl text-secondary-500 mb-4">Tarefas</h2>
       <div className="flex overflow-x-auto p-4 mx-6 items-center gap-8 overflow-y-hidden">
         <AddCategoryButton onClick={() => handleAddCategory("task")} />
+        {categories.map((category: ICategory, index) => {
+          if (category.type === "note") return <></>;
+          return (
+            <Category
+              {...category}
+              key={category.id}
+              onUpdate={(data) => handleUpdateCategory(data, category.id)}
+              onDelete={() => handleDeleteCategory(category.id)}
+            />
+          );
+        })}
       </div>
     </StandardPage>
   );
