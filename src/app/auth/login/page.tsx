@@ -18,10 +18,10 @@ const LoginPage = () => {
       <div className="max-w-[300px] rounded-md bg-background-800 p-4">
         <form className="gap-4 flex flex-col">
           <Input icon={MdAlternateEmail} type="email" placeholder="Email" />
-          <Input icon={FaLock} type="password" placeholder="Senha" />
+          <Input icon={FaLock} type="password" placeholder="Senha" visibility />
 
           <div className="pt-2 flex flex-col gap-2">
-            <Button text="Criar conta" onClick={() => null} />
+            <Button text="Entrar" onClick={() => null} />
             <span
               className={`${openSans.className} text-secondary-500 font-normal text-sm text-center`}
             >

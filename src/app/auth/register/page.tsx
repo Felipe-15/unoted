@@ -21,8 +21,12 @@ const RegisterPage = () => {
         <form className="gap-4 flex flex-col">
           <Input icon={AiOutlineUser} placeholder="Nome" />
           <Input icon={MdAlternateEmail} type="email" placeholder="Email" />
-          <Input icon={FaLock} type="password" placeholder="Senha" />
-          <Input icon={MdPassword} placeholder="Confirme a senha" />
+          <Input icon={FaLock} type="password" placeholder="Senha" visibility />
+          <Input
+            icon={MdPassword}
+            placeholder="Confirme a senha"
+            type="password"
+          />
           <div className="pt-2 flex flex-col gap-2">
             <Button text="Criar conta" onClick={() => null} />
             <span

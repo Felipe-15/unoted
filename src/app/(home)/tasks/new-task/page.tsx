@@ -24,7 +24,7 @@ const NewTaskPage = () => {
     <StandardPage>
       <div className="flex justify-between items-center">
         <Link
-          href="/tasks"
+          href="/tasks "
           className="flex gap-4 text-primary-500 transition hover:text-primary-400 text-xl items-center"
         >
           <BsArrowLeft />
