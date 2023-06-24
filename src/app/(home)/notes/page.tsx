@@ -51,7 +51,7 @@ const HomePage = () => {
       handleGetCategories();
       handleGetNotes();
     }
-  }, []);
+  }, [user]);
 
   return (
     <StandardPage user={user}>
