@@ -18,6 +18,7 @@ import { formatDate } from "@/utils/formatDate";
 const HomePage = () => {
   const { user, setUser } = useAuth();
   const [notes, setNotes] = useState<INote[]>([]);
+  const [filteredNotes, setFilteredNotes] = useState<INote[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<ICategory | null>(null);
 
@@ -25,6 +26,7 @@ const HomePage = () => {
     try {
       const notesRes = await getNotes(user?.id || "");
       setNotes(notesRes);
+      setFilteredNotes(notesRes);
     } catch (error) {}
   };
 
@@ -33,6 +35,15 @@ const HomePage = () => {
       const categoriesRes = await getCategories(user?.id || "", "note");
       setCategories(categoriesRes || []);
     } catch (error) {}
+  };
+
+  const handleFilterNotes = (category: ICategory | null) => {
+    setSelectedFilter(category);
+    if (!category) {
+      setFilteredNotes(notes);
+      return;
+    }
+    setFilteredNotes(notes.filter((note) => note.category_id === category.id));
   };
 
   useEffect(() => {
@@ -50,7 +61,7 @@ const HomePage = () => {
             <FilterSelector
               text="Todas"
               isSelected={!selectedFilter}
-              onSelect={() => setSelectedFilter(null)}
+              onSelect={() => handleFilterNotes(null)}
             />
             {categories.map((category) => (
               <FilterSelector
@@ -59,7 +70,7 @@ const HomePage = () => {
                 isSelected={
                   !!selectedFilter && selectedFilter.id === category.id
                 }
-                onSelect={() => setSelectedFilter(category)}
+                onSelect={() => handleFilterNotes(category)}
               />
             ))}
           </div>
@@ -74,9 +85,7 @@ const HomePage = () => {
           </Link>
         </div>
         <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-          {notes.map((note) => {
-            console.log("Data: ", note.created_at.toDate());
-
+          {filteredNotes.map((note) => {
             return (
               <Note
                 {...note}
