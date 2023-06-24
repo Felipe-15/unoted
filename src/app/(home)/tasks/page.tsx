@@ -1,3 +1,4 @@
+"use client";
 import "@/styles/scroll.css";
 import Link from "next/link";
 
@@ -7,10 +8,13 @@ import Note from "../../components/Note";
 
 import { BsPlus } from "react-icons/bs";
 import TaskNote from "@/app/components/TaskNote";
+import { useAuth } from "@/hooks/useAuth";
 
 const HomePage = () => {
+  const { user, setUser } = useAuth();
+
   return (
-    <StandardPage>
+    <StandardPage user={user}>
       <>
         <div className="flex w-full h-fit justify-between gap-3 items-center mb-4">
           <div className="flex invisible-scroll h-fit max-w-full sm:max-w-[400px] overflow-x-auto gap-2">
