@@ -40,7 +40,7 @@ const RegisterPage = () => {
     try {
       await signup(data.email, data.password, data.name);
 
-      router.push("/my-notes");
+      router.push("/notes");
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +49,7 @@ const RegisterPage = () => {
   const handleGoogleAuth = async () => {
     try {
       await googleSignin();
-      router.push("/my-notes");
+      router.push("/notes");
     } catch (err) {}
   };
 

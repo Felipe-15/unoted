@@ -34,7 +34,7 @@ const LoginPage = () => {
     try {
       await signin(data.email, data.password);
 
-      router.push("/my-notes");
+      router.push("/notes");
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +44,7 @@ const LoginPage = () => {
     try {
       await googleSignin();
 
-      router.push("/my-notes");
+      router.push("/notes");
     } catch (err) {
       console.log(err);
     }

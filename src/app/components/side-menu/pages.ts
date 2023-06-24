@@ -9,7 +9,7 @@ export const pages = {
     {
       icon: MdDashboard,
       text: "Minhas notas",
-      path: "/my-notes",
+      path: "/notes",
     },
     {
       icon: TbFolders,

@@ -1,16 +1,18 @@
 import { openSans } from "../fonts";
+import Link from "next/link";
 
 import { MdEdit } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
 
 interface Props {
+  noteId: string;
   title: string;
   createdAt: string;
   content: string;
   color?: string;
 }
 
-const Note = ({ title, content, createdAt, color }: Props) => {
+const Note = ({ title, noteId, content, createdAt, color }: Props) => {
   return (
     <div
       style={{ borderTopColor: color || "#ff9000" }}
@@ -28,9 +30,12 @@ const Note = ({ title, content, createdAt, color }: Props) => {
         </p>
       </div>
       <div className="transition-opacity opacity-0 absolute bottom-2 right-2 flex items-center group-hover:opacity-100 justify-center gap-1">
-        <button className="p-2 text-secondary-500 transition hover:text-primary-500">
+        <Link
+          href={`notes/edit/${noteId}`}
+          className="p-2 text-secondary-500 transition hover:text-primary-500"
+        >
           <MdEdit />
-        </button>
+        </Link>
         <button className="p-2 text-secondary-500 transition hover:text-danger">
           <BsFillTrashFill />
         </button>

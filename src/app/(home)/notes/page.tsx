@@ -75,7 +75,7 @@ const HomePage = () => {
             ))}
           </div>
           <Link
-            href="/my-notes/new-note"
+            href="/notes/new-note"
             className="absolute bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
           >
             <BsPlus size={24} />
@@ -90,6 +90,7 @@ const HomePage = () => {
               <Note
                 {...note}
                 key={note.id}
+                noteId={note.id}
                 color={
                   categories.filter(
                     (category) => category.id === note.category_id

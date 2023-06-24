@@ -49,7 +49,7 @@ const NewNotePage = () => {
     <StandardPage headerType="noSearch" user={user}>
       <div className="flex justify-between items-center">
         <Link
-          href="/my-notes"
+          href="/notes"
           className="flex gap-4 text-primary-500 transition hover:text-primary-400 text-xl items-center"
         >
           <BsArrowLeft />
