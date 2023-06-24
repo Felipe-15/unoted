@@ -20,7 +20,6 @@ const CategoriesPage = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("User id: ", user.id);
       handleGetCategories();
     }
   }, [user]);
@@ -29,7 +28,6 @@ const CategoriesPage = () => {
     try {
       const categoriesRes = await getCategories(user?.id || "");
       if (!categoriesRes) return;
-      console.log("Categories res: ", categoriesRes);
       setCategories(categoriesRes);
     } catch (error) {
       console.log(error);
