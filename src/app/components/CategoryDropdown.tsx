@@ -1,9 +1,20 @@
 "use client";
+import { ICategory } from "@/interfaces/Category";
 import { useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 
-const CategoryDropdown = () => {
+interface Props {
+  categories: ICategory[];
+  selectedCategory?: ICategory;
+  onSelectCategory: (category: ICategory) => void;
+}
+
+const CategoryDropdown = ({
+  categories,
+  onSelectCategory,
+  selectedCategory,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex flex-col items-center">
@@ -18,18 +29,32 @@ const CategoryDropdown = () => {
           className={`transition-all ${isOpen ? "-rotate-180" : "rotate-0"} `}
         />
         <div
-          className={`absolute cursor-default flex  rounded-b-md transition-all w-full ${
+          className={`absolute cursor-default flex flex-col  rounded-b-md transition-all w-full ${
             !isOpen
               ? "h-0 overflow-hidden bottom-0"
               : "h-[96px] overflow-y-auto scale-y-100 bottom-[-100px]"
           } bg-background-700`}
         >
-          <span className="p-1 text-secondary-500 cursor-pointer w-full text-center h-fit border-b-[1px] border-b-gray-400 hover:text-primary-500 transition bg-background-800">
-            Faculdade
-          </span>
+          {categories.map((category) => {
+            return (
+              <span
+                onClick={() => onSelectCategory(category)}
+                key={category.id}
+                className={`p-1 w-full text-center h-fit border-b-[1px] overflow-x-hidden overflow-ellipsis ${
+                  selectedCategory?.id === category.id
+                    ? "bg-background-800 cursor-default text-primary-500"
+                    : "hover:text-primary-500 cursor-pointer text-secondary-500"
+                } border-b-gray-500  transition  whitespace-nowrap text-sm`}
+              >
+                {category.name}
+              </span>
+            );
+          })}
         </div>
       </div>
-      <span className="text-lg text-gray-300">Nenhuma</span>
+      <span className="text-lg text-gray-300">
+        {selectedCategory?.name || "Nenhuma"}
+      </span>
     </div>
   );
 };

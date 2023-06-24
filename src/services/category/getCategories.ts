@@ -1,13 +1,26 @@
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { getDocs, collection, query, where, and } from "firebase/firestore";
 import { db } from "@/config/firebase";
 import { ICategory } from "@/interfaces/Category";
 
-export const getCategories = async (userId: string) => {
+export const getCategories = async (
+  userId: string,
+  filter?: "note" | "task"
+) => {
   try {
-    const q = query(
-      collection(db, "categories"),
-      where("creator_id", "==", userId)
-    );
+    let q = null;
+    if (filter) {
+      q = query(
+        collection(db, "categories"),
+        where("creator_id", "==", userId),
+        where("type", "==", filter)
+      );
+    } else {
+      q = query(
+        collection(db, "categories"),
+        where("creator_id", "==", userId)
+      );
+    }
+
     const querySnapshot = await getDocs(q);
     const categories: ICategory[] = [];
     querySnapshot.forEach((category: any) => {
