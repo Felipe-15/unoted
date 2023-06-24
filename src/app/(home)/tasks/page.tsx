@@ -29,7 +29,7 @@ const HomePage = () => {
             </span>
           </Link>
         </div>
-        <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-25vh)]">
+        <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
           <TaskNote
             categorieName="Faculdade"
             expireAt="22 Jun, 2023"

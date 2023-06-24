@@ -16,15 +16,15 @@ const StandardPage = ({
     <section className="w-full h-screen flex-col bg-background-800 overflow-hidden">
       <header className="flex w-full justify-between items-center p-6 h-[75px]">
         <SearchInput />
-        <div className="flex rounded-full border-[1px] border-secondary-500 sm:p-0 sm:border-none sm:gap-2 text-secondary-500 items-center justify-center overflow-hidden">
+        <div className="flex rounded-full border-[1px] border-secondary-500 sm:p-0 sm:border-none sm:gap-2 text-secondary-500 items-center justify-center overflow-hidden group">
           {user?.photo ? (
-            <div className="rounded-full max-h-[32px] max-w-[32px] flex items-center justify-center overflow-hidden">
+            <div className="rounded-full max-h-[32px] max-w-[32px] flex items-center justify-center overflow-hidden cursor-pointer">
               <Image
                 src={user.photo}
                 alt="Foto de perfil"
                 width={24}
                 height={24}
-                className="w-full h-auto"
+                className="w-full h-auto transition hover:brightness-75"
               />
             </div>
           ) : (
