@@ -63,7 +63,9 @@ const CategoriesPage = () => {
 
   return (
     <StandardPage>
-      <h2 className="pt-4 text-4xl text-secondary-500 mb-4">Notas</h2>
+      <h2 className="pt-4 text-3xl md:text-4xl text-secondary-500 mb-4">
+        Notas
+      </h2>
       <div className="flex overflow-x-auto p-4 items-center gap-8 mb-4 mx-6 overflow-y-hidden">
         <AddCategoryButton onClick={() => handleAddCategory("note")} />
         {categories.map((category: ICategory, index) => {
@@ -78,7 +80,9 @@ const CategoriesPage = () => {
           );
         })}
       </div>
-      <h2 className="pt-4 text-4xl text-secondary-500 mb-4">Tarefas</h2>
+      <h2 className="pt-4 text-3xl md:text-4xl text-secondary-500 mb-4">
+        Tarefas
+      </h2>
       <div className="flex overflow-x-auto p-4 mx-6 items-center gap-8 overflow-y-hidden">
         <AddCategoryButton onClick={() => handleAddCategory("task")} />
         {categories.map((category: ICategory, index) => {

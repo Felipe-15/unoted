@@ -1,14 +1,38 @@
-import { FiUser } from "react-icons/fi";
+import Image from "next/image";
 import SearchInput from "./SearchInput";
 
-const StandardPage = ({ children }: { children: React.ReactNode }) => {
+import { FiUser } from "react-icons/fi";
+import { User } from "@/interfaces/User";
+
+interface Props {
+  user?: User;
+}
+
+const StandardPage = ({
+  children,
+  user,
+}: Props & { children: React.ReactNode }) => {
   return (
     <section className="w-full h-screen flex-col bg-background-800 overflow-hidden">
       <header className="flex w-full justify-between items-center p-6 h-[75px]">
         <SearchInput />
-        <div className="flex rounded-full border-[1px] border-secondary-500 p-2 sm:p-0 sm:border-none sm:gap-2 text-secondary-500 items-center justify-center">
-          <FiUser size={20} />
-          <span className="hidden sm:inline">Olá, Felipe</span>
+        <div className="flex rounded-full border-[1px] border-secondary-500 sm:p-0 sm:border-none sm:gap-2 text-secondary-500 items-center justify-center overflow-hidden">
+          {user?.photo ? (
+            <div className="rounded-full max-h-[32px] max-w-[32px] flex items-center justify-center overflow-hidden">
+              <Image
+                src={user.photo}
+                alt="Foto de perfil"
+                width={24}
+                height={24}
+                className="w-full h-auto"
+              />
+            </div>
+          ) : (
+            <FiUser size={20} />
+          )}
+          <span className="hidden sm:inline">
+            Olá, {user?.name.split(" ")[0]}
+          </span>
         </div>
       </header>
       <section className="flex flex-col w-full h-[calc(100vh-75px)] bg-background-900 rounded-tl-2xl px-6 py-4">
