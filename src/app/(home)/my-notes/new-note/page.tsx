@@ -46,7 +46,7 @@ const NewNotePage = () => {
   }, [user]);
 
   return (
-    <StandardPage>
+    <StandardPage headerType="noSearch" user={user}>
       <div className="flex justify-between items-center">
         <Link
           href="/my-notes"

@@ -6,16 +6,22 @@ import { User } from "@/interfaces/User";
 
 interface Props {
   user?: User;
+  headerType?: "full" | "noSearch";
 }
 
 const StandardPage = ({
   children,
   user,
+  headerType,
 }: Props & { children: React.ReactNode }) => {
   return (
     <section className="w-full h-screen flex-col bg-background-800 overflow-hidden">
-      <header className="flex w-full justify-between items-center p-6 h-[75px]">
-        <SearchInput />
+      <header
+        className={`flex w-full ${
+          headerType === "noSearch" ? "justify-end" : "justify-between"
+        } items-center p-6 h-[75px]`}
+      >
+        {headerType !== "noSearch" && <SearchInput />}
         <div className="flex rounded-full border-[1px] border-secondary-500 sm:p-0 sm:border-none sm:gap-2 text-secondary-500 items-center justify-center overflow-hidden group">
           {user?.photo ? (
             <div className="rounded-full max-h-[32px] max-w-[32px] flex items-center justify-center overflow-hidden cursor-pointer">

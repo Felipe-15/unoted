@@ -7,5 +7,11 @@ export const formatDate = (timestamp: number) => {
     year: "numeric",
   });
 
-  return stringData.replace(/(\d+)\/(\d+)\/(\d+)/, "$1 de $2, $3");
+  let replaced: any = stringData.replace(/(de\s)|\./g, "").split(" ");
+
+  replaced[1] = replaced[1].slice(0, 1).toUpperCase() + replaced[1].slice(1);
+
+  replaced = `${replaced[0]} ${replaced[1]}, ${replaced[2]}`;
+
+  return replaced;
 };

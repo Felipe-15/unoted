@@ -62,7 +62,7 @@ const CategoriesPage = () => {
   };
 
   return (
-    <StandardPage>
+    <StandardPage user={user}>
       <h2 className="pt-4 text-3xl md:text-4xl text-secondary-500 mb-4">
         Notas
       </h2>

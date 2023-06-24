@@ -4,5 +4,5 @@ export interface INote {
   title: string;
   content: string;
   category_id: string;
-  created_at: number | string;
+  created_at: any;
 }
