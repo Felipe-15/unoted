@@ -54,8 +54,11 @@ const CategoriesPage = () => {
     } catch (error) {}
   };
 
-  const handleDeleteCategory = async (categoryId: string) => {
-    await deleteCategory(categoryId);
+  const handleDeleteCategory = async (
+    categoryId: string,
+    categoryType: "note" | "task"
+  ) => {
+    await deleteCategory(categoryId, user?.id || "", categoryType);
     setCategories((prev) => prev.filter((c) => c.id !== categoryId));
   };
 
@@ -73,7 +76,7 @@ const CategoriesPage = () => {
               {...category}
               key={category.id}
               onUpdate={(data) => handleUpdateCategory(data, category.id)}
-              onDelete={() => handleDeleteCategory(category.id)}
+              onDelete={() => handleDeleteCategory(category.id, category.type)}
             />
           );
         })}
@@ -90,7 +93,7 @@ const CategoriesPage = () => {
               {...category}
               key={category.id}
               onUpdate={(data) => handleUpdateCategory(data, category.id)}
-              onDelete={() => handleDeleteCategory(category.id)}
+              onDelete={() => handleDeleteCategory(category.id, category.type)}
             />
           );
         })}

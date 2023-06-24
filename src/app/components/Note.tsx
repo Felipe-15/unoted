@@ -10,9 +10,17 @@ interface Props {
   createdAt: string;
   content: string;
   color?: string;
+  onDelete: () => void;
 }
 
-const Note = ({ title, noteId, content, createdAt, color }: Props) => {
+const Note = ({
+  title,
+  noteId,
+  content,
+  createdAt,
+  color,
+  onDelete,
+}: Props) => {
   return (
     <div
       style={{ borderTopColor: color || "#ff9000" }}
@@ -36,7 +44,10 @@ const Note = ({ title, noteId, content, createdAt, color }: Props) => {
         >
           <MdEdit />
         </Link>
-        <button className="p-2 text-secondary-500 transition hover:text-danger">
+        <button
+          onClick={onDelete}
+          className="p-2 text-secondary-500 transition hover:text-danger"
+        >
           <BsFillTrashFill />
         </button>
       </div>

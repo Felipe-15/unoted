@@ -14,6 +14,7 @@ import { getNotes } from "@/services/note/getNotes";
 import { getCategories } from "@/services/category";
 import { ICategory } from "@/interfaces/Category";
 import { formatDate } from "@/utils/formatDate";
+import { deleteNote } from "@/services/note/deleteNote";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
@@ -21,6 +22,13 @@ const HomePage = () => {
   const [filteredNotes, setFilteredNotes] = useState<INote[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<ICategory | null>(null);
+
+  useEffect(() => {
+    if (user) {
+      handleGetCategories();
+      handleGetNotes();
+    }
+  }, [user]);
 
   const handleGetNotes = async () => {
     try {
@@ -46,12 +54,14 @@ const HomePage = () => {
     setFilteredNotes(notes.filter((note) => note.category_id === category.id));
   };
 
-  useEffect(() => {
-    if (user) {
-      handleGetCategories();
-      handleGetNotes();
-    }
-  }, [user]);
+  const handleDeleteNote = async (noteId: string) => {
+    try {
+      await deleteNote(noteId);
+      const filteredData = notes.filter((note) => note.id !== noteId);
+      setNotes(filteredData);
+      setFilteredNotes(filteredData);
+    } catch (error) {}
+  };
 
   return (
     <StandardPage user={user}>
@@ -97,6 +107,7 @@ const HomePage = () => {
                   )[0].color
                 }
                 createdAt={formatDate(note.created_at.toMillis())}
+                onDelete={() => handleDeleteNote(note.id)}
               />
             );
           })}
