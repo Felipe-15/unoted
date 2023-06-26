@@ -9,7 +9,7 @@ import StandardPage from "@/app/components/StandardPage";
 import CategoryDropdown from "@/app/components/CategoryDropdown";
 import Button from "@/app/components/Button";
 
-import { BsArrowLeft } from "react-icons/bs";
+import { BsArrowLeft, BsFillTrashFill } from "react-icons/bs";
 import { BiCalendar, BiHelpCircle } from "react-icons/bi";
 import Task from "@/app/components/Task";
 import { ITask } from "@/interfaces/Task";
@@ -36,11 +36,15 @@ const NewTaskPage = () => {
     setCategories(categoriesRes);
   };
 
-  const addTask = () => {
+  const handleAddTask = () => {
     setTasks((prev) => [
       { id: (prev.length + 1).toString(), text: "Nova tarefa", checked: false },
       ...prev,
     ]);
+  };
+
+  const handleDeleteTask = (id: string) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
   };
 
   const handleEditTask = (text: string, id: string) => {
@@ -92,17 +96,24 @@ const NewTaskPage = () => {
       <div className="flex flex-col gap-3 justify-start items-center -ml-10 pt-12">
         <div className="flex flex-col w-fit items-start gap-4">
           {tasks.map((task) => (
-            <Task
-              editable
-              key={task.id.toString()}
-              text={task.text}
-              isChecked={task.checked}
-              onEdit={(text) => handleEditTask(text, task.id)}
-              onToggleCheck={(checked) => handleCheckTask(checked, task.id)}
-            />
+            <div key={task.id.toString()} className="flex gap-2 group">
+              <Task
+                editable
+                text={task.text}
+                isChecked={task.checked}
+                onEdit={(text) => handleEditTask(text, task.id)}
+                onToggleCheck={(checked) => handleCheckTask(checked, task.id)}
+              />
+              <button
+                onClick={() => handleDeleteTask(task.id)}
+                className="opacity-0 transition -translate-x-2 text-secondary-500 hover:text-danger group-hover:opacity-100 group-hover:-translate-x-0"
+              >
+                <BsFillTrashFill />
+              </button>
+            </div>
           ))}
           <button
-            onClick={addTask}
+            onClick={handleAddTask}
             className="flex gap-2 cursor-text text-gray-500 text-semibold"
           >
             <span className="h-[24px] w-[24px] rounded-sm border-[2px] border-gray-500"></span>
