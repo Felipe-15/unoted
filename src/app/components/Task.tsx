@@ -1,7 +1,7 @@
 "use client";
 import "@/styles/animations.css";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { openSans } from "../fonts";
 
 import { BsCheck } from "react-icons/bs";
@@ -10,10 +10,18 @@ interface Props {
   isChecked: boolean;
   text: string;
   editable?: boolean;
+  onEdit?: (text: string) => void;
+  onToggleCheck: (checked: boolean) => void;
 }
 
-const Task = ({ isChecked, text, editable }: Props) => {
+const Task = ({ isChecked, text, editable, onEdit, onToggleCheck }: Props) => {
   const [checked, setChecked] = useState(isChecked);
+  const contentRef = useRef({} as HTMLParagraphElement);
+
+  const handleCheck = () => {
+    onToggleCheck(!checked);
+    setChecked((prev) => !prev);
+  };
   return (
     <div className="flex gap-2">
       <div className="relative flex h-[24px] w-[24px]">
@@ -30,6 +38,16 @@ const Task = ({ isChecked, text, editable }: Props) => {
       </div>
       <p
         contentEditable={editable}
+        ref={contentRef}
+        onBlur={
+          editable && onEdit
+            ? () => {
+                if (contentRef.current.innerText !== text) {
+                  onEdit(contentRef.current.innerText);
+                }
+              }
+            : () => null
+        }
         className={`${
           openSans.className
         } font-semibold overflow-hidden font-normal  ${
