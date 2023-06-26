@@ -3,6 +3,9 @@ import "@/styles/scroll.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+import { getNotes, deleteNote } from "@/services/note";
+import { getCategories } from "@/services/category";
+
 import StandardPage from "../../components/StandardPage";
 import FilterSelector from "../../components/FilterSelector";
 import Note from "../../components/Note";
@@ -10,11 +13,8 @@ import Note from "../../components/Note";
 import { BsPlus } from "react-icons/bs";
 import { useAuth } from "@/hooks/useAuth";
 import { INote } from "@/interfaces/Note";
-import { getNotes } from "@/services/note/getNotes";
-import { getCategories } from "@/services/category";
 import { ICategory } from "@/interfaces/Category";
 import { formatDate } from "@/utils/formatDate";
-import { deleteNote } from "@/services/note/deleteNote";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();

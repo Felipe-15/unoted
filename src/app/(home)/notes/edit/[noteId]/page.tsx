@@ -6,6 +6,8 @@ import { getCategories } from "@/services/category";
 import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
+import { getNote, updateNote } from "@/services/note";
+
 import StandardPage from "@/app/components/StandardPage";
 import CategoryDropdown from "@/app/components/CategoryDropdown";
 import Button from "@/app/components/Button";
@@ -14,8 +16,6 @@ import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
 import { ICategory } from "@/interfaces/Category";
 import { INote } from "@/interfaces/Note";
-import { getNote } from "@/services/note/getNote";
-import { updatedNote } from "@/services/note/updateNote";
 
 const EditNotePage = ({
   params: { noteId },
@@ -74,7 +74,7 @@ const EditNotePage = ({
       }
     }
 
-    await updatedNote(note?.id || "", updatedData);
+    await updateNote(note?.id || "", updatedData);
   };
 
   const handleGetNote = async () => {

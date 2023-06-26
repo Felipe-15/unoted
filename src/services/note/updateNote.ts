@@ -1,7 +1,7 @@
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "@/config/firebase";
 
-export const updatedNote = async (
+export const updateNote = async (
   noteId: string,
   data: { category_id?: string; title?: string; content?: string }
 ) => {
