@@ -1,6 +1,11 @@
 "use client";
 import "@/styles/scroll.css";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+
+import { useAuth } from "@/hooks/useAuth";
+
+import { ICategory } from "@/interfaces/Category";
 
 import StandardPage from "../../components/StandardPage";
 import FilterSelector from "../../components/FilterSelector";
@@ -8,20 +13,65 @@ import Note from "../../components/Note";
 
 import { BsPlus } from "react-icons/bs";
 import TaskNote from "@/app/components/TaskNote";
-import { useAuth } from "@/hooks/useAuth";
+import { getCategories } from "@/services/category";
+import { formatDate } from "@/utils/formatDate";
+import { getTasks } from "@/services/task/getTasks";
+import { FaTasks } from "react-icons/fa";
+import { ITask } from "@/interfaces/Task";
+
+const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
+
+const filterDates = {
+  today: 0,
+  tomorrow: ONE_DAY_MILLIS,
+  nextWeek: ONE_DAY_MILLIS * 7,
+};
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [selectedDate, setSelectedDate] = useState<number | null>(0);
+  const [tasks, setTasks] = useState<ITask[]>([]);
+
+  useEffect(() => {
+    handleGetCategories();
+    handleGetTasks();
+  }, [user]);
+
+  const handleGetCategories = async () => {
+    const categoriesRes: any = await getCategories(user?.id || "", "task");
+    setCategories(categoriesRes);
+  };
+  const handleGetTasks = async () => {
+    const tasksRes: any = await getTasks(user?.id || "");
+    setTasks(tasksRes);
+  };
 
   return (
     <StandardPage user={user}>
       <>
         <div className="flex w-full h-fit justify-between gap-3 items-center mb-4">
           <div className="flex invisible-scroll h-fit max-w-full sm:max-w-[400px] overflow-x-auto gap-2">
-            <FilterSelector text="Hoje" isSelected />
-            <FilterSelector text="Amanhã" isSelected={false} />
-            <FilterSelector text="Próx. Semana" isSelected={false} />
-            <FilterSelector text="Todas" isSelected={false} />
+            <FilterSelector
+              text="Hoje"
+              onSelect={() => setSelectedDate(filterDates.today)}
+              isSelected={selectedDate === filterDates.today}
+            />
+            <FilterSelector
+              text="Amanhã"
+              onSelect={() => setSelectedDate(filterDates.tomorrow)}
+              isSelected={selectedDate === filterDates.tomorrow}
+            />
+            <FilterSelector
+              text="Próx. Semana"
+              onSelect={() => setSelectedDate(filterDates.nextWeek)}
+              isSelected={selectedDate === filterDates.nextWeek}
+            />
+            <FilterSelector
+              text="Todas"
+              onSelect={() => setSelectedDate(null)}
+              isSelected={selectedDate === null}
+            />
           </div>
           <Link
             href="/tasks/new-task"
@@ -34,11 +84,32 @@ const HomePage = () => {
           </Link>
         </div>
         <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-          <TaskNote
-            categorieName="Faculdade"
-            expireAt="22 Jun, 2023"
-            tasks={[""]}
-          />
+          {categories?.length ? (
+            categories.map((c) => {
+              const currentTasks = tasks?.length
+                ? tasks.filter((t) => t.category_id === c.id)
+                : [];
+              if (!currentTasks.length) return <></>;
+              return (
+                <TaskNote
+                  {...c}
+                  key={c.id}
+                  expireAt={
+                    selectedDate === null
+                      ? selectedDate
+                      : selectedDate === 0
+                      ? formatDate(Date.now())
+                      : formatDate(Date.now() + selectedDate)
+                  }
+                  categorieName={c.name}
+                  tasks={currentTasks}
+                  onEditTask={() => null}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )}
         </div>
       </>
     </StandardPage>

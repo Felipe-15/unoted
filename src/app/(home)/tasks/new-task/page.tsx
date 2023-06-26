@@ -100,7 +100,7 @@ const NewTaskPage = () => {
               <Task
                 editable
                 text={task.text}
-                isChecked={task.checked}
+                checked={task.checked}
                 onEdit={(text) => handleEditTask(text, task.id)}
                 onToggleCheck={(checked) => handleCheckTask(checked, task.id)}
               />
