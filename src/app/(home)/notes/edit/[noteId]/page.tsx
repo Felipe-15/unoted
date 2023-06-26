@@ -13,38 +13,80 @@ import Button from "@/app/components/Button";
 import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
 import { ICategory } from "@/interfaces/Category";
-import { createNote } from "@/services/note/createNote";
+import { INote } from "@/interfaces/Note";
+import { getNote } from "@/services/note/getNote";
+import { updatedNote } from "@/services/note/updateNote";
 
-const EditNotePage = ({ params }: { params: { noteId: string } }) => {
+const EditNotePage = ({
+  params: { noteId },
+}: {
+  params: { noteId: string };
+}) => {
   const { user, setUser } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>();
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
+  const [note, setNote] = useState<INote>();
 
   const { register, handleSubmit, clearErrors } = useForm({
     defaultValues: {
       title: "",
       content: "",
     },
+    values: {
+      title: note?.title || "",
+      content: note?.content || "",
+    },
   });
+
+  const handleInitialData = async () => {
+    const categoriesRes = await handleGetCategories();
+    const noteRes = await handleGetNote();
+
+    setSelectedCategory(
+      categoriesRes?.filter((c) => c.id === noteRes?.category_id)[0]
+    );
+  };
 
   const handleGetCategories = async () => {
     const categoriesRes = await getCategories(user?.id || "", "note");
     setCategories(categoriesRes);
+
+    return categoriesRes;
   };
 
-  const handleCreateNote = async (data: any) => {
-    await createNote({
+  const handleUpdateNote = async (data: any) => {
+    const newData = {
+      title: data.title !== note?.title,
+      content: data.content !== note?.content,
+      category_id: selectedCategory?.id !== note?.category_id,
+    };
+
+    const updatedData = {
       title: data.title,
       content: data.content,
-      creator_id: user?.id || "",
-      category_id: selectedCategory?.id || "",
-    });
+      category_id: selectedCategory?.id,
+    };
+
+    for (let key of Object.keys(updatedData)) {
+      let currentKey: "title" | "content" | "category_id" = key as any;
+      if (!newData[currentKey]) {
+        delete updatedData[currentKey];
+      }
+    }
+
+    await updatedNote(note?.id || "", updatedData);
   };
 
-  const handleGetNote = async (data: any) => {};
+  const handleGetNote = async () => {
+    const noteRes = await getNote(user?.id || "", noteId);
+
+    setNote(noteRes);
+
+    return noteRes;
+  };
 
   useEffect(() => {
-    handleGetCategories();
+    handleInitialData();
   }, [user]);
 
   return (
@@ -81,7 +123,7 @@ const EditNotePage = ({ params }: { params: { noteId: string } }) => {
           <BiHelpCircle />
         </button>
         <div className="max-w-[100px] w-full">
-          <Button text="Salvar" onClick={handleSubmit(handleCreateNote)} />
+          <Button text="Salvar" onClick={handleSubmit(handleUpdateNote)} />
         </div>
       </div>
     </StandardPage>
