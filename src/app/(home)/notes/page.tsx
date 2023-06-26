@@ -19,6 +19,7 @@ import { deleteNote } from "@/services/note/deleteNote";
 const HomePage = () => {
   const { user, setUser } = useAuth();
   const [notes, setNotes] = useState<INote[]>([]);
+  const [search, setSearch] = useState("");
   const [filteredNotes, setFilteredNotes] = useState<INote[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<ICategory | null>(null);
@@ -63,8 +64,27 @@ const HomePage = () => {
     } catch (error) {}
   };
 
+  const handleSearch = (search: string) => {
+    const currentSearch = search.toLowerCase();
+    setSearch(currentSearch);
+
+    if (selectedFilter) {
+      setFilteredNotes(
+        notes.filter(
+          (note) =>
+            note.category_id === selectedFilter.id &&
+            note.title.toLowerCase().includes(currentSearch)
+        )
+      );
+    } else {
+      setFilteredNotes(
+        notes.filter((note) => note.title.toLowerCase().includes(currentSearch))
+      );
+    }
+  };
+
   return (
-    <StandardPage user={user}>
+    <StandardPage user={user} onSearch={handleSearch}>
       <>
         <div className="flex w-full h-fit justify-between gap-3 items-center mb-4">
           <div className="flex pb-3 h-fit max-w-full sm:max-w-[400px] overflow-x-auto gap-2">
