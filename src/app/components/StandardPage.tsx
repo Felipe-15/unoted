@@ -7,11 +7,13 @@ import { User } from "@/interfaces/User";
 interface Props {
   user?: User;
   headerType?: "full" | "noSearch";
+  onSearch?: (search: string) => void;
 }
 
 const StandardPage = ({
   children,
   user,
+  onSearch,
   headerType,
 }: Props & { children: React.ReactNode }) => {
   return (
@@ -21,7 +23,9 @@ const StandardPage = ({
           headerType === "noSearch" ? "justify-end" : "justify-between"
         } items-center p-6 h-[75px]`}
       >
-        {headerType !== "noSearch" && <SearchInput />}
+        {headerType !== "noSearch" && onSearch && (
+          <SearchInput onSearch={onSearch} />
+        )}
         <div className="flex rounded-full border-[1px] border-secondary-500 sm:p-0 sm:border-none sm:gap-2 text-secondary-500 items-center justify-center overflow-hidden group">
           {user?.photo ? (
             <div className="rounded-full max-h-[32px] max-w-[32px] flex items-center justify-center overflow-hidden cursor-pointer">

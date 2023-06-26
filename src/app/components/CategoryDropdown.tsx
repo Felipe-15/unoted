@@ -40,7 +40,7 @@ const CategoryDropdown = ({
               <span
                 onClick={() => onSelectCategory(category)}
                 key={category.id}
-                className={`p-1 w-full text-center h-fit border-b-[1px] overflow-x-hidden overflow-ellipsis ${
+                className={`p-1 w-full text-center h-1/3 flex items-center justify-center border-b-[1px] overflow-x-hidden overflow-ellipsis ${
                   selectedCategory?.id === category.id
                     ? "bg-background-800 cursor-default text-primary-500"
                     : "hover:text-primary-500 cursor-pointer text-secondary-500"
