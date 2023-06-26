@@ -12,25 +12,42 @@ interface Props {
   editable?: boolean;
   onEdit?: (text: string) => void;
   onToggleCheck: (checked: boolean) => void;
+  animationOnRemove?: boolean;
 }
 
-const Task = ({ checked, text, editable, onEdit, onToggleCheck }: Props) => {
+const Task = ({
+  checked,
+  text,
+  editable,
+  animationOnRemove,
+  onEdit,
+  onToggleCheck,
+}: Props) => {
   const [currentChecked, setCurrentChecked] = useState(checked);
   const contentRef = useRef({} as HTMLParagraphElement);
+  const taskRef = useRef({} as HTMLDivElement);
 
   const handleCheck = () => {
-    onToggleCheck(!currentChecked);
-    setCurrentChecked((prev) => !prev);
+    if (animationOnRemove && !currentChecked) {
+      setCurrentChecked((prev) => !prev);
+      taskRef.current.classList.add("remove-task");
+      setTimeout(() => {
+        onToggleCheck(!currentChecked);
+      }, 1200);
+    } else {
+      onToggleCheck(!currentChecked);
+      setCurrentChecked((prev) => !prev);
+    }
   };
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 h-[24px]" ref={taskRef}>
       <div className="relative flex h-[24px] w-[24px]">
         <input
           type="checkbox"
           className="absolute peer opacity-0 inset-0 cursor-pointer"
           defaultChecked={checked}
           checked={currentChecked}
-          onChange={() => setCurrentChecked((prev) => !prev)}
+          onChange={handleCheck}
         />
         <span className="h-full w-full flex items-center justify-center text-secondary-500 peer-checked:bg-primary-500 peer-checked:border-primary-500 transition rounded-sm border-2 border-secondary-500">
           {currentChecked && <BsCheck id="draw-svg" size={24} />}

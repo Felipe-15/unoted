@@ -18,6 +18,7 @@ import { formatDate } from "@/utils/formatDate";
 import { getTasks } from "@/services/task/getTasks";
 import { FaTasks } from "react-icons/fa";
 import { ITask } from "@/interfaces/Task";
+import { updateTask } from "@/services/task/updateTask";
 
 const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -32,6 +33,8 @@ const HomePage = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedDate, setSelectedDate] = useState<number | null>(0);
   const [tasks, setTasks] = useState<ITask[]>([]);
+  const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
+  const [showChecked, setShowChecked] = useState(false);
 
   useEffect(() => {
     handleGetCategories();
@@ -45,6 +48,31 @@ const HomePage = () => {
   const handleGetTasks = async () => {
     const tasksRes: any = await getTasks(user?.id || "");
     setTasks(tasksRes);
+    if (!showChecked && tasksRes) {
+      setFilteredTasks(tasksRes.filter((t: any) => t.checked === false));
+    }
+  };
+
+  const handleFilterChecked = () => {
+    setShowChecked((prev) => !prev);
+
+    if (showChecked) {
+      setFilteredTasks((prev) => prev.filter((t) => t.checked === false));
+    } else {
+      setFilteredTasks(tasks);
+    }
+  };
+
+  const handleToggleCheck = async (checked: boolean, taskId: string) => {
+    console.log("atualizou id: ", taskId, " com valor: ", checked);
+    await updateTask(taskId, { checked });
+    const newTasks = tasks.map((t) =>
+      t.id === taskId ? { ...t, checked } : t
+    );
+    setTasks(newTasks);
+    if (!showChecked && checked) {
+      setFilteredTasks((prev) => prev.filter((t) => t.id !== taskId));
+    }
   };
 
   return (
@@ -86,8 +114,8 @@ const HomePage = () => {
         <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
           {categories?.length ? (
             categories.map((c) => {
-              const currentTasks = tasks?.length
-                ? tasks.filter((t) => t.category_id === c.id)
+              const currentTasks = filteredTasks?.length
+                ? filteredTasks.filter((t) => t.category_id === c.id)
                 : [];
               if (!currentTasks.length) return <></>;
               return (
@@ -103,7 +131,8 @@ const HomePage = () => {
                   }
                   categorieName={c.name}
                   tasks={currentTasks}
-                  onEditTask={() => null}
+                  onEditTask={handleToggleCheck}
+                  removeChecked={!showChecked}
                 />
               );
             })
@@ -111,6 +140,12 @@ const HomePage = () => {
             <></>
           )}
         </div>
+        <button
+          className="text-primary-500 w-fit transition hover:text-primary-400"
+          onClick={handleFilterChecked}
+        >
+          {showChecked ? "Esconder concluídas" : "Ver concluídas"}
+        </button>
       </>
     </StandardPage>
   );

@@ -10,6 +10,7 @@ interface Props {
   expireAt: string | null;
   tasks: ITask[];
   color?: string;
+  removeChecked: boolean;
   onEditTask: (checked: boolean, id: string) => void;
 }
 
@@ -18,6 +19,7 @@ const TaskNote = ({
   tasks,
   expireAt,
   color,
+  removeChecked,
   onEditTask,
 }: Props) => {
   return (
@@ -39,19 +41,12 @@ const TaskNote = ({
             <Task
               {...t}
               key={t.id}
+              animationOnRemove={removeChecked}
               onToggleCheck={(checked) => onEditTask(checked, t.id)}
             />
           ))}
         </div>
       </div>
-      {/* <div className="transition-opacity opacity-0 absolute bottom-2 right-2 flex items-center group-hover:opacity-100 justify-center gap-1">
-        <button className="p-2 text-secondary-500 transition hover:text-primary-500">
-          <MdEdit />
-        </button>
-        <button className="p-2 text-secondary-500 transition hover:text-danger">
-          <BsFillTrashFill />
-        </button>
-      </div> */}
     </div>
   );
 };
