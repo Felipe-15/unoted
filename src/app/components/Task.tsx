@@ -40,7 +40,10 @@ const Task = ({
     }
   };
   return (
-    <div className="flex gap-2 h-[24px]" ref={taskRef}>
+    <div
+      className="flex gap-2 h-[24px] [&:not(:last-child)]:mb-2"
+      ref={taskRef}
+    >
       <div className="relative flex h-[24px] w-[24px]">
         <input
           type="checkbox"

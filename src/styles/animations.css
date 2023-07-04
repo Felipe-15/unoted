@@ -29,10 +29,12 @@
   from {
     opacity: 0;
     height: 24px;
+    margin-bottom: 0.5rem;
   }
   to {
     opacity: 0;
     height: 0;
+    margin-bottom: 0px;
   }
 }
 
