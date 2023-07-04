@@ -2,11 +2,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
-import { getCategories } from "@/services/category";
 import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
 import { getNote, updateNote } from "@/services/note";
+import { getCategories } from "@/services/category";
+
+import { ICategory } from "@/interfaces/Category";
+import { INote } from "@/interfaces/Note";
 
 import StandardPage from "@/app/components/StandardPage";
 import CategoryDropdown from "@/app/components/CategoryDropdown";
@@ -14,8 +17,6 @@ import Button from "@/app/components/Button";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
-import { ICategory } from "@/interfaces/Category";
-import { INote } from "@/interfaces/Note";
 
 const EditNotePage = ({
   params: { noteId },

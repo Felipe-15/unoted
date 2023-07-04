@@ -31,8 +31,10 @@ const filterDates = {
 const HomePage = () => {
   const { user, setUser } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([]);
   const [selectedDate, setSelectedDate] = useState<number | null>(0);
   const [tasks, setTasks] = useState<ITask[]>([]);
+  const [search, setSearch] = useState("");
   const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
   const [showChecked, setShowChecked] = useState(false);
 
@@ -44,6 +46,7 @@ const HomePage = () => {
   const handleGetCategories = async () => {
     const categoriesRes: any = await getCategories(user?.id || "", "task");
     setCategories(categoriesRes);
+    setFilteredCategories(categoriesRes);
   };
   const handleGetTasks = async () => {
     const tasksRes: any = await getTasks(user?.id || "");
@@ -57,10 +60,19 @@ const HomePage = () => {
     setShowChecked((prev) => !prev);
 
     if (showChecked) {
-      setFilteredTasks((prev) => prev.filter((t) => t.checked === false));
+      setFilteredTasks(tasks.filter((t) => t.checked === false));
     } else {
       setFilteredTasks(tasks);
     }
+  };
+
+  const handleSearch = (search: string) => {
+    const currentSearch = search.toLowerCase();
+    setSearch(currentSearch);
+
+    setFilteredCategories(
+      categories.filter((c) => c.name.toLowerCase().includes(currentSearch))
+    );
   };
 
   const handleToggleCheck = async (checked: boolean, taskId: string) => {
@@ -76,7 +88,7 @@ const HomePage = () => {
   };
 
   return (
-    <StandardPage user={user}>
+    <StandardPage user={user} onSearch={handleSearch}>
       <>
         <div className="flex w-full h-fit justify-between gap-3 items-center mb-4">
           <div className="flex invisible-scroll h-fit max-w-full sm:max-w-[400px] overflow-x-auto gap-2">
@@ -112,8 +124,8 @@ const HomePage = () => {
           </Link>
         </div>
         <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-          {categories?.length ? (
-            categories.map((c) => {
+          {filteredCategories?.length ? (
+            filteredCategories.map((c) => {
               const currentTasks = filteredTasks?.length
                 ? filteredTasks.filter((t) => t.category_id === c.id)
                 : [];
