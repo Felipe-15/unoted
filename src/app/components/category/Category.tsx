@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
+import CategoryName from "./CategoryName";
 
 interface Props {
   name: string;
@@ -19,7 +20,7 @@ const Category = ({ name, color, onUpdate, onDelete }: Props) => {
   };
 
   return (
-    <div className="flex group max-w-[260px]">
+    <div className="flex group w-[260px] shrink-0">
       <div
         style={{ backgroundColor: currentColor }}
         className="peer mr-4 cursor-pointer transition-[border-radius_width] ease-in-out rounded-[50%] h-[32px] w-[32px] duration-300 hover:w-[64px] hover:rounded-md shrink-0"
@@ -37,21 +38,7 @@ const Category = ({ name, color, onUpdate, onDelete }: Props) => {
           }}
         />
       </div>
-      <input
-        placeholder="Digite..."
-        defaultValue={name}
-        className="bg-transparent max-w-[200px] outline-none placeholder:text-secondary-500 text-secondary-500 text-3xl mr-2"
-        onBlur={(e) => {
-          if (e.target.value !== name) {
-            onUpdate({ name: e.target.value });
-          }
-        }}
-        onKeyUp={(e) => {
-          if (e.key === "Enter" && e.currentTarget.value !== name) {
-            onUpdate({ name: e.currentTarget.value });
-          }
-        }}
-      />
+      <CategoryName defaultName={name} onUpdate={onUpdate} />
       <button
         onClick={onDelete}
         className="flex opacity-0 peer-hover:-translate-x-6 peer-hover:opacity-0 -translate-x-6 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 items-center text-xl p-1 cursor-pointer text-secondary-500 hover:text-danger"

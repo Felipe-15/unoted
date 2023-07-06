@@ -11,7 +11,7 @@ import {
 import { ICategory } from "@/interfaces/Category";
 
 import AddCategoryButton from "@/app/components/AddCategoryButton";
-import Category from "@/app/components/Category";
+import Category from "@/app/components/category/Category";
 import StandardPage from "@/app/components/StandardPage";
 
 const CategoriesPage = () => {
