@@ -15,16 +15,17 @@ export const deleteCategory = async (
 ) => {
   try {
     await deleteDoc(doc(db, "categories", categoryId));
+    const typeC = typeCategory === "note" ? "notes" : "tasks";
 
     const q = query(
-      collection(db, typeCategory === "note" ? "notes" : "tasks"),
+      collection(db, typeC),
       where("category_id", "==", categoryId),
       where("creator_id", "==", userId)
     );
     const snap = await getDocs(q);
 
     snap.forEach(async (note) => {
-      await deleteDoc(doc(db, "notes", note.id));
+      await deleteDoc(doc(db, typeC, note.id));
     });
   } catch (error) {}
 };
