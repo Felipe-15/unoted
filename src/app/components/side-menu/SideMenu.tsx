@@ -4,7 +4,7 @@ import MenuLink from "./MenuLink";
 
 import { pages } from "./pages";
 
-import { AiOutlineTwitter } from "react-icons/ai";
+import { BsDiscord } from "react-icons/bs";
 import { AiFillGithub } from "react-icons/ai";
 import { AiOutlineInstagram } from "react-icons/ai";
 
@@ -38,15 +38,24 @@ const SideMenu = () => {
         ))}
       </div>
       <div className="flex flex-col lg:flex-row pb-4 pl-3 gap-3 py">
-        <div className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500">
-          <AiOutlineTwitter size={24} />
-        </div>
-        <div className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500">
+        <a
+          href="https://discord.com/users/318361153698791425"
+          className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500"
+        >
+          <BsDiscord size={24} />
+        </a>
+        <a
+          href="https://github.com/Felipe-15"
+          className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500"
+        >
           <AiFillGithub size={24} />
-        </div>
-        <div className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500">
+        </a>
+        <a
+          href="https://www.instagram.com/felipe_souza_25/"
+          className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500"
+        >
           <AiOutlineInstagram size={24} />
-        </div>
+        </a>
       </div>
     </nav>
   );
