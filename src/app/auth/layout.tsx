@@ -9,7 +9,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="bg-background-900 h-screen w-full grid grid-cols-1 md:grid-cols-2">
+    <main className="bg-background-900 min-h-screen w-full grid grid-cols-1 md:grid-cols-2">
       <Toaster />
       <section className="hidden md:flex flex-col h-full w-full items-center justify-center">
         <div className="flex flex-col gap-4 items-center justify-center p-4">
