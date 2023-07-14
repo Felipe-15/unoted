@@ -39,12 +39,14 @@ const SideMenu = () => {
       </div>
       <div className="flex flex-col lg:flex-row pb-4 pl-3 gap-3 py">
         <a
+          target="_blank"
           href="https://discord.com/users/318361153698791425"
           className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500"
         >
           <BsDiscord size={24} />
         </a>
         <a
+          target="_blank"
           href="https://github.com/Felipe-15"
           className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500"
         >
@@ -52,6 +54,7 @@ const SideMenu = () => {
         </a>
         <a
           href="https://www.instagram.com/felipe_souza_25/"
+          target="_blank"
           className="cursor-pointer p-1 text-secondary-500 transition hover:text-primary-500"
         >
           <AiOutlineInstagram size={24} />
