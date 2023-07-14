@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { toast, Toaster } from "react-hot-toast";
 import { openSans } from "@/app/fonts";
 import { getCategories } from "@/services/category";
 import { useAuth } from "@/hooks/useAuth";
@@ -33,6 +34,10 @@ const NewNotePage = () => {
   };
 
   const handleCreateNote = async (data: any) => {
+    if (!selectedCategory) {
+      toast.error("Por favor, selecione uma categoria para criar a nota!");
+      return;
+    }
     await createNote({
       title: data.title,
       content: data.content,
@@ -47,6 +52,7 @@ const NewNotePage = () => {
 
   return (
     <StandardPage headerType="noSearch" user={user}>
+      <Toaster />
       <div className="flex justify-between items-center">
         <Link
           href="/notes"

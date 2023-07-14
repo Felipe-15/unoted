@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
 
@@ -57,6 +58,10 @@ const NewTaskPage = () => {
 
   const handleCreateTasks = async () => {
     if (!tasks) return;
+    if (!selectedCategory) {
+      toast.error("Por favor, selecione uma categoria para criar as tarefas!");
+      return;
+    }
     const tasksWithData: Omit<ITask, "id">[] = tasks.map((t) => {
       const { id, ...rest } = t;
       return {
@@ -72,6 +77,7 @@ const NewTaskPage = () => {
 
   return (
     <StandardPage headerType="noSearch" user={user}>
+      <Toaster />
       <div className="flex justify-between items-center">
         <Link
           href="/tasks "
