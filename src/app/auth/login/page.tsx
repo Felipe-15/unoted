@@ -2,6 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
@@ -36,7 +37,7 @@ const LoginPage = () => {
 
       router.push("/notes");
     } catch (err) {
-      console.log(err);
+      toast.error("Erro ao efetuar login, verifique seus dados!");
     }
   };
 
@@ -46,7 +47,7 @@ const LoginPage = () => {
 
       router.push("/notes");
     } catch (err) {
-      console.log(err);
+      toast.error("Erro ao efetuar login pelo Google, tente novamente!");
     }
   };
 

@@ -1,4 +1,5 @@
 "use client";
+import { toast, Toaster } from "react-hot-toast";
 import Image from "next/image";
 import drawImage from "../../../public/home-draw.svg";
 
@@ -9,6 +10,7 @@ export default function AuthLayout({
 }) {
   return (
     <main className="bg-background-900 h-screen w-full grid grid-cols-1 md:grid-cols-2">
+      <Toaster />
       <section className="hidden md:flex flex-col h-full w-full items-center justify-center">
         <div className="flex flex-col gap-4 items-center justify-center p-4">
           <Image

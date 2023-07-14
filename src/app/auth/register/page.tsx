@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
+import { toast } from "react-hot-toast";
 
 import { signup } from "@/services/auth/signup";
 import { googleSignin } from "@/services/auth/googleSignin";
@@ -42,7 +43,7 @@ const RegisterPage = () => {
 
       router.push("/notes");
     } catch (err) {
-      console.log(err);
+      toast.error("Ocorreu algum erro interno, tente novamente!");
     }
   };
 
@@ -50,7 +51,9 @@ const RegisterPage = () => {
     try {
       await googleSignin();
       router.push("/notes");
-    } catch (err) {}
+    } catch (err) {
+      toast.error("Ocorreu algum erro interno, tente novamente!");
+    }
   };
 
   return (
