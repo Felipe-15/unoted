@@ -30,8 +30,10 @@ const Input = ({
         className={`w-full rounded-md transition flex gap-2 p-2 pr-0 bg-background-700 text-lg items-center border-[1px] ${
           focus
             ? "border-primary-500 shadow-primary-500/20 shadow-md "
+            : error
+            ? "border-danger"
             : "border-transparent"
-        } ${error && "border-danger"}`}
+        }`}
       >
         {Icon && <Icon className="text-primary-500" />}
         <input
@@ -51,7 +53,7 @@ const Input = ({
           </div>
         )}
       </div>
-      <small className="text-sm text-danger">{error}</small>
+      <small className="text-sm text-danger h-1">{error}</small>
     </div>
   );
 };

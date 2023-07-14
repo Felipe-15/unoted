@@ -71,6 +71,7 @@ const LoginPage = () => {
                 required: { value: true, message: "O email é obrigatório!" },
               }),
             }}
+            error={errors.email?.message}
             icon={MdAlternateEmail}
             type="email"
             placeholder="Email"
@@ -81,6 +82,7 @@ const LoginPage = () => {
                 required: { value: true, message: "A senha é obrigatória!" },
               }),
             }}
+            error={errors.password?.message}
             icon={FaLock}
             type="password"
             placeholder="Senha"
