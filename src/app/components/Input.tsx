@@ -44,7 +44,7 @@ const Input = ({
         />
         {visibility && (
           <div
-            className="text-gray-400 transition hover:text-primary-500 cursor-pointer"
+            className="text-gray-400 transition hover:text-primary-500 cursor-pointer px-1"
             onClick={() => setIsVisible((prev) => !prev)}
           >
             {isVisible ? <MdOutlineVisibilityOff /> : <MdOutlineVisibility />}
