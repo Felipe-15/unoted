@@ -41,7 +41,7 @@ const StandardPage = ({
             <FiUser size={20} />
           )}
           <span className="hidden sm:inline">
-            Olá, {user?.name.split(" ")[0]}
+            Olá, {user?.name?.split(" ")[0]}
           </span>
         </div>
       </header>

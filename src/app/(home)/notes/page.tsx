@@ -18,11 +18,16 @@ import { formatDate } from "@/utils/formatDate";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
+
   const [notes, setNotes] = useState<INote[]>([]);
-  const [search, setSearch] = useState("");
   const [filteredNotes, setFilteredNotes] = useState<INote[]>([]);
+
+  const [search, setSearch] = useState("");
+
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<ICategory | null>(null);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -32,11 +37,15 @@ const HomePage = () => {
   }, [user]);
 
   const handleGetNotes = async () => {
+    setIsLoading(true);
     try {
       const notesRes = await getNotes(user?.id || "");
       setNotes(notesRes);
       setFilteredNotes(notesRes);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGetCategories = async () => {
@@ -114,6 +123,11 @@ const HomePage = () => {
             </span>
           </Link>
         </div>
+        {!notes.length && !isLoading && (
+          <h3 className="font-bold text-gray-300 text-xl">
+            Parece que você ainda não tem anotações...
+          </h3>
+        )}
         <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
           {filteredNotes.map((note) => {
             return (

@@ -10,7 +10,7 @@ import { AiOutlineInstagram } from "react-icons/ai";
 
 const SideMenu = () => {
   const pathName = usePathname();
-  const selectedRoute = "/" + pathName.split("/").filter((path) => !!path)[0];
+  const selectedRoute = "/" + pathName?.split("/").filter((path) => !!path)[0];
 
   return (
     <nav className="flex z-10 shadow-md flex-col h-screen w-full max-w-[48px] lg:max-w-[180px] bg-background-800">
