@@ -40,7 +40,7 @@ const TaskNote = ({
           {tasks
             .filter((t) =>
               expireAt !== null
-                ? new Date(expireAt || "").getTime() > t.expires_at.toMillis()
+                ? new Date(expireAt || "").getTime() >= t.expires_at.toMillis()
                 : true
             )
             .map((t) => (
