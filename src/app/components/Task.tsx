@@ -25,7 +25,7 @@ const Task = ({
 }: Props) => {
   const [currentChecked, setCurrentChecked] = useState(checked);
   const contentRef = useRef({} as HTMLParagraphElement);
-  const taskRef = useRef({} as HTMLDivElement);
+  const taskRef = useRef({} as HTMLLIElement);
 
   const handleCheck = () => {
     if (animationOnRemove && !currentChecked) {
@@ -40,10 +40,7 @@ const Task = ({
     }
   };
   return (
-    <div
-      className="flex gap-2 h-[24px] [&:not(:last-child)]:mb-2"
-      ref={taskRef}
-    >
+    <li className="flex gap-2 h-[24px] [&:not(:last-child)]:mb-2" ref={taskRef}>
       <div className="relative flex h-[24px] w-[24px]">
         <input
           type="checkbox"
@@ -76,7 +73,7 @@ const Task = ({
       >
         {text}
       </p>
-    </div>
+    </li>
   );
 };
 

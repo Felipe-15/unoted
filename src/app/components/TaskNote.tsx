@@ -36,7 +36,7 @@ const TaskNote = ({
           </span>
         )}
         <h4 className="text-xl text-secondary-500 mb-2">{categorieName}</h4>
-        <div className="flex flex-col pl-2 transition-all h-full overflow-x-hidden text-ellipsis overflow-y-auto ">
+        <ul className="flex flex-col pl-2 transition-all h-full overflow-x-hidden text-ellipsis overflow-y-auto ">
           {tasks
             .filter((t) =>
               expireAt !== null
@@ -51,7 +51,7 @@ const TaskNote = ({
                 onToggleCheck={(checked) => onEditTask(checked, t.id)}
               />
             ))}
-        </div>
+        </ul>
       </div>
     </div>
   );
