@@ -101,8 +101,11 @@ const NewTaskPage = () => {
       </div>
       <div className="flex flex-col gap-3 justify-start items-center -ml-10 pt-12">
         <div className="flex flex-col w-fit items-start gap-4">
-          {tasks.map((task) => (
-            <div key={task.id.toString()} className="flex gap-2 group">
+          {tasks?.map((task) => (
+            <div
+              key={task.id.toString()}
+              className="flex gap-2 items-center justify-center group"
+            >
               <Task
                 editable
                 text={task.text}

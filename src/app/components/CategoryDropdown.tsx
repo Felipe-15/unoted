@@ -35,7 +35,7 @@ const CategoryDropdown = ({
               : "h-[96px] overflow-y-auto scale-y-100 bottom-[-100px]"
           } bg-background-700`}
         >
-          {categories.map((category) => {
+          {categories?.map((category) => {
             return (
               <li key={category.id}>
                 <span
