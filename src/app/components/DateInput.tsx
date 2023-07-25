@@ -14,6 +14,7 @@ const DateInput = ({ date, onSelectDate }: Props) => {
         <BiCalendar />
         <span>Data</span>
         <input
+          data-testid="date-input"
           type="date"
           className=" cursor-pointer absolute inset-0 opacity-0"
           onChange={(e) => onSelectDate(e.target.value)}

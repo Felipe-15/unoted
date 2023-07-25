@@ -29,6 +29,7 @@ const CategoryDropdown = ({
           className={`transition-all ${isOpen ? "-rotate-180" : "rotate-0"} `}
         />
         <ul
+          data-testid="category-filter-list"
           className={`absolute cursor-default flex flex-col  rounded-b-md transition-all w-full ${
             !isOpen
               ? "h-0 overflow-hidden bottom-0"
@@ -39,7 +40,10 @@ const CategoryDropdown = ({
             return (
               <li key={category.id}>
                 <span
-                  onClick={() => onSelectCategory(category)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSelectCategory(category);
+                  }}
                   className={`p-1 w-full text-center h-1/3 flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis ${
                     selectedCategory?.id === category.id
                       ? "bg-background-800 cursor-default text-primary-500"

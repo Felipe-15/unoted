@@ -9,7 +9,7 @@ import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 interface Props {
   registerField?: any;
   error?: string;
-  icon: IconType;
+  icon?: IconType;
   type?: HTMLInputTypeAttribute;
   visibility?: boolean;
 }
@@ -27,6 +27,7 @@ const Input = ({
   return (
     <div className="w-full max-w-[280px]">
       <div
+        data-testid="input-holder"
         className={`w-full rounded-md transition flex gap-2 p-2 pr-0 bg-background-700 text-lg items-center border-[1px] ${
           focus
             ? "border-primary-500 shadow-primary-500/20 shadow-md "
@@ -35,7 +36,7 @@ const Input = ({
             : "border-transparent"
         }`}
       >
-        {Icon && <Icon className="text-primary-500" />}
+        {Icon && <Icon data-testid="input-icon" className="text-primary-500" />}
         <input
           {...rest}
           {...registerField}
