@@ -11,9 +11,8 @@ const SearchInput = ({ onSearch }: Props) => {
   const inputRef = useRef({} as HTMLInputElement);
   return (
     <div
-      className={`relative max-w-[160px] flex gap-3 text-secondary-500 text-xl  items-center after:bottom-0 after:transition-all after:h-[1px] after:block after:content-[''] after:absolute  after:bg-secondary-500 after:w-0  ${
-        focus && "after:w-full"
-      }`}
+      data-focus={focus}
+      className={`relative max-w-[160px] flex gap-3 text-secondary-500 text-xl  items-center after:bottom-0 after:transition-all after:h-[1px] after:block after:content-[''] after:absolute  after:bg-secondary-500 after:w-0 data-[focus=true]:after:w-full`}
     >
       <BiSearch />
       <input

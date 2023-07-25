@@ -56,6 +56,7 @@ const Task = ({
       <p
         contentEditable={editable}
         ref={contentRef}
+        data-current-checked={currentChecked}
         onBlur={
           editable && onEdit
             ? () => {
@@ -65,11 +66,7 @@ const Task = ({
               }
             : () => null
         }
-        className={`${
-          openSans.className
-        } font-semibold overflow-hidden font-normal  ${
-          currentChecked ? "line-through text-gray-500" : "text-secondary-500"
-        } whitespace-nowrap text-ellipsis`}
+        className={`${openSans.className} overflow-hidden font-normal text-secondary-500 data-[current-checked=true]:line-through data-[current-checked=true]:text-gray-500 whitespace-nowrap text-ellipsis`}
       >
         {text}
       </p>

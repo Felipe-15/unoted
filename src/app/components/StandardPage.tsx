@@ -19,9 +19,8 @@ const StandardPage = ({
   return (
     <section className="w-full h-screen flex-col bg-background-800 overflow-hidden">
       <header
-        className={`flex w-full ${
-          headerType === "noSearch" ? "justify-end" : "justify-between"
-        } items-center p-6 h-[75px]`}
+        data-header-type={headerType}
+        className={`flex w-full data-[header-type=noSearch]:justify-end justify-between items-center p-6 h-[75px]`}
       >
         {headerType !== "noSearch" && onSearch && (
           <SearchInput onSearch={onSearch} />

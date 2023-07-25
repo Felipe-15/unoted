@@ -28,13 +28,9 @@ const Input = ({
     <div className="w-full max-w-[280px]">
       <div
         data-testid="input-holder"
-        className={`w-full rounded-md transition flex gap-2 p-2 pr-0 bg-background-700 text-lg items-center border-[1px] ${
-          focus
-            ? "border-primary-500 shadow-primary-500/20 shadow-md "
-            : error
-            ? "border-danger"
-            : "border-transparent"
-        }`}
+        data-focus={focus}
+        data-error={error && !focus}
+        className={`w-full rounded-md transition flex gap-2 p-2 pr-0 bg-background-700 text-lg items-center border-transparent border-[1px] data-[focus=true]:border-primary-500 data-[focus=true]:shadow-primary-500/20 data-[focus=true]:shadow-md data-[error=true]:border-danger`}
       >
         {Icon && <Icon data-testid="input-icon" className="text-primary-500" />}
         <input

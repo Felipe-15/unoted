@@ -44,11 +44,8 @@ const CategoryDropdown = ({
                     e.stopPropagation();
                     onSelectCategory(category);
                   }}
-                  className={`p-1 w-full text-center h-1/3 flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis ${
-                    selectedCategory?.id === category.id
-                      ? "bg-background-800 cursor-default text-primary-500"
-                      : "hover:text-primary-500 cursor-pointer text-secondary-500"
-                  } [&:not(:last-child)]:border-b-gray-500  transition  whitespace-nowrap text-sm`}
+                  data-selected-category={selectedCategory?.id === category.id}
+                  className={`p-1 w-full text-center h-1/3 flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 [&:not(:last-child)]:border-b-gray-500  transition  whitespace-nowrap text-sm`}
                 >
                   {category.name}
                 </span>
