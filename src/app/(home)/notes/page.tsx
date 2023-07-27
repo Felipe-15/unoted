@@ -138,7 +138,7 @@ const HomePage = () => {
           </>
         )}
         {!notes?.length && !isLoading && (
-          <div className="flex items-center justify-center gap-3 w-full flex-1 -mt-10">
+          <div className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
             <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
             <h3 className="font-bold text-secondary-500 text-xl">
               Não há anotações ainda...
