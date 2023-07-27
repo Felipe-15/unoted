@@ -90,7 +90,12 @@ const LoginPage = () => {
           />
 
           <div className="pt-2 flex flex-col gap-2">
-            <Button text="Entrar" onClick={() => null} />
+            <Button
+              text="Entrar"
+              onClick={() => null}
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            />
             <span
               className={`${openSans.className} text-secondary-500 font-normal text-sm text-center`}
             >
@@ -121,6 +126,7 @@ const LoginPage = () => {
               text="Google"
               icon={AiOutlineGoogle}
               onClick={handleGoogleAuth}
+              disabled={isSubmitting}
             />
           </div>
         </div>

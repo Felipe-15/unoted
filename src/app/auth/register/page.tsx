@@ -126,7 +126,12 @@ const RegisterPage = () => {
             error={errors.confirmPassword?.message}
           />
           <div className="pt-2 flex flex-col gap-2">
-            <Button text="Criar conta" onClick={() => null} />
+            <Button
+              text="Criar conta"
+              loading={isSubmitting}
+              disabled={isSubmitting}
+              onClick={() => null}
+            />
             <span
               className={`${openSans.className} text-secondary-500 font-normal text-sm text-center`}
             >
@@ -153,10 +158,11 @@ const RegisterPage = () => {
           </span>
           <div className="w-[120px]">
             <Button
+              disabled={isSubmitting}
               outline
               text="Google"
               icon={AiOutlineGoogle}
-              onClick={handleGoogleAuth}
+              onClick={!isSubmitting ? handleGoogleAuth : () => null}
             />
           </div>
         </div>
