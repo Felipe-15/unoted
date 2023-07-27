@@ -44,7 +44,7 @@ const StandardPage = ({
           </span>
         </div>
       </header>
-      <section className="flex flex-col w-full h-[calc(100vh-75px)] bg-background-900 rounded-tl-2xl px-6 py-4">
+      <section className="relative flex flex-col w-full h-[calc(100vh-75px)] bg-background-900 rounded-tl-2xl px-6 py-4">
         {children}
       </section>
     </section>
