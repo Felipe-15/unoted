@@ -1,21 +1,20 @@
-import { useContext, useEffect } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { AuthContext } from "@/contexts/Auth";
+import { User } from "@/interfaces/User";
 
 export function useAuth() {
   const router = useRouter();
-
-  const { setUser, user } = useContext(AuthContext);
+  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const userRecovered = JSON.parse(sessionStorage.getItem("user") || "{}");
 
-    if (!userRecovered) {
+    if (!Object.keys(userRecovered).length) {
       router.push("/auth/login");
     } else {
       setUser(userRecovered);
     }
   }, []);
 
-  return { user, setUser };
+  return { user: user || undefined, setUser };
 }

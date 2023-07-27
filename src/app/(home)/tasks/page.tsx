@@ -29,7 +29,7 @@ const filterDates = {
 };
 
 const TasksPage = () => {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
 
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([]);

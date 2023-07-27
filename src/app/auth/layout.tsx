@@ -1,4 +1,3 @@
-"use client";
 import { toast, Toaster } from "react-hot-toast";
 import Image from "next/image";
 import drawImage from "../../../public/home-draw.svg";

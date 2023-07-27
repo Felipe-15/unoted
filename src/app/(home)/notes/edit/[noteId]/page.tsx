@@ -23,7 +23,7 @@ const EditNotePage = ({
 }: {
   params: { noteId: string };
 }) => {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>();
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
   const [note, setNote] = useState<INote>();

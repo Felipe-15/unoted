@@ -15,7 +15,7 @@ import Category from "@/app/components/category/Category";
 import StandardPage from "@/app/components/StandardPage";
 
 const CategoriesPage = () => {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([]);
 
