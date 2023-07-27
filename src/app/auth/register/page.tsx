@@ -97,6 +97,10 @@ const RegisterPage = () => {
             registerField={{
               ...register("password", {
                 required: { value: true, message: "Senha é obrigatória!" },
+                minLength: {
+                  value: 6,
+                  message: "A senha deve ter no mínimo 6 dígitos!",
+                },
               }),
             }}
             icon={FaLock}
