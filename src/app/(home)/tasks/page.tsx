@@ -127,7 +127,7 @@ const TasksPage = () => {
           </div>
           <Link
             href="/tasks/new-task"
-            className="absolute z-10 bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
+            className="fixed z-10 bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
           >
             <BsPlus size={24} />
             <span className="hidden sm:inline whitespace-nowrap">
