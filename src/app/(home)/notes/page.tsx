@@ -1,5 +1,6 @@
 "use client";
 import "@/styles/scroll.css";
+import emptyEmoji from "../../../../public/empty-emoji.png";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -15,6 +16,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { INote } from "@/interfaces/Note";
 import { ICategory } from "@/interfaces/Category";
 import { formatDate } from "@/utils/formatDate";
+import Image from "next/image";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
@@ -123,29 +125,34 @@ const HomePage = () => {
             </span>
           </Link>
         </div>
-        {!notes.length && !isLoading && (
-          <h3 className="font-bold text-gray-300 text-xl">
-            Parece que você ainda não tem anotações...
-          </h3>
+        {!notes?.length && !isLoading && (
+          <div className="flex items-center justify-center gap-3 w-full flex-1 -mt-10">
+            <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
+            <h3 className="font-bold text-secondary-500 text-xl">
+              Não há anotações ainda...
+            </h3>
+          </div>
         )}
-        <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-          {filteredNotes.map((note) => {
-            return (
-              <Note
-                {...note}
-                key={note.id}
-                noteId={note.id}
-                color={
-                  categories.filter(
-                    (category) => category.id === note.category_id
-                  )[0].color
-                }
-                createdAt={formatDate(note.created_at.toMillis())}
-                onDelete={() => handleDeleteNote(note.id)}
-              />
-            );
-          })}
-        </div>
+        {!!notes?.length && (
+          <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+            {filteredNotes.map((note) => {
+              return (
+                <Note
+                  {...note}
+                  key={note.id}
+                  noteId={note.id}
+                  color={
+                    categories.filter(
+                      (category) => category.id === note.category_id
+                    )[0].color
+                  }
+                  createdAt={formatDate(note.created_at.toMillis())}
+                  onDelete={() => handleDeleteNote(note.id)}
+                />
+              );
+            })}
+          </div>
+        )}
       </>
     </StandardPage>
   );

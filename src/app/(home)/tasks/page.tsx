@@ -3,6 +3,8 @@ import "@/styles/scroll.css";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+import emptyEmoji from "../../../../public/empty-emoji.png";
+
 import { useAuth } from "@/hooks/useAuth";
 
 import { ICategory } from "@/interfaces/Category";
@@ -19,6 +21,7 @@ import { getTasks } from "@/services/task/getTasks";
 import { FaTasks } from "react-icons/fa";
 import { ITask } from "@/interfaces/Task";
 import { updateTask } from "@/services/task/updateTask";
+import Image from "next/image";
 
 const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -132,50 +135,57 @@ const TasksPage = () => {
           </Link>
         </div>
         {!tasks?.length && !isLoading && (
-          <h3 className="font-bold text-gray-300 text-xl">
-            Parece que você ainda não tem tarefas...
-          </h3>
+          <div className="flex items-center justify-center gap-3 w-full flex-1 -mt-10">
+            <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
+            <h3 className="font-bold text-secondary-500 text-xl">
+              Não há tarefas ainda...
+            </h3>
+          </div>
         )}
-        <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-          {filteredCategories?.length ? (
-            filteredCategories.map((c) => {
-              const currentTasks = filteredTasks?.length
-                ? filteredTasks.filter((t) => t.category_id === c.id)
-                : [];
-              if (!currentTasks?.length) return <></>;
-              return (
-                <TaskNote
-                  {...c}
-                  key={c.id}
-                  expireAt={
-                    selectedDate === null
-                      ? selectedDate
-                      : selectedDate === 0
-                      ? formatDate(Date.now())
-                      : formatDate(Date.now() + selectedDate)
-                  }
-                  categorieName={c.name}
-                  tasks={currentTasks}
-                  onEditTask={handleToggleCheck}
-                  removeChecked={!showChecked}
-                />
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </div>
-        <div className="flex gap-3">
-          <button
-            className="text-primary-500 w-fit transition hover:text-primary-400"
-            onClick={handleFilterChecked}
-          >
-            {showChecked ? "Esconder concluídas" : "Mostrar concluídas"}
-          </button>
-          <button className="text-danger w-fit transition hover:brightness-150">
-            Tarefas atrasadas
-          </button>
-        </div>
+        {!!tasks?.length && (
+          <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+            {filteredCategories?.length ? (
+              filteredCategories.map((c) => {
+                const currentTasks = filteredTasks?.length
+                  ? filteredTasks.filter((t) => t.category_id === c.id)
+                  : [];
+                if (!currentTasks?.length) return <></>;
+                return (
+                  <TaskNote
+                    {...c}
+                    key={c.id}
+                    expireAt={
+                      selectedDate === null
+                        ? selectedDate
+                        : selectedDate === 0
+                        ? formatDate(Date.now())
+                        : formatDate(Date.now() + selectedDate)
+                    }
+                    categorieName={c.name}
+                    tasks={currentTasks}
+                    onEditTask={handleToggleCheck}
+                    removeChecked={!showChecked}
+                  />
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </div>
+        )}
+        {!!tasks?.length && (
+          <div className="flex gap-3">
+            <button
+              className="text-primary-500 w-fit transition hover:text-primary-400"
+              onClick={handleFilterChecked}
+            >
+              {showChecked ? "Esconder concluídas" : "Mostrar concluídas"}
+            </button>
+            <button className="text-danger w-fit transition hover:brightness-150">
+              Tarefas atrasadas
+            </button>
+          </div>
+        )}
       </>
     </StandardPage>
   );
