@@ -10,13 +10,13 @@ export const signin = async (email: string, password: string) => {
   const snap = await getDoc(doc(db, "users", user.uid));
 
   if (snap.exists()) {
-    const { name } = snap.data();
+    const { name, photo } = snap.data();
     sessionStorage.setItem(
       "user",
       JSON.stringify({
         id: user.uid,
         name: name,
-        photo: user.photoURL || "",
+        photo: photo || user.photoURL || "",
       })
     );
   }
