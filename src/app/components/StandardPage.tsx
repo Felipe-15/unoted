@@ -31,8 +31,8 @@ const StandardPage = ({
               <Image
                 src={user.photo}
                 alt="Foto de perfil"
-                width={24}
-                height={24}
+                width={32}
+                height={32}
                 className="w-full h-auto transition hover:brightness-75"
               />
             </div>

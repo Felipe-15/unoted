@@ -31,7 +31,7 @@ export const signup = async (email: string, password: string, name: string) => {
           user.photoURL ||
           `https://ui-avatars.com/api/?name=${name
             .split(" ")
-            .join("+")}&background=233C43&rounded=true&length=${
+            .join("+")}&background=FF9000&rounded=true&length=${
             name.split(" ").length
           }&color=FDFFFC`,
       })
