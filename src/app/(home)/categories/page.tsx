@@ -13,11 +13,13 @@ import { ICategory } from "@/interfaces/Category";
 import AddCategoryButton from "@/app/components/AddCategoryButton";
 import Category from "@/app/components/category/Category";
 import StandardPage from "@/app/components/StandardPage";
+import SkeletonCategory from "@/app/components/Skeletons/SkeletonCategory";
 
 const CategoriesPage = () => {
   const { user } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -26,6 +28,7 @@ const CategoriesPage = () => {
   }, [user]);
 
   const handleGetCategories = async () => {
+    setIsLoading(true);
     try {
       const categoriesRes = await getCategories(user?.id || "");
       if (!categoriesRes) return;
@@ -33,6 +36,8 @@ const CategoriesPage = () => {
       setFilteredCategories(categoriesRes);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -83,6 +88,10 @@ const CategoriesPage = () => {
       </h2>
       <div className="flex overflow-x-auto p-4 items-center gap-8 mb-4 mx-6 overflow-y-hidden">
         <AddCategoryButton onClick={() => handleAddCategory("note")} />
+        {isLoading &&
+          Array(3)
+            .fill(0)
+            .map((_, index) => <SkeletonCategory key={index.toString()} />)}
         {filteredCategories.map((category: ICategory, index) => {
           if (category.type === "task") return <></>;
           return (
@@ -100,6 +109,10 @@ const CategoriesPage = () => {
       </h2>
       <div className="flex overflow-x-auto p-4 mx-6 items-center gap-8 overflow-y-hidden">
         <AddCategoryButton onClick={() => handleAddCategory("task")} />
+        {isLoading &&
+          Array(3)
+            .fill(0)
+            .map((_, index) => <SkeletonCategory key={index.toString()} />)}
         {filteredCategories.map((category: ICategory, index) => {
           if (category.type === "note") return <></>;
           return (

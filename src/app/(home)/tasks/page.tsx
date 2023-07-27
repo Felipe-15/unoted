@@ -22,6 +22,7 @@ import { FaTasks } from "react-icons/fa";
 import { ITask } from "@/interfaces/Task";
 import { updateTask } from "@/services/task/updateTask";
 import Image from "next/image";
+import SkeletonTaskNote from "@/app/components/Skeletons/SkeletonTaskNote";
 
 const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -134,6 +135,15 @@ const TasksPage = () => {
             </span>
           </Link>
         </div>
+        {isLoading && (
+          <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+            {Array(3)
+              .fill(0)
+              .map((_, index) => (
+                <SkeletonTaskNote key={index.toString()} />
+              ))}
+          </div>
+        )}
         {!tasks?.length && !isLoading && (
           <div className="flex items-center justify-center gap-3 w-full flex-1 -mt-10">
             <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />

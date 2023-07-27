@@ -17,6 +17,7 @@ import { INote } from "@/interfaces/Note";
 import { ICategory } from "@/interfaces/Category";
 import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
+import SkeletonNote from "@/app/components/Skeletons/SkeletonNote";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
@@ -125,6 +126,17 @@ const HomePage = () => {
             </span>
           </Link>
         </div>
+        {isLoading && (
+          <>
+            <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+              {Array(3)
+                .fill({})
+                .map((_, index) => (
+                  <SkeletonNote key={index.toString()} />
+                ))}
+            </div>
+          </>
+        )}
         {!notes?.length && !isLoading && (
           <div className="flex items-center justify-center gap-3 w-full flex-1 -mt-10">
             <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
