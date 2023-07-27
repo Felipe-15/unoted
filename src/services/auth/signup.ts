@@ -13,7 +13,13 @@ export const signup = async (email: string, password: string, name: string) => {
     await setDoc(doc(db, "users", user.uid), {
       name: name,
       email: email,
-      photo: user.photoURL || "",
+      photo:
+        user.photoURL ||
+        `https://ui-avatars.com/api/?name=${name
+          .split(" ")
+          .join("+")}&background=233C43&rounded=true&length=${
+          name.split(" ").length
+        }&color=FDFFFC`,
     });
 
     sessionStorage.setItem(
@@ -21,7 +27,13 @@ export const signup = async (email: string, password: string, name: string) => {
       JSON.stringify({
         id: user.uid,
         name,
-        photo: user.photoURL || "",
+        photo:
+          user.photoURL ||
+          `https://ui-avatars.com/api/?name=${name
+            .split(" ")
+            .join("+")}&background=233C43&rounded=true&length=${
+            name.split(" ").length
+          }&color=FDFFFC`,
       })
     );
   } catch (err: any) {
