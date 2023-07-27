@@ -36,6 +36,13 @@ const CategoryDropdown = ({
               : "h-[96px] overflow-y-auto scale-y-100 bottom-[-100px]"
           } bg-background-700`}
         >
+          {!categories?.length && (
+            <li>
+              <span className="text-sm cursor-text text-secondary-500 font-semibold leading-tight">
+                Não há categorias ainda
+              </span>
+            </li>
+          )}
           {categories?.map((category) => {
             return (
               <li key={category.id}>
