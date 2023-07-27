@@ -1,6 +1,6 @@
 const SkeletonTaskNote = () => {
   return (
-    <div className="flex flex-col w-[280px] h-[300px] border-t-4 border-secondary-500 p-4 rounded-md animate-pulse bg-background-600 gap-2">
+    <div className="flex flex-col w-[280px] h-[300px] border-t-4 border-secondary-500 p-4 rounded-md animate-pulse bg-zinc-400 gap-2">
       <div
         style={{ animationDelay: "0.5s" }}
         className="bg-secondary-500 w-12 h-3 animate-pulse rounded-sm"
