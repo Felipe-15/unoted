@@ -38,32 +38,31 @@ const CategoryDropdown = ({
         >
           {!categories?.length && (
             <li>
-              <span className="text-sm cursor-text text-secondary-500 font-semibold leading-tight">
+              <p className="text-sm cursor-text text-secondary-500 font-semibold leading-tight">
                 Não há categorias ainda
-              </span>
+              </p>
             </li>
           )}
           {categories?.map((category) => {
             return (
-              <li key={category.id}>
-                <span
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSelectCategory(category);
-                  }}
-                  data-selected-category={selectedCategory?.id === category.id}
-                  className={`p-1 w-full text-center h-1/3 flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 [&:not(:last-child)]:border-b-gray-500  transition  whitespace-nowrap text-sm`}
-                >
-                  {category.name}
-                </span>
+              <li
+                key={category.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelectCategory(category);
+                }}
+                data-selected-category={selectedCategory?.id === category.id}
+                className={`p-1 w-full h-1/3 text-center  flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 [&:not(:last-child)]:border-b-gray-500  transition  whitespace-nowrap text-sm`}
+              >
+                {category.name}
               </li>
             );
           })}
         </ul>
       </button>
-      <span className="text-lg text-gray-300">
+      <p className="text-lg text-gray-300">
         {selectedCategory?.name || "Nenhuma"}
-      </span>
+      </p>
     </div>
   );
 };
