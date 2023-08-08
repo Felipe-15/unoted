@@ -13,14 +13,14 @@ const mockCategories: ICategory[] = [
   {
     color: "#fff",
     creator_id: "123",
-    id: "123",
+    id: "125",
     name: "Categoria teste",
     type: "note",
   },
   {
     color: "#fff",
     creator_id: "123",
-    id: "123",
+    id: "124",
     name: "Categoria teste",
     type: "note",
   },
