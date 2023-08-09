@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast, Toaster } from "react-hot-toast";
 import { openSans } from "@/app/fonts";
@@ -15,8 +16,11 @@ import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
 import { ICategory } from "@/interfaces/Category";
 import { createNote } from "@/services/note/createNote";
+import ResponsiveHolder from "@/app/components/ResponsiveHolder";
 
 const NewNotePage = () => {
+  const router = useRouter();
+
   const { user, setUser } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>();
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
@@ -38,12 +42,20 @@ const NewNotePage = () => {
       toast.error("Por favor, selecione uma categoria para criar a nota!");
       return;
     }
-    await createNote({
-      title: data.title,
-      content: data.content,
-      creator_id: user?.id || "",
-      category_id: selectedCategory?.id || "",
-    });
+    try {
+      await createNote({
+        title: data.title,
+        content: data.content,
+        creator_id: user?.id || "",
+        category_id: selectedCategory?.id || "",
+      });
+
+      router.push("/notes");
+    } catch (err) {
+      toast.error(
+        "Algum erro ocorreu enquanto ocorria a criação da nota, tente novamente!"
+      );
+    }
   };
 
   useEffect(() => {

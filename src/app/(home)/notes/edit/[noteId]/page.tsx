@@ -1,5 +1,7 @@
 "use client";
+import { toast, Toaster } from "react-hot-toast";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
 import { useAuth } from "@/hooks/useAuth";
@@ -23,6 +25,8 @@ const EditNotePage = ({
 }: {
   params: { noteId: string };
 }) => {
+  const router = useRouter();
+
   const { user } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>();
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
@@ -75,7 +79,14 @@ const EditNotePage = ({
       }
     }
 
-    await updateNote(note?.id || "", updatedData);
+    try {
+      await updateNote(note?.id || "", updatedData);
+      router.push("/notes");
+    } catch (err) {
+      toast.error(
+        "Um erro ocorreu enquanto a nota era atualizada, tente novamente!"
+      );
+    }
   };
 
   const handleGetNote = async () => {
@@ -92,6 +103,7 @@ const EditNotePage = ({
 
   return (
     <StandardPage headerType="noSearch" user={user}>
+      <Toaster />
       <div className="flex justify-between items-center">
         <Link
           href="/notes"

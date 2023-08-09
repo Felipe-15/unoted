@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
@@ -20,6 +21,8 @@ import { getCategories } from "@/services/category";
 import { createTasks } from "@/services/task/createTasks";
 
 const NewTaskPage = () => {
+  const router = useRouter();
+
   const { user } = useAuth();
   const [tasks, setTasks] = useState<
     Omit<ITask, "creator_id" | "category_id" | "expires_at">[]
@@ -72,7 +75,14 @@ const NewTaskPage = () => {
       };
     });
 
-    await createTasks(tasksWithData, user?.id || "");
+    try {
+      await createTasks(tasksWithData, user?.id || "");
+      router.push("/tasks");
+    } catch (err) {
+      toast.error(
+        "Houve um erro enquanto eram criadas as tarefas, tente novamente!"
+      );
+    }
   };
 
   return (
