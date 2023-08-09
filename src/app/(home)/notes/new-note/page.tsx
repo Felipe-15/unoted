@@ -16,7 +16,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
 import { ICategory } from "@/interfaces/Category";
 import { createNote } from "@/services/note/createNote";
-import ResponsiveHolder from "@/app/components/ResponsiveHolder";
+// import ResponsiveHolder from "@/app/components/ResponsiveHolder";
 
 const NewNotePage = () => {
   const router = useRouter();
