@@ -19,6 +19,7 @@ import DateInput from "@/app/components/DateInput";
 import { ICategory } from "@/interfaces/Category";
 import { getCategories } from "@/services/category";
 import { createTasks } from "@/services/task/createTasks";
+import ResponsiveHolder from "@/app/components/ResponsiveHolder";
 
 const NewTaskPage = () => {
   const router = useRouter();
@@ -97,7 +98,7 @@ const NewTaskPage = () => {
           <span className="hidden md:inline">Voltar</span>
         </Link>
         <h2 className="text-secondary-500 text-2xl md:text-3xl">Nova Tarefa</h2>
-        <div className="flex gap-6">
+        <ResponsiveHolder title="Categoria e Data">
           <CategoryDropdown
             categories={categories}
             selectedCategory={selectedCategory}
@@ -107,14 +108,14 @@ const NewTaskPage = () => {
             date={date && new Date(date).toLocaleDateString("pt-BR")}
             onSelectDate={(date: any) => setDate(date)}
           />
-        </div>
+        </ResponsiveHolder>
       </div>
-      <div className="flex flex-col gap-3 justify-start items-center -ml-10 pt-12">
+      <div className="flex flex-col gap-3 justify-start items-center md:-ml-10 pt-12">
         <div className="flex flex-col w-fit items-start gap-4">
           {tasks?.map((task) => (
             <div
               key={task.id.toString()}
-              className="flex gap-2 items-center justify-center group"
+              className="flex gap-2 items-center justify-center group sm:max-w-[95%]"
             >
               <Task
                 editable
@@ -133,9 +134,9 @@ const NewTaskPage = () => {
           ))}
           <button
             onClick={handleAddTask}
-            className="flex gap-2 cursor-text text-gray-500 text-semibold"
+            className="flex gap-2 cursor-text text-gray-500 text-semibold w-full"
           >
-            <span className="h-[24px] w-[24px] rounded-sm border-[2px] border-gray-500"></span>
+            <span className="h-[24px] w-[24px] rounded-sm border-[2px] border-gray-500 shrink-0"></span>
             <span className={openSans.className}>
               Clique aqui para adicionar uma tarefa...
             </span>
