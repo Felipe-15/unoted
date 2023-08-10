@@ -8,6 +8,7 @@ import { getCategories } from "@/services/category";
 import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
+import ResponsiveHolder from "@/app/components/ResponsiveHolder";
 import StandardPage from "@/app/components/StandardPage";
 import CategoryDropdown from "@/app/components/CategoryDropdown";
 import Button from "@/app/components/Button";
@@ -16,7 +17,6 @@ import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
 import { ICategory } from "@/interfaces/Category";
 import { createNote } from "@/services/note/createNote";
-// import ResponsiveHolder from "@/app/components/ResponsiveHolder";
 
 const NewNotePage = () => {
   const router = useRouter();
