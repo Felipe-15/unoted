@@ -37,9 +37,9 @@ const CategoryDropdown = ({
           } bg-background-700`}
         >
           {!categories?.length && (
-            <li>
+            <li className="p-1 pt-2">
               <p className="text-sm cursor-text text-secondary-500 font-semibold leading-tight">
-                Não há categorias ainda
+                Sem categorias
               </p>
             </li>
           )}
@@ -50,9 +50,10 @@ const CategoryDropdown = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   onSelectCategory(category);
+                  setTimeout(() => setIsOpen(false), 250);
                 }}
                 data-selected-category={selectedCategory?.id === category.id}
-                className={`p-1 w-full h-1/3 text-center  flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 [&:not(:last-child)]:border-b-gray-500  transition  whitespace-nowrap text-sm`}
+                className={`p-1 w-full h-1/3 text-center  flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=false]:hover:bg-background-800/20 data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 [&:not(:last-child)]:border-b-gray-500  transition  whitespace-nowrap text-sm`}
               >
                 {category.name}
               </li>

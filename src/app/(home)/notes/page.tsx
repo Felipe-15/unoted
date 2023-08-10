@@ -33,6 +33,7 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     if (user) {
       handleGetCategories();
       handleGetNotes();

@@ -74,11 +74,13 @@ const NewNotePage = () => {
           <span className="hidden md:inline">Voltar</span>
         </Link>
         <h2 className="text-secondary-500 text-2xl md:text-3xl">Nova nota</h2>
-        <CategoryDropdown
-          categories={categories || []}
-          selectedCategory={selectedCategory}
-          onSelectCategory={(category) => setSelectedCategory(category)}
-        />
+        <ResponsiveHolder title="Categoria">
+          <CategoryDropdown
+            categories={categories || []}
+            selectedCategory={selectedCategory}
+            onSelectCategory={(category) => setSelectedCategory(category)}
+          />
+        </ResponsiveHolder>
       </div>
       <div className="flex flex-col gap-3 justify-center items-center -ml-10 pt-12 h-full">
         <input
