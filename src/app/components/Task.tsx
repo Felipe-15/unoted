@@ -40,8 +40,12 @@ const Task = ({
     }
   };
   return (
-    <li className="flex gap-2 h-[24px] [&:not(:last-child)]:mb-2" ref={taskRef}>
-      <div className="relative flex h-[24px] w-[24px]">
+    <li
+      data-is-editable={editable}
+      className="flex gap-2 data-[is-editable=true]:h-fit h-[24px] [&:not(:last-child)]:mb-2 w-full"
+      ref={taskRef}
+    >
+      <div className="relative flex h-[24px] w-[24px] shrink-0">
         <input
           type="checkbox"
           className="absolute peer opacity-0 inset-0 cursor-pointer"
@@ -57,6 +61,7 @@ const Task = ({
         contentEditable={editable}
         ref={contentRef}
         data-current-checked={currentChecked}
+        data-is-editable={editable}
         onBlur={
           editable && onEdit
             ? () => {
@@ -66,7 +71,7 @@ const Task = ({
               }
             : () => null
         }
-        className={`${openSans.className} overflow-hidden font-normal text-secondary-500 data-[current-checked=true]:line-through data-[current-checked=true]:text-gray-500 whitespace-nowrap text-ellipsis`}
+        className={`${openSans.className} overflow-hidden font-normal text-secondary-500 data-[current-checked=true]:line-through data-[current-checked=true]:text-gray-500 data-[is-editable=true]:sm:max-w-[80%] data-[is-editable=true]:h-fit data-[is-editable=false]:whitespace-nowrap text-ellipsis`}
       >
         {text}
       </p>
