@@ -19,6 +19,7 @@ import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
 import FilterList from "@/app/components/FilterList";
 import SkeletonNoteList from "@/app/components/Skeletons/SkeletonNoteList";
+import SkeletonFilterList from "@/app/components/Skeletons/SkeletonFilterList";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
@@ -101,19 +102,22 @@ const HomePage = () => {
     <StandardPage user={user} onSearch={handleSearch}>
       <>
         <header className="flex w-full h-fit justify-between gap-3 items-center mb-4">
-          <FilterList
-            dinamicConfig={{
-              dinamicFilters: categories,
-              onSelectFilter: handleFilterNotes,
-              selectedFilter,
-            }}
-          >
-            <FilterSelector
-              text="Todas"
-              isSelected={!selectedFilter}
-              onSelect={() => handleFilterNotes(null)}
-            />
-          </FilterList>
+          {!isLoading && (
+            <FilterList
+              dinamicConfig={{
+                dinamicFilters: categories,
+                onSelectFilter: handleFilterNotes,
+                selectedFilter,
+              }}
+            >
+              <FilterSelector
+                text="Todas"
+                isSelected={!selectedFilter}
+                onSelect={() => handleFilterNotes(null)}
+              />
+            </FilterList>
+          )}
+          {isLoading && <SkeletonFilterList />}
           <Link
             href="/notes/new-note"
             className="fixed z-10 bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
