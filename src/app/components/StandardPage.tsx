@@ -3,7 +3,7 @@ import SearchInput from "./SearchInput";
 
 import { FiUser } from "react-icons/fi";
 import { User } from "@/interfaces/User";
-import SkeletonUser from "./Skeletons/SkeletonUser";
+import SkeletonUser from "./Skeletons/single-skeletons/SkeletonUser";
 
 interface Props {
   user?: User;

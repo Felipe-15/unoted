@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import SkeletonCategory from "@/app/components/Skeletons/SkeletonCategory";
+import SkeletonCategory from "@/app/components/Skeletons/single-skeletons/SkeletonCategory";
 
 export default {
   title: "Skeletons/Skeleton Category",

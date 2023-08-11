@@ -17,8 +17,8 @@ import { INote } from "@/interfaces/Note";
 import { ICategory } from "@/interfaces/Category";
 import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
-import SkeletonNote from "@/app/components/Skeletons/SkeletonNote";
 import FilterList from "@/app/components/FilterList";
+import SkeletonNoteList from "@/app/components/Skeletons/SkeletonNoteList";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
@@ -122,17 +122,7 @@ const HomePage = () => {
             <p className="hidden sm:inline whitespace-nowrap">Nova nota</p>
           </Link>
         </header>
-        {isLoading && (
-          <>
-            <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-              {Array(3)
-                .fill({})
-                .map((_, index) => (
-                  <SkeletonNote key={index.toString()} />
-                ))}
-            </section>
-          </>
-        )}
+        {isLoading && <SkeletonNoteList />}
         {!notes?.length && !isLoading && (
           <article className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
             <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />

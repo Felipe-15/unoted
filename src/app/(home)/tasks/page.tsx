@@ -22,8 +22,9 @@ import { FaTasks } from "react-icons/fa";
 import { ITask } from "@/interfaces/Task";
 import { updateTask } from "@/services/task/updateTask";
 import Image from "next/image";
-import SkeletonTaskNote from "@/app/components/Skeletons/SkeletonTaskNote";
+
 import FilterList from "@/app/components/FilterList";
+import SkeletonTaskList from "@/app/components/Skeletons/SkeletonTaskList";
 
 const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -134,15 +135,7 @@ const TasksPage = () => {
             <p className="hidden sm:inline whitespace-nowrap">Nova tarefa</p>
           </Link>
         </header>
-        {isLoading && (
-          <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-            {Array(3)
-              .fill(0)
-              .map((_, index) => (
-                <SkeletonTaskNote key={index.toString()} />
-              ))}
-          </section>
-        )}
+        {isLoading && <SkeletonTaskList />}
         {!tasks?.length && !isLoading && (
           <article className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
             <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />

@@ -13,7 +13,7 @@ import { ICategory } from "@/interfaces/Category";
 import AddCategoryButton from "@/app/components/AddCategoryButton";
 import Category from "@/app/components/category/Category";
 import StandardPage from "@/app/components/StandardPage";
-import SkeletonCategory from "@/app/components/Skeletons/SkeletonCategory";
+import SkeletonCategory from "@/app/components/Skeletons/single-skeletons/SkeletonCategory";
 
 const CategoriesPage = () => {
   const { user } = useAuth();
