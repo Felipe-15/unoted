@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import SkeletonNote from "@/app/components/Skeletons/SkeletonNote";
+import SkeletonNote from "@/app/components/Skeletons/single-skeletons/SkeletonNote";
 
 export default {
   title: "Skeletons/Skeleton Note",

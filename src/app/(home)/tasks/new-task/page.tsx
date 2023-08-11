@@ -110,7 +110,7 @@ const NewTaskPage = () => {
           />
         </ResponsiveHolder>
       </div>
-      <div className="flex flex-col gap-3 justify-start items-center md:-ml-10 pt-12">
+      <div className="flex flex-col gap-3 justify-start items-center md:-ml-10 pt-12 max-h-8/10 overflow-y-auto my-2">
         <div className="flex flex-col w-fit items-start gap-4">
           {tasks?.map((task) => (
             <div
@@ -134,12 +134,12 @@ const NewTaskPage = () => {
           ))}
           <button
             onClick={handleAddTask}
-            className="flex gap-2 cursor-text text-gray-500 text-semibold w-full"
+            className="flex gap-2 text-gray-500 text-semibold w-full cursor-pointer"
           >
             <span className="h-[24px] w-[24px] rounded-sm border-[2px] border-gray-500 shrink-0"></span>
-            <span className={openSans.className}>
+            <p className={openSans.className}>
               Clique aqui para adicionar uma tarefa...
-            </span>
+            </p>
           </button>
         </div>
       </div>

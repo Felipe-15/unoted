@@ -22,22 +22,20 @@ const Note = ({
   onDelete,
 }: Props) => {
   return (
-    <div
+    <article
       style={{ borderTopColor: color || "#ff9000" }}
       className="relative flex flex-col rounded-md border-t-4 bg-background-700 p-4 gap-2 max-w-[280px] min-w-[240px] h-[300px] group"
     >
-      <div className="flex flex-col gap-2">
-        <span
-          className={`${openSans.className} text-sm text-gray-400 font-bold`}
-        >
+      <header className="flex flex-col gap-2">
+        <p className={`${openSans.className} text-sm text-gray-400 font-bold`}>
           {createdAt}
-        </span>
+        </p>
         <h4 className="text-xl text-secondary-500 mb-2">{title}</h4>
         <p className={`${openSans.className} font-normal text-secondary-500 `}>
           {content}
         </p>
-      </div>
-      <div className="transition-opacity opacity-0 absolute bottom-2 right-2 flex items-center group-hover:opacity-100 justify-center gap-1">
+      </header>
+      <footer className="transition-opacity opacity-0 absolute bottom-2 right-2 flex items-center group-hover:opacity-100 justify-center gap-1">
         <Link
           href={`notes/edit/${noteId}`}
           className="p-2 text-secondary-500 transition hover:text-primary-500"
@@ -50,8 +48,8 @@ const Note = ({
         >
           <BsFillTrashFill />
         </button>
-      </div>
-    </div>
+      </footer>
+    </article>
   );
 };
 
