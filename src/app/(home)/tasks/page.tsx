@@ -23,6 +23,7 @@ import { ITask } from "@/interfaces/Task";
 import { updateTask } from "@/services/task/updateTask";
 import Image from "next/image";
 import SkeletonTaskNote from "@/app/components/Skeletons/SkeletonTaskNote";
+import FilterList from "@/app/components/FilterList";
 
 const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -102,8 +103,8 @@ const TasksPage = () => {
   return (
     <StandardPage user={user} onSearch={handleSearch}>
       <>
-        <div className="flex w-full h-fit justify-between gap-3 items-center mb-4">
-          <div className="flex invisible-scroll h-fit max-w-full sm:max-w-[400px] overflow-x-auto gap-2">
+        <header className="flex w-full h-fit justify-between gap-3 items-center mb-4">
+          <FilterList>
             <FilterSelector
               text="Hoje"
               onSelect={() => setSelectedDate(filterDates.today)}
@@ -124,36 +125,34 @@ const TasksPage = () => {
               onSelect={() => setSelectedDate(null)}
               isSelected={selectedDate === null}
             />
-          </div>
+          </FilterList>
           <Link
             href="/tasks/new-task"
             className="fixed z-10 bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
           >
             <BsPlus size={24} />
-            <span className="hidden sm:inline whitespace-nowrap">
-              Nova tarefa
-            </span>
+            <p className="hidden sm:inline whitespace-nowrap">Nova tarefa</p>
           </Link>
-        </div>
+        </header>
         {isLoading && (
-          <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+          <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
             {Array(3)
               .fill(0)
               .map((_, index) => (
                 <SkeletonTaskNote key={index.toString()} />
               ))}
-          </div>
+          </section>
         )}
         {!tasks?.length && !isLoading && (
-          <div className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
+          <article className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
             <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
-            <h3 className="font-bold text-secondary-500 text-xl">
+            <p className="font-bold text-secondary-500 text-xl">
               Não há tarefas ainda...
-            </h3>
-          </div>
+            </p>
+          </article>
         )}
         {!!tasks?.length && (
-          <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+          <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
             {filteredCategories?.length ? (
               filteredCategories.map((c) => {
                 const currentTasks = filteredTasks?.length
@@ -181,10 +180,10 @@ const TasksPage = () => {
             ) : (
               <></>
             )}
-          </div>
+          </section>
         )}
         {!!tasks?.length && (
-          <div className="flex gap-3">
+          <footer className="flex gap-3">
             <button
               className="text-primary-500 w-fit transition hover:text-primary-400"
               onClick={handleFilterChecked}
@@ -194,7 +193,7 @@ const TasksPage = () => {
             <button className="text-danger w-fit transition hover:brightness-150">
               Tarefas atrasadas
             </button>
-          </div>
+          </footer>
         )}
       </>
     </StandardPage>

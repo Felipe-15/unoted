@@ -18,6 +18,7 @@ import { ICategory } from "@/interfaces/Category";
 import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
 import SkeletonNote from "@/app/components/Skeletons/SkeletonNote";
+import FilterList from "@/app/components/FilterList";
 
 const HomePage = () => {
   const { user, setUser } = useAuth();
@@ -99,55 +100,49 @@ const HomePage = () => {
   return (
     <StandardPage user={user} onSearch={handleSearch}>
       <>
-        <div className="flex w-full h-fit justify-between gap-3 items-center mb-4">
-          <div className="flex pb-3 h-fit max-w-full sm:max-w-[400px] overflow-x-auto gap-2">
+        <header className="flex w-full h-fit justify-between gap-3 items-center mb-4">
+          <FilterList
+            dinamicConfig={{
+              dinamicFilters: categories,
+              onSelectFilter: handleFilterNotes,
+              selectedFilter,
+            }}
+          >
             <FilterSelector
               text="Todas"
               isSelected={!selectedFilter}
               onSelect={() => handleFilterNotes(null)}
             />
-            {categories.map((category) => (
-              <FilterSelector
-                key={category.id}
-                text={category.name}
-                isSelected={
-                  !!selectedFilter && selectedFilter.id === category.id
-                }
-                onSelect={() => handleFilterNotes(category)}
-              />
-            ))}
-          </div>
+          </FilterList>
           <Link
             href="/notes/new-note"
             className="fixed z-10 bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
           >
             <BsPlus size={24} />
-            <span className="hidden sm:inline whitespace-nowrap">
-              Nova nota
-            </span>
+            <p className="hidden sm:inline whitespace-nowrap">Nova nota</p>
           </Link>
-        </div>
+        </header>
         {isLoading && (
           <>
-            <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+            <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
               {Array(3)
                 .fill({})
                 .map((_, index) => (
                   <SkeletonNote key={index.toString()} />
                 ))}
-            </div>
+            </section>
           </>
         )}
         {!notes?.length && !isLoading && (
-          <div className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
+          <article className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
             <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
-            <h3 className="font-bold text-secondary-500 text-xl">
+            <p className="font-bold text-secondary-500 text-xl">
               Não há anotações ainda...
-            </h3>
-          </div>
+            </p>
+          </article>
         )}
         {!!notes?.length && (
-          <div className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+          <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
             {filteredNotes.map((note) => {
               return (
                 <Note
@@ -164,7 +159,7 @@ const HomePage = () => {
                 />
               );
             })}
-          </div>
+          </section>
         )}
       </>
     </StandardPage>
