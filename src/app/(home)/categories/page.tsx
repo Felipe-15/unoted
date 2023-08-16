@@ -93,7 +93,7 @@ const CategoriesPage = () => {
             .fill(0)
             .map((_, index) => <SkeletonCategory key={index.toString()} />)}
         {filteredCategories.map((category: ICategory, index) => {
-          if (category.type === "task") return <></>;
+          if (category.type === "task") return;
           return (
             <Category
               {...category}
@@ -114,7 +114,7 @@ const CategoriesPage = () => {
             .fill(0)
             .map((_, index) => <SkeletonCategory key={index.toString()} />)}
         {filteredCategories.map((category: ICategory, index) => {
-          if (category.type === "note") return <></>;
+          if (category.type === "note") return;
           return (
             <Category
               {...category}
