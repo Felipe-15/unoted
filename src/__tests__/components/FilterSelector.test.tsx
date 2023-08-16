@@ -27,6 +27,10 @@ describe("<FilterSelector />", () => {
     );
 
     const filterSelector = await findByText("teste");
-    expect(filterSelector.classList.contains("bg-primary-500")).toBeTruthy();
+    expect(
+      filterSelector.classList.contains(
+        "data-[is-selected=true]:bg-primary-500"
+      )
+    ).toBeTruthy();
   });
 });

@@ -33,7 +33,9 @@ describe("<Input />", () => {
 
     const inputHolder = await findByTestId("input-holder");
 
-    expect(inputHolder.classList.contains("border-danger")).toBeTruthy();
+    expect(
+      inputHolder.classList.contains("data-[error=true]:border-danger")
+    ).toBeTruthy();
   });
   it("should change the input holder style when it's focused and return when lose focus", async () => {
     const { findByTestId, findByPlaceholderText } = render(
@@ -48,14 +50,16 @@ describe("<Input />", () => {
 
     const inputHolder = await findByTestId("input-holder");
 
-    expect(inputHolder.classList.contains("border-primary-500")).toBeTruthy();
+    expect(
+      inputHolder.attributes.getNamedItem("data-focus")?.value === "true"
+    ).toBeTruthy();
 
     act(() => {
       input.blur();
     });
 
     expect(
-      inputHolder.classList.contains("border-primary-500")
+      inputHolder.attributes.getNamedItem("data-focus")?.value === "true"
     ).not.toBeTruthy();
   });
 });

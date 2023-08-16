@@ -40,7 +40,7 @@ describe("<Button />", () => {
 
     const button = await findByText("teste");
 
-    expect(button.classList.contains("text-primary-500")).toBeTruthy();
+    expect(button.attributes.getNamedItem("data-outline")).toBeTruthy();
   });
   it("should disable the button when the prop 'disabled' it's given", async () => {
     const mockFunc = jest.fn();

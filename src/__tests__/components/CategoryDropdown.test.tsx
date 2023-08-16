@@ -86,6 +86,8 @@ describe("<CategoryDropdown>", () => {
     const selectedStyles = selected[0].classList;
 
     expect(unselectedStyles.contains("cursor-pointer")).toBeTruthy();
-    expect(selectedStyles.contains("bg-background-800")).toBeTruthy();
+    expect(
+      selectedStyles.contains("data-[selected-category=true]:bg-background-800")
+    ).toBeTruthy();
   });
 });
