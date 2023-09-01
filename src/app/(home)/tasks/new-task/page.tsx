@@ -1,11 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import usePage from "./usePage";
 import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
-
-import { useAuth } from "@/hooks/useAuth";
 
 import StandardPage from "@/app/components/StandardPage";
 import CategoryDropdown from "@/app/components/CategoryDropdown";
@@ -14,77 +11,26 @@ import Button from "@/app/components/Button";
 import { BsArrowLeft, BsFillTrashFill } from "react-icons/bs";
 import { BiCalendar, BiHelpCircle } from "react-icons/bi";
 import Task from "@/app/components/Task";
-import { ITask } from "@/interfaces/Task";
 import DateInput from "@/app/components/DateInput";
-import { ICategory } from "@/interfaces/Category";
-import { getCategories } from "@/services/category";
-import { createTasks } from "@/services/task/createTasks";
 import ResponsiveHolder from "@/app/components/ResponsiveHolder";
+import { useRouter } from "next/navigation";
 
 const NewTaskPage = () => {
   const router = useRouter();
-
-  const { user } = useAuth();
-  const [tasks, setTasks] = useState<
-    Omit<ITask, "creator_id" | "category_id" | "expires_at">[]
-  >([]);
-  const [date, setDate] = useState("");
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<ICategory>();
-
-  useEffect(() => {
-    handleGetCategories();
-  }, [user]);
-
-  const handleGetCategories = async () => {
-    const categoriesRes: any = await getCategories(user?.id || "", "task");
-    setCategories(categoriesRes);
-  };
-
-  const handleAddTask = () => {
-    setTasks((prev) => [
-      { id: (prev.length + 1).toString(), text: "Nova tarefa", checked: false },
-      ...prev,
-    ]);
-  };
-
-  const handleDeleteTask = (id: string) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
-  };
-
-  const handleEditTask = (text: string, id: string) => {
-    setTasks((prev) => prev.map((t) => (t.id !== id ? t : { ...t, text })));
-  };
-
-  const handleCheckTask = (checked: boolean, id: string) => {
-    setTasks((prev) => prev.map((t) => (t.id !== id ? t : { ...t, checked })));
-  };
-
-  const handleCreateTasks = async () => {
-    if (!tasks) return;
-    if (!selectedCategory) {
-      toast.error("Por favor, selecione uma categoria para criar as tarefas!");
-      return;
-    }
-    const tasksWithData: Omit<ITask, "id">[] = tasks.map((t) => {
-      const { id, ...rest } = t;
-      return {
-        ...rest,
-        creator_id: user?.id || "",
-        category_id: selectedCategory?.id || "",
-        expires_at: date || Date.now(),
-      };
-    });
-
-    try {
-      await createTasks(tasksWithData, user?.id || "");
-      router.push("/tasks");
-    } catch (err) {
-      toast.error(
-        "Houve um erro enquanto eram criadas as tarefas, tente novamente!"
-      );
-    }
-  };
+  const {
+    categories,
+    date,
+    tasks,
+    selectedCategory,
+    user,
+    handleAddTask,
+    handleCheckTask,
+    handleCreateTasks,
+    handleDeleteTask,
+    handleEditTask,
+    setDate,
+    setSelectedCategory,
+  } = usePage(router);
 
   return (
     <StandardPage headerType="noSearch" user={user}>

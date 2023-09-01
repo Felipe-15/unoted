@@ -1,17 +1,8 @@
 "use client";
-import { toast, Toaster } from "react-hot-toast";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import usePage from "./usePage";
+import { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { openSans } from "@/app/fonts";
-import { useAuth } from "@/hooks/useAuth";
-import { useForm } from "react-hook-form";
-
-import { getNote, updateNote } from "@/services/note";
-import { getCategories } from "@/services/category";
-
-import { ICategory } from "@/interfaces/Category";
-import { INote } from "@/interfaces/Note";
 
 import StandardPage from "@/app/components/StandardPage";
 import CategoryDropdown from "@/app/components/CategoryDropdown";
@@ -19,6 +10,7 @@ import Button from "@/app/components/Button";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
+import { useRouter } from "next/navigation";
 
 const EditNotePage = ({
   params: { noteId },
@@ -26,80 +18,15 @@ const EditNotePage = ({
   params: { noteId: string };
 }) => {
   const router = useRouter();
-
-  const { user } = useAuth();
-  const [categories, setCategories] = useState<ICategory[]>();
-  const [selectedCategory, setSelectedCategory] = useState<ICategory>();
-  const [note, setNote] = useState<INote>();
-
-  const { register, handleSubmit, clearErrors } = useForm({
-    defaultValues: {
-      title: "",
-      content: "",
-    },
-    values: {
-      title: note?.title || "",
-      content: note?.content || "",
-    },
-  });
-
-  const handleInitialData = async () => {
-    const categoriesRes = await handleGetCategories();
-    const noteRes = await handleGetNote();
-
-    setSelectedCategory(
-      categoriesRes?.filter((c) => c.id === noteRes?.category_id)[0]
-    );
-  };
-
-  const handleGetCategories = async () => {
-    const categoriesRes = await getCategories(user?.id || "", "note");
-    setCategories(categoriesRes);
-
-    return categoriesRes;
-  };
-
-  const handleUpdateNote = async (data: any) => {
-    const newData = {
-      title: data.title !== note?.title,
-      content: data.content !== note?.content,
-      category_id: selectedCategory?.id !== note?.category_id,
-    };
-
-    const updatedData = {
-      title: data.title,
-      content: data.content,
-      category_id: selectedCategory?.id,
-    };
-
-    for (let key of Object.keys(updatedData)) {
-      let currentKey: "title" | "content" | "category_id" = key as any;
-      if (!newData[currentKey]) {
-        delete updatedData[currentKey];
-      }
-    }
-
-    try {
-      await updateNote(note?.id || "", updatedData);
-      router.push("/notes");
-    } catch (err) {
-      toast.error(
-        "Um erro ocorreu enquanto a nota era atualizada, tente novamente!"
-      );
-    }
-  };
-
-  const handleGetNote = async () => {
-    const noteRes = await getNote(user?.id || "", noteId);
-
-    setNote(noteRes);
-
-    return noteRes;
-  };
-
-  useEffect(() => {
-    handleInitialData();
-  }, [user]);
+  const {
+    categories,
+    user,
+    selectedCategory,
+    handleSubmit,
+    handleUpdateNote,
+    setSelectedCategory,
+    register,
+  } = usePage(router, noteId);
 
   return (
     <StandardPage headerType="noSearch" user={user}>

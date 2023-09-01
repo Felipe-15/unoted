@@ -16,45 +16,20 @@ import { AiOutlineUser } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
+import usePage from "./usePage";
 
 const RegisterPage = () => {
+  const router = useRouter();
   const {
+    isSubmitting,
+    errors,
+    passWatch,
+    clearErrors,
+    handleGoogleAuth,
+    handleRegister,
     register,
     handleSubmit,
-    watch,
-    clearErrors,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  const router = useRouter();
-
-  const passWatch = watch("password");
-
-  const handleRegister = async (data: any) => {
-    try {
-      await signup(data.email, data.password, data.name);
-
-      router.push("/notes");
-    } catch (err) {
-      toast.error("Ocorreu algum erro interno, tente novamente!");
-    }
-  };
-
-  const handleGoogleAuth = async () => {
-    try {
-      await googleSignin();
-      router.push("/notes");
-    } catch (err) {
-      toast.error("Ocorreu algum erro interno, tente novamente!");
-    }
-  };
+  } = usePage(router);
 
   return (
     <section className="flex flex-col items-center justify-center">

@@ -1,20 +1,15 @@
 "use client";
 import "@/styles/scroll.css";
 import emptyEmoji from "../../../../public/empty-emoji.png";
-import { useEffect, useState } from "react";
 import Link from "next/link";
-
-import { getNotes, deleteNote } from "@/services/note";
-import { getCategories } from "@/services/category";
+import usePage from "./usePage";
 
 import StandardPage from "../../components/StandardPage";
 import FilterSelector from "../../components/FilterSelector";
 import Note from "../../components/Note";
 
 import { BsPlus } from "react-icons/bs";
-import { useAuth } from "@/hooks/useAuth";
-import { INote } from "@/interfaces/Note";
-import { ICategory } from "@/interfaces/Category";
+
 import { formatDate } from "@/utils/formatDate";
 import Image from "next/image";
 import FilterList from "@/app/components/FilterList";
@@ -22,81 +17,17 @@ import SkeletonNoteList from "@/app/components/Skeletons/SkeletonNoteList";
 import SkeletonFilterList from "@/app/components/Skeletons/SkeletonFilterList";
 
 const HomePage = () => {
-  const { user, setUser } = useAuth();
-
-  const [notes, setNotes] = useState<INote[]>([]);
-  const [filteredNotes, setFilteredNotes] = useState<INote[]>([]);
-
-  const [search, setSearch] = useState("");
-
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  const [selectedFilter, setSelectedFilter] = useState<ICategory | null>(null);
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (user) {
-      handleGetCategories();
-      handleGetNotes();
-    }
-  }, [user]);
-
-  const handleGetNotes = async () => {
-    setIsLoading(true);
-    try {
-      const notesRes = await getNotes(user?.id || "");
-      setNotes(notesRes);
-      setFilteredNotes(notesRes);
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGetCategories = async () => {
-    try {
-      const categoriesRes = await getCategories(user?.id || "", "note");
-      setCategories(categoriesRes || []);
-    } catch (error) {}
-  };
-
-  const handleFilterNotes = (category: ICategory | null) => {
-    setSelectedFilter(category);
-    if (!category) {
-      setFilteredNotes(notes);
-      return;
-    }
-    setFilteredNotes(notes.filter((note) => note.category_id === category.id));
-  };
-
-  const handleDeleteNote = async (noteId: string) => {
-    try {
-      await deleteNote(noteId);
-      const filteredData = notes.filter((note) => note.id !== noteId);
-      setNotes(filteredData);
-      setFilteredNotes(filteredData);
-    } catch (error) {}
-  };
-
-  const handleSearch = (search: string) => {
-    const currentSearch = search.toLowerCase();
-    setSearch(currentSearch);
-
-    if (selectedFilter) {
-      setFilteredNotes(
-        notes.filter(
-          (note) =>
-            note.category_id === selectedFilter.id &&
-            note.title.toLowerCase().includes(currentSearch)
-        )
-      );
-    } else {
-      setFilteredNotes(
-        notes.filter((note) => note.title.toLowerCase().includes(currentSearch))
-      );
-    }
-  };
+  const {
+    categories,
+    filteredNotes,
+    notes,
+    isLoading,
+    user,
+    selectedFilter,
+    handleDeleteNote,
+    handleFilterNotes,
+    handleSearch,
+  } = usePage();
 
   return (
     <StandardPage user={user} onSearch={handleSearch}>

@@ -1,12 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import usePage from "./usePage";
 import Link from "next/link";
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { openSans } from "@/app/fonts";
-import { getCategories } from "@/services/category";
-import { useAuth } from "@/hooks/useAuth";
-import { useForm } from "react-hook-form";
 
 import ResponsiveHolder from "@/app/components/ResponsiveHolder";
 import StandardPage from "@/app/components/StandardPage";
@@ -15,52 +11,19 @@ import Button from "@/app/components/Button";
 
 import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
-import { ICategory } from "@/interfaces/Category";
-import { createNote } from "@/services/note/createNote";
+import { useRouter } from "next/navigation";
 
 const NewNotePage = () => {
   const router = useRouter();
-
-  const { user, setUser } = useAuth();
-  const [categories, setCategories] = useState<ICategory[]>();
-  const [selectedCategory, setSelectedCategory] = useState<ICategory>();
-
-  const { register, handleSubmit, clearErrors } = useForm({
-    defaultValues: {
-      title: "",
-      content: "",
-    },
-  });
-
-  const handleGetCategories = async () => {
-    const categoriesRes = await getCategories(user?.id || "", "note");
-    setCategories(categoriesRes);
-  };
-
-  const handleCreateNote = async (data: any) => {
-    if (!selectedCategory) {
-      toast.error("Por favor, selecione uma categoria para criar a nota!");
-      return;
-    }
-    try {
-      await createNote({
-        title: data.title,
-        content: data.content,
-        creator_id: user?.id || "",
-        category_id: selectedCategory?.id || "",
-      });
-
-      router.push("/notes");
-    } catch (err) {
-      toast.error(
-        "Algum erro ocorreu enquanto ocorria a criação da nota, tente novamente!"
-      );
-    }
-  };
-
-  useEffect(() => {
-    handleGetCategories();
-  }, [user]);
+  const {
+    categories,
+    user,
+    selectedCategory,
+    register,
+    setSelectedCategory,
+    handleCreateNote,
+    handleSubmit,
+  } = usePage(router);
 
   return (
     <StandardPage headerType="noSearch" user={user}>

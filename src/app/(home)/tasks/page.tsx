@@ -1,13 +1,9 @@
 "use client";
 import "@/styles/scroll.css";
-import { useState, useEffect } from "react";
+import usePage from "./usePage";
 import Link from "next/link";
 
 import emptyEmoji from "../../../../public/empty-emoji.png";
-
-import { useAuth } from "@/hooks/useAuth";
-
-import { ICategory } from "@/interfaces/Category";
 
 import StandardPage from "../../components/StandardPage";
 import FilterSelector from "../../components/FilterSelector";
@@ -15,12 +11,8 @@ import Note from "../../components/Note";
 
 import { BsPlus } from "react-icons/bs";
 import TaskNote from "@/app/components/TaskNote";
-import { getCategories } from "@/services/category";
 import { formatDate } from "@/utils/formatDate";
-import { getTasks } from "@/services/task/getTasks";
 import { FaTasks } from "react-icons/fa";
-import { ITask } from "@/interfaces/Task";
-import { updateTask } from "@/services/task/updateTask";
 import Image from "next/image";
 
 import FilterList from "@/app/components/FilterList";
@@ -35,71 +27,19 @@ const filterDates = {
 };
 
 const TasksPage = () => {
-  const { user } = useAuth();
-
-  const [categories, setCategories] = useState<ICategory[]>([]);
-  const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([]);
-
-  const [selectedDate, setSelectedDate] = useState<number | null>(0);
-
-  const [search, setSearch] = useState("");
-
-  const [tasks, setTasks] = useState<ITask[]>([]);
-  const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
-  const [showChecked, setShowChecked] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    handleGetCategories();
-    handleGetTasks();
-  }, [user]);
-
-  const handleGetCategories = async () => {
-    const categoriesRes: any = await getCategories(user?.id || "", "task");
-    setCategories(categoriesRes);
-    setFilteredCategories(categoriesRes);
-  };
-  const handleGetTasks = async () => {
-    setIsLoading(true);
-    const tasksRes: any = await getTasks(user?.id || "");
-    setTasks(tasksRes);
-    if (!showChecked && tasksRes) {
-      setFilteredTasks(tasksRes.filter((t: any) => t.checked === false));
-    }
-    setIsLoading(false);
-  };
-
-  const handleFilterChecked = () => {
-    setShowChecked((prev) => !prev);
-
-    if (showChecked) {
-      setFilteredTasks(tasks.filter((t) => t.checked === false));
-    } else {
-      setFilteredTasks(tasks);
-    }
-  };
-
-  const handleSearch = (search: string) => {
-    const currentSearch = search.toLowerCase();
-    setSearch(currentSearch);
-
-    setFilteredCategories(
-      categories.filter((c) => c.name.toLowerCase().includes(currentSearch))
-    );
-  };
-
-  const handleToggleCheck = async (checked: boolean, taskId: string) => {
-    console.log("atualizou id: ", taskId, " com valor: ", checked);
-    await updateTask(taskId, { checked });
-    const newTasks = tasks.map((t) =>
-      t.id === taskId ? { ...t, checked } : t
-    );
-    setTasks(newTasks);
-    if (!showChecked && checked) {
-      setFilteredTasks((prev) => prev.filter((t) => t.id !== taskId));
-    }
-  };
+  const {
+    user,
+    selectedDate,
+    isLoading,
+    tasks,
+    filteredCategories,
+    filteredTasks,
+    showChecked,
+    handleSearch,
+    setSelectedDate,
+    handleToggleCheck,
+    handleFilterChecked,
+  } = usePage();
 
   return (
     <StandardPage user={user} onSearch={handleSearch}>
