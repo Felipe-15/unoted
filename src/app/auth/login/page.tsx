@@ -1,7 +1,5 @@
 "use client";
-
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import usePage from "./usePage";
 import { toast } from "react-hot-toast";
 
 import Link from "next/link";
@@ -13,43 +11,20 @@ import Button from "@/app/components/Button";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-import { signin } from "@/services/auth/signin";
-import { googleSignin } from "@/services/auth/googleSignin";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-  const {
-    register,
-    handleSubmit,
-    clearErrors,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
   const router = useRouter();
-
-  const handleLogin = async (data: any) => {
-    try {
-      await signin(data.email, data.password);
-
-      router.push("/notes");
-    } catch (err) {
-      toast.error("Erro ao efetuar login, verifique seus dados!");
-    }
-  };
-
-  const handleGoogleAuth = async () => {
-    try {
-      await googleSignin();
-
-      router.push("/notes");
-    } catch (err) {
-      toast.error("Erro ao efetuar login pelo Google, tente novamente!");
-    }
-  };
+  const {
+    errors,
+    isSubmitting,
+    register,
+    clearErrors,
+    signin,
+    handleGoogleAuth,
+    handleLogin,
+    handleSubmit,
+  } = usePage(router);
 
   return (
     <section className="flex flex-col items-center justify-center">
