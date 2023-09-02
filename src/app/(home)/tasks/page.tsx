@@ -41,6 +41,63 @@ const TasksPage = () => {
     handleFilterChecked,
   } = usePage();
 
+  const taskList = isLoading ? (
+    <SkeletonTaskList />
+  ) : !tasks?.length ? (
+    <article className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
+      <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
+      <p className="font-bold text-secondary-500 text-xl">
+        Não há tarefas ainda...
+      </p>
+    </article>
+  ) : (
+    <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
+      {filteredCategories?.length ? (
+        filteredCategories.map((c) => {
+          const currentTasks = filteredTasks?.length
+            ? filteredTasks.filter((t) => t.category_id === c.id)
+            : [];
+          if (!currentTasks?.length) return <></>;
+          return (
+            <TaskNote
+              {...c}
+              key={c.id}
+              expireAt={
+                selectedDate === null
+                  ? selectedDate
+                  : selectedDate === 0
+                  ? formatDate(Date.now())
+                  : formatDate(Date.now() + selectedDate)
+              }
+              categorieName={c.name}
+              tasks={currentTasks}
+              onEditTask={handleToggleCheck}
+              removeChecked={!showChecked}
+            />
+          );
+        })
+      ) : (
+        <></>
+      )}
+    </section>
+  );
+
+  const footer = !!tasks?.length ? (
+    <footer className="flex gap-3">
+      <button
+        className="text-primary-500 w-fit transition hover:text-primary-400"
+        onClick={handleFilterChecked}
+      >
+        {showChecked ? "Esconder concluídas" : "Mostrar concluídas"}
+      </button>
+      <button className="text-danger w-fit transition hover:brightness-150">
+        Tarefas atrasadas
+      </button>
+    </footer>
+  ) : (
+    <></>
+  );
+
   return (
     <StandardPage user={user} onSearch={handleSearch}>
       <>
@@ -75,59 +132,8 @@ const TasksPage = () => {
             <p className="hidden sm:inline whitespace-nowrap">Nova tarefa</p>
           </Link>
         </header>
-        {isLoading && <SkeletonTaskList />}
-        {!tasks?.length && !isLoading && (
-          <article className="flex items-center justify-center gap-3 w-full flex-1 pb-10">
-            <Image src={emptyEmoji} width={64} height={64} alt="Empty data" />
-            <p className="font-bold text-secondary-500 text-xl">
-              Não há tarefas ainda...
-            </p>
-          </article>
-        )}
-        {!!tasks?.length && (
-          <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-            {filteredCategories?.length ? (
-              filteredCategories.map((c) => {
-                const currentTasks = filteredTasks?.length
-                  ? filteredTasks.filter((t) => t.category_id === c.id)
-                  : [];
-                if (!currentTasks?.length) return <></>;
-                return (
-                  <TaskNote
-                    {...c}
-                    key={c.id}
-                    expireAt={
-                      selectedDate === null
-                        ? selectedDate
-                        : selectedDate === 0
-                        ? formatDate(Date.now())
-                        : formatDate(Date.now() + selectedDate)
-                    }
-                    categorieName={c.name}
-                    tasks={currentTasks}
-                    onEditTask={handleToggleCheck}
-                    removeChecked={!showChecked}
-                  />
-                );
-              })
-            ) : (
-              <></>
-            )}
-          </section>
-        )}
-        {!!tasks?.length && (
-          <footer className="flex gap-3">
-            <button
-              className="text-primary-500 w-fit transition hover:text-primary-400"
-              onClick={handleFilterChecked}
-            >
-              {showChecked ? "Esconder concluídas" : "Mostrar concluídas"}
-            </button>
-            <button className="text-danger w-fit transition hover:brightness-150">
-              Tarefas atrasadas
-            </button>
-          </footer>
-        )}
+        {taskList}
+        {footer}
       </>
     </StandardPage>
   );
