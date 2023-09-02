@@ -8,7 +8,7 @@ export function useAuth() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
-    const subscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       const recoveredUser: User = JSON.parse(
         sessionStorage.getItem("user") || "{}"
       );
@@ -26,6 +26,8 @@ export function useAuth() {
         photo: photoURL || photo,
       });
     });
+
+    return () => unsubscribe();
   }, []);
 
   return { user: user || undefined, setUser };
