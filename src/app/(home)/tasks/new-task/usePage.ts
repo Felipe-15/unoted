@@ -25,6 +25,13 @@ export default function usePage(router: any) {
     setCategories(categoriesRes);
   };
 
+  const handleSelectDate = (date: string) => {
+    const dateObj = new Date(date);
+    dateObj.setMinutes(dateObj.getMinutes() + dateObj.getTimezoneOffset());
+
+    setDate(dateObj.toLocaleDateString("pt-BR"));
+  };
+
   const handleAddTask = () => {
     setTasks((prev) => [
       { id: (prev.length + 1).toString(), text: "Nova tarefa", checked: false },
@@ -56,7 +63,7 @@ export default function usePage(router: any) {
         ...rest,
         creator_id: user?.id || "",
         category_id: selectedCategory?.id || "",
-        expires_at: date || Date.now(),
+        expires_at: date || new Date().toLocaleDateString("pt-BR"),
       };
     });
 
@@ -78,6 +85,7 @@ export default function usePage(router: any) {
     user,
     setDate,
     setSelectedCategory,
+    handleSelectDate,
     handleAddTask,
     handleCheckTask,
     handleCreateTasks,
