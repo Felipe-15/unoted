@@ -10,7 +10,7 @@ export const createTasks = async (
     tasks.forEach(async (task) => {
       await addDoc(collection(db, "tasks"), {
         ...task,
-        expires_at: Timestamp.fromDate(new Date(task.expires_at)),
+        expires_at: task.expires_at,
       });
     });
   } catch (error) {}

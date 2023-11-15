@@ -62,13 +62,7 @@ const TasksPage = () => {
             <TaskNote
               {...c}
               key={c.id}
-              expireAt={
-                selectedDate === null
-                  ? selectedDate
-                  : selectedDate === 0
-                  ? formatDate(Date.now())
-                  : formatDate(Date.now() + selectedDate)
-              }
+              expireAt={selectedDate}
               categorieName={c.name}
               tasks={currentTasks}
               onEditTask={handleToggleCheck}
