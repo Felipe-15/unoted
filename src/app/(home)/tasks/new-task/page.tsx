@@ -28,7 +28,7 @@ const NewTaskPage = () => {
     handleCreateTasks,
     handleDeleteTask,
     handleEditTask,
-    setDate,
+    handleSelectDate,
     setSelectedCategory,
   } = usePage(router);
 
@@ -50,10 +50,7 @@ const NewTaskPage = () => {
             selectedCategory={selectedCategory}
             onSelectCategory={(category) => setSelectedCategory(category)}
           />
-          <DateInput
-            date={date && new Date(date).toLocaleDateString("pt-BR")}
-            onSelectDate={(date: any) => setDate(date)}
-          />
+          <DateInput date={date} onSelectDate={handleSelectDate} />
         </ResponsiveHolder>
       </div>
       <div className="flex flex-col gap-3 justify-start items-center md:-ml-10 pt-12 max-h-8/10 overflow-y-auto my-2">
