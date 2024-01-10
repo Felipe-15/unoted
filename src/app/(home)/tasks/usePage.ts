@@ -1,13 +1,17 @@
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 import { ICategory } from "@/interfaces/Category";
 import { ITask } from "@/interfaces/Task";
 import { getCategories } from "@/services/category";
 import { getTasks } from "@/services/task/getTasks";
 import { updateTask } from "@/services/task/updateTask";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { deleteTask } from "@/services/task/deleteTask";
 
 export default function usePage() {
   const { user } = useAuth();
+  const router = useRouter();
 
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([]);
@@ -26,6 +30,21 @@ export default function usePage() {
     handleGetCategories();
     handleGetTasks();
   }, [user]);
+
+  const handleNavigation = () => {
+    if (!categories.length) {
+      toast(
+        "Ops, parece que você ainda não criou categorias pra tarefas, iremos lhe redirecionar para criá-las antes!",
+        {
+          icon: "⚠️",
+        }
+      );
+      setTimeout(() => router.push("/categories"), 4000);
+      return;
+    }
+
+    router.push("/tasks/new-task");
+  };
 
   const handleGetCategories = async () => {
     const categoriesRes: any = await getCategories(user?.id || "", "task");
@@ -62,13 +81,22 @@ export default function usePage() {
   };
 
   const handleToggleCheck = async (checked: boolean, taskId: string) => {
-    console.log("atualizou id: ", taskId, " com valor: ", checked);
     await updateTask(taskId, { checked });
     const newTasks = tasks.map((t) =>
       t.id === taskId ? { ...t, checked } : t
     );
     setTasks(newTasks);
     if (!showChecked && checked) {
+      setFilteredTasks((prev) => prev.filter((t) => t.id !== taskId));
+    }
+  };
+
+  const handleRemoveTask = async (taskId: string) => {
+    await deleteTask(taskId);
+
+    setTasks((prev) => prev.filter((t) => t.id !== taskId));
+
+    if (selectedDate) {
       setFilteredTasks((prev) => prev.filter((t) => t.id !== taskId));
     }
   };
@@ -85,5 +113,7 @@ export default function usePage() {
     handleToggleCheck,
     handleSearch,
     handleFilterChecked,
+    handleNavigation,
+    handleRemoveTask,
   };
 }

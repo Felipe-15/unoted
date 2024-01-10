@@ -17,6 +17,7 @@ import Image from "next/image";
 
 import FilterList from "@/app/components/FilterList";
 import SkeletonTaskList from "@/app/components/Skeletons/SkeletonTaskList";
+import { Toaster } from "react-hot-toast";
 
 const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -39,6 +40,8 @@ const TasksPage = () => {
     setSelectedDate,
     handleToggleCheck,
     handleFilterChecked,
+    handleNavigation,
+    handleRemoveTask,
   } = usePage();
 
   const taskList = isLoading ? (
@@ -62,6 +65,7 @@ const TasksPage = () => {
             <TaskNote
               {...c}
               key={c.id}
+              onRemoveTask={handleRemoveTask}
               expireAt={selectedDate}
               categorieName={c.name}
               tasks={currentTasks}
@@ -94,6 +98,7 @@ const TasksPage = () => {
 
   return (
     <StandardPage user={user} onSearch={handleSearch}>
+      <Toaster />
       <>
         <header className="flex w-full h-fit justify-between gap-3 items-center mb-4">
           <FilterList>
@@ -118,13 +123,14 @@ const TasksPage = () => {
               isSelected={selectedDate === null}
             />
           </FilterList>
-          <Link
-            href="/tasks/new-task"
+          <button
+            role="link"
+            onClick={handleNavigation}
             className="fixed z-10 bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
           >
             <BsPlus size={24} />
             <p className="hidden sm:inline whitespace-nowrap">Nova tarefa</p>
-          </Link>
+          </button>
         </header>
         {taskList}
         {footer}
