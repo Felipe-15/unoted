@@ -1,12 +1,15 @@
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 import { ICategory } from "@/interfaces/Category";
 import { INote } from "@/interfaces/Note";
 import { getCategories } from "@/services/category";
 import { deleteNote, getNotes } from "@/services/note";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function usePage() {
   const { user, setUser } = useAuth();
+  const router = useRouter();
 
   const [notes, setNotes] = useState<INote[]>([]);
   const [filteredNotes, setFilteredNotes] = useState<INote[]>([]);
@@ -25,6 +28,21 @@ export default function usePage() {
       handleGetNotes();
     }
   }, [user]);
+
+  const handleNavigation = () => {
+    if (!categories.length) {
+      toast(
+        "Ops, parece que você ainda não criou categorias pra anotações, iremos lhe redirecionar para criá-las antes!",
+        {
+          icon: "⚠️",
+        }
+      );
+      setTimeout(() => router.push("/categories"), 4000);
+      return;
+    }
+
+    router.push("/notes/new-note");
+  };
 
   const handleGetNotes = async () => {
     setIsLoading(true);
@@ -86,6 +104,7 @@ export default function usePage() {
     handleDeleteNote,
     handleSearch,
     handleFilterNotes,
+    handleNavigation,
     isLoading,
     categories,
     notes,

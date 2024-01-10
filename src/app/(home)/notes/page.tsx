@@ -15,8 +15,9 @@ import Image from "next/image";
 import FilterList from "@/app/components/FilterList";
 import SkeletonNoteList from "@/app/components/Skeletons/SkeletonNoteList";
 import SkeletonFilterList from "@/app/components/Skeletons/SkeletonFilterList";
+import { Toaster } from "react-hot-toast";
 
-const HomePage = () => {
+const NotePage = () => {
   const {
     categories,
     filteredNotes,
@@ -27,6 +28,7 @@ const HomePage = () => {
     handleDeleteNote,
     handleFilterNotes,
     handleSearch,
+    handleNavigation,
   } = usePage();
 
   const filterList = !isLoading ? (
@@ -80,15 +82,19 @@ const HomePage = () => {
   return (
     <StandardPage user={user} onSearch={handleSearch}>
       <>
+        <Toaster />
         <header className="flex w-full h-fit justify-between gap-3 items-center mb-4">
           {filterList}
-          <Link
-            href="/notes/new-note"
+          <button
+            onClick={handleNavigation}
+            role="link"
             className="fixed z-10 bottom-4 right-4 p-2 sm:p-0 text-secondary-500 sm:static rounded-full sm:rounded-none bg-primary-500 sm:bg-transparent flex gap-2 items-center justify-center sm:text-primary-500 transition hover:text-primary-400"
           >
             <BsPlus size={24} />
-            <p className="hidden sm:inline whitespace-nowrap">Nova nota</p>
-          </Link>
+            <span className="hidden sm:inline whitespace-nowrap">
+              Nova nota
+            </span>
+          </button>
         </header>
         {noteList}
       </>
@@ -96,4 +102,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default NotePage;
