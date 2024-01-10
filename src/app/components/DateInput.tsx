@@ -1,5 +1,3 @@
-"use client";
-
 import { BiCalendar } from "react-icons/bi";
 
 interface Props {
