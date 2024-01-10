@@ -10,6 +10,7 @@ import Button from "@/app/components/Button";
 
 import { BsArrowLeft, BsFillTrashFill } from "react-icons/bs";
 import { BiCalendar, BiHelpCircle } from "react-icons/bi";
+import { MdOutlineMoreTime } from "react-icons/md";
 import Task from "@/app/components/Task";
 import DateInput from "@/app/components/DateInput";
 import ResponsiveHolder from "@/app/components/ResponsiveHolder";
@@ -44,7 +45,11 @@ const NewTaskPage = () => {
           <span className="hidden md:inline">Voltar</span>
         </Link>
         <h2 className="text-secondary-500 text-2xl md:text-3xl">Nova Tarefa</h2>
-        <ResponsiveHolder title="Categoria e Data">
+        <ResponsiveHolder
+          title="Categoria e data"
+          buttonTitle="Detalhes"
+          buttonIcon={MdOutlineMoreTime}
+        >
           <CategoryDropdown
             categories={categories}
             selectedCategory={selectedCategory}
@@ -91,7 +96,11 @@ const NewTaskPage = () => {
           <BiHelpCircle />
         </button>
         <div className="max-w-[100px] w-full">
-          <Button text="Salvar" onClick={handleCreateTasks} />
+          <Button
+            disabled={!categories?.length || !selectedCategory}
+            text="Salvar"
+            onClick={handleCreateTasks}
+          />
         </div>
       </div>
     </StandardPage>
