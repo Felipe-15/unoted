@@ -1,6 +1,4 @@
-"use client";
 import "@/styles/scroll.css";
-import { useEffect, useState } from "react";
 
 import { ICategory } from "@/interfaces/Category";
 
