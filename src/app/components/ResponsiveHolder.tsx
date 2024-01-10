@@ -3,13 +3,21 @@ import "@/styles/animations.css";
 import { useState, useEffect, useRef } from "react";
 import { GoGear } from "react-icons/go";
 import { IoMdClose } from "react-icons/io";
+import { IconType } from "react-icons/lib";
 
 interface Props {
   children: React.ReactNode;
   title: string;
+  buttonTitle: string;
+  buttonIcon: IconType;
 }
 
-const ResponsiveHolder = ({ title, children }: Props) => {
+const ResponsiveHolder = ({
+  title,
+  children,
+  buttonTitle,
+  buttonIcon: ButtonIcon,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -26,9 +34,7 @@ const ResponsiveHolder = ({ title, children }: Props) => {
   };
 
   useEffect(() => {
-    console.log("Use effect");
     if (window.innerWidth <= 480) {
-      console.log("Use effect condicional");
       setIsMobile(true);
     }
   }, []);
@@ -37,9 +43,13 @@ const ResponsiveHolder = ({ title, children }: Props) => {
       <button
         style={{ display: isMobile ? "flex" : "none" }}
         onClick={handleToggleOpen}
-        className="p-1 fixed right-6 bottom-20 cursor-pointer transition hover:rotate-45 rounded-full bg-background-700 hover:bg-primary-500 "
+        className="p-1 fixed flex items-center justify-center px-2 right-6 bottom-20 cursor-pointer transition rounded-full bg-background-700 hover:bg-primary-500 text-secondary-500"
       >
-        <GoGear size={24} className="static sm:hidden text-secondary-500" />
+        <ButtonIcon
+          size={16}
+          className="static sm:hidden text-secondary-500 mr-1"
+        />
+        {buttonTitle}
       </button>
 
       <div
