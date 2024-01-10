@@ -26,7 +26,7 @@ export const pages = {
     {
       icon: FiUser,
       text: "Perfil",
-      path: "/perfil",
+      path: "/profile",
     },
     {
       icon: IoMdHelp,
