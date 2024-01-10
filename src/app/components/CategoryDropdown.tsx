@@ -1,6 +1,6 @@
 "use client";
+import { useState, useEffect, useRef, MouseEvent } from "react";
 import { ICategory } from "@/interfaces/Category";
-import { useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
 import { BiCategoryAlt } from "react-icons/bi";
 
@@ -16,6 +16,20 @@ const CategoryDropdown = ({
   selectedCategory,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const handleOutsideClick = (e: Event) => {
+    if (listRef.current && !listRef.current.contains(e.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  const listRef = useRef({} as HTMLUListElement);
+
+  useEffect(() => {
+    window.addEventListener("mousedown", handleOutsideClick);
+
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [listRef]);
+
   return (
     <div className="flex flex-col items-center">
       <button
@@ -29,6 +43,7 @@ const CategoryDropdown = ({
           className={`transition-all ${isOpen ? "-rotate-180" : "rotate-0"} `}
         />
         <ul
+          ref={listRef}
           data-testid="category-filter-list"
           className={`absolute cursor-default flex flex-col  rounded-b-md transition-all w-full ${
             !isOpen
@@ -53,7 +68,7 @@ const CategoryDropdown = ({
                   setTimeout(() => setIsOpen(false), 250);
                 }}
                 data-selected-category={selectedCategory?.id === category.id}
-                className={`p-1 w-full h-1/3 text-center  flex items-center justify-center [&:not(:last-child)]:border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=false]:hover:bg-background-800/20 data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 [&:not(:last-child)]:border-b-gray-500  transition  whitespace-nowrap text-sm`}
+                className={`p-1 w-full h-1/3 text-center  flex items-center justify-center border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=false]:hover:bg-background-800/20 data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 border-b-zinc-400  transition  whitespace-nowrap text-sm`}
               >
                 {category.name}
               </li>
