@@ -10,16 +10,20 @@ export const signup = async (email: string, password: string, name: string) => {
       email,
       password
     );
+
+    const photo =
+      user.photoURL ||
+      `https://ui-avatars.com/api/?name=${name.replace(
+        " ",
+        "+"
+      )}&background=233C43&rounded=true&length=${
+        name.split(" ").length
+      }&color=FDFFFC`;
+
     await setDoc(doc(db, "users", user.uid), {
       name: name,
       email: email,
-      photo:
-        user.photoURL ||
-        `https://ui-avatars.com/api/?name=${name
-          .split(" ")
-          .join("+")}&background=233C43&rounded=true&length=${
-          name.split(" ").length
-        }&color=FDFFFC`,
+      photo,
     });
 
     sessionStorage.setItem(
@@ -27,13 +31,7 @@ export const signup = async (email: string, password: string, name: string) => {
       JSON.stringify({
         id: user.uid,
         name,
-        photo:
-          user.photoURL ||
-          `https://ui-avatars.com/api/?name=${name
-            .split(" ")
-            .join("+")}&background=FF9000&rounded=true&length=${
-            name.split(" ").length
-          }&color=FDFFFC`,
+        photo,
       })
     );
   } catch (err: any) {

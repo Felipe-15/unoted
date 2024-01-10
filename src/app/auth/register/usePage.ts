@@ -24,7 +24,7 @@ export default function usePage(router: any) {
 
   const handleRegister = async (data: any) => {
     try {
-      await signup(data.email, data.password, data.name);
+      await signup(data.email, data.password, data.name.trim());
 
       router.push("/notes");
     } catch (err) {
