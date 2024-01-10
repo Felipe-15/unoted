@@ -1,10 +1,11 @@
 "use client";
 import "@/styles/animations.css";
+import "@/styles/scroll.css";
 
 import { useRef, useState } from "react";
 import { openSans } from "../fonts";
 
-import { BsCheck } from "react-icons/bs";
+import { BsCheck, BsFillTrashFill } from "react-icons/bs";
 
 interface Props {
   checked: boolean;
@@ -12,6 +13,7 @@ interface Props {
   editable?: boolean;
   onEdit?: (text: string) => void;
   onToggleCheck: (checked: boolean) => void;
+  onDelete: () => void;
   animationOnRemove?: boolean;
 }
 
@@ -22,6 +24,7 @@ const Task = ({
   animationOnRemove,
   onEdit,
   onToggleCheck,
+  onDelete,
 }: Props) => {
   const [currentChecked, setCurrentChecked] = useState(checked);
   const contentRef = useRef({} as HTMLParagraphElement);
@@ -42,7 +45,7 @@ const Task = ({
   return (
     <li
       data-is-editable={editable}
-      className="flex gap-2 data-[is-editable=true]:h-fit hover:h-fit h-[24px] [&:not(:last-child)]:mb-2 w-full"
+      className="flex gap-2 data-[is-editable=true]:h-fit hover:h-[48px] h-[24px] [&:not(:last-child)]:mb-2 w-full group transition-all"
       ref={taskRef}
     >
       <div className="relative flex h-[24px] w-[24px] shrink-0">
@@ -71,10 +74,17 @@ const Task = ({
               }
             : () => null
         }
-        className={`${openSans.className} font-normal overflow-hidden text-secondary-500 data-[current-checked=true]:line-through data-[current-checked=true]:text-gray-500 data-[is-editable=true]:sm:max-w-[80%] data-[is-editable=true]:h-fit data-[is-editable=false]:whitespace-nowrap text-ellipsis`}
+        className={`${openSans.className} invisible-scroll font-normal overflow-hidden
+        whitespace-nowrap group-hover:whitespace-normal group-hover:overflow-y-scroll text-secondary-500 data-[current-checked=true]:line-through data-[current-checked=true]:text-gray-500 data-[is-editable=true]:sm:max-w-[80%] data-[is-editable=true]:h-fit data-[is-editable=false]:whitespace-nowrap text-ellipsis`}
       >
         {text}
       </p>
+      <button
+        onClick={() => onDelete()}
+        className="flex align-top pt-1 opacity-0 transition -translate-x-2 text-secondary-500 hover:text-danger group-hover:opacity-100 group-hover:-translate-x-0"
+      >
+        <BsFillTrashFill />
+      </button>
     </li>
   );
 };

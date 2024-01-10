@@ -37,7 +37,7 @@ const TaskNote = ({
   return (
     <div
       style={{ borderTopColor: color || "#ff9000" }}
-      className="relative flex flex-col rounded-md border-t-4 bg-background-700 p-4 gap-2 max-w-[280px] min-w-[240px] h-[300px] group"
+      className="relative flex flex-col rounded-md border-t-4 bg-background-700 p-4 gap-2 max-w-[280px] min-w-[240px] h-[300px]"
     >
       <div className="flex flex-col gap-2 h-full">
         {expireAt !== null && (
@@ -66,20 +66,13 @@ const TaskNote = ({
                 : true;
             })
             .map((t) => (
-              <div key={t.id} className="flex gap-2 group">
-                <Task
-                  {...t}
-                  key={t.id}
-                  animationOnRemove={removeChecked}
-                  onToggleCheck={(checked) => onEditTask(checked, t.id)}
-                />
-                <button
-                  onClick={() => onRemoveTask(t.id)}
-                  className="opacity-0 group-hover:opacity-100 transition text-secondary-500 hover:text-danger"
-                >
-                  <BsFillTrashFill />
-                </button>
-              </div>
+              <Task
+                {...t}
+                key={t.id}
+                animationOnRemove={removeChecked}
+                onToggleCheck={(checked) => onEditTask(checked, t.id)}
+                onDelete={() => onRemoveTask(t.id)}
+              />
             ))}
         </ul>
       </div>

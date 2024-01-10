@@ -71,13 +71,8 @@ const NewTaskPage = () => {
                 checked={task.checked}
                 onEdit={(text) => handleEditTask(text, task.id)}
                 onToggleCheck={(checked) => handleCheckTask(checked, task.id)}
+                onDelete={() => handleDeleteTask(task.id)}
               />
-              <button
-                onClick={() => handleDeleteTask(task.id)}
-                className="opacity-0 transition -translate-x-2 text-secondary-500 hover:text-danger group-hover:opacity-100 group-hover:-translate-x-0"
-              >
-                <BsFillTrashFill />
-              </button>
             </div>
           ))}
           <button
