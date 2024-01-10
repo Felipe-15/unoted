@@ -14,6 +14,7 @@ interface Props {
   color?: string;
   removeChecked: boolean;
   onEditTask: (checked: boolean, id: string) => void;
+  onRemoveTask: (taskId: string) => Promise<void>;
 }
 
 const TaskNote = ({
@@ -23,6 +24,7 @@ const TaskNote = ({
   color,
   removeChecked,
   onEditTask,
+  onRemoveTask,
 }: Props) => {
   let titleDate = "";
   if (!expireAt) {
@@ -64,12 +66,20 @@ const TaskNote = ({
                 : true;
             })
             .map((t) => (
-              <Task
-                {...t}
-                key={t.id}
-                animationOnRemove={removeChecked}
-                onToggleCheck={(checked) => onEditTask(checked, t.id)}
-              />
+              <div key={t.id} className="flex gap-2 group">
+                <Task
+                  {...t}
+                  key={t.id}
+                  animationOnRemove={removeChecked}
+                  onToggleCheck={(checked) => onEditTask(checked, t.id)}
+                />
+                <button
+                  onClick={() => onRemoveTask(t.id)}
+                  className="opacity-0 group-hover:opacity-100 transition text-secondary-500 hover:text-danger"
+                >
+                  <BsFillTrashFill />
+                </button>
+              </div>
             ))}
         </ul>
       </div>
