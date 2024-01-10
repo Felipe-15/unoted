@@ -11,7 +11,7 @@ export default function usePage(router: any) {
   const [categories, setCategories] = useState<ICategory[]>();
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
 
-  const { register, handleSubmit, clearErrors } = useForm({
+  const { register, handleSubmit, clearErrors, getValues } = useForm({
     defaultValues: {
       title: "",
       content: "",
@@ -56,5 +56,6 @@ export default function usePage(router: any) {
     handleSubmit,
     handleCreateNote,
     setSelectedCategory,
+    getValues,
   };
 }

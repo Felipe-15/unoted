@@ -12,6 +12,7 @@ import Button from "@/app/components/Button";
 import { BsArrowLeft } from "react-icons/bs";
 import { BiHelpCircle } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import { TbFolders } from "react-icons/tb";
 
 const NewNotePage = () => {
   const router = useRouter();
@@ -23,7 +24,10 @@ const NewNotePage = () => {
     setSelectedCategory,
     handleCreateNote,
     handleSubmit,
+    getValues,
   } = usePage(router);
+
+  const { content, title } = getValues();
 
   return (
     <StandardPage headerType="noSearch" user={user}>
@@ -37,7 +41,11 @@ const NewNotePage = () => {
           <span className="hidden md:inline">Voltar</span>
         </Link>
         <h2 className="text-secondary-500 text-2xl md:text-3xl">Nova nota</h2>
-        <ResponsiveHolder title="Categoria">
+        <ResponsiveHolder
+          buttonTitle="Categoria"
+          title="Selecione abaixo"
+          buttonIcon={TbFolders}
+        >
           <CategoryDropdown
             categories={categories || []}
             selectedCategory={selectedCategory}
@@ -62,7 +70,11 @@ const NewNotePage = () => {
           <BiHelpCircle />
         </button>
         <div className="max-w-[100px] w-full">
-          <Button text="Salvar" onClick={handleSubmit(handleCreateNote)} />
+          <Button
+            disabled={!content || !title || !selectedCategory}
+            text="Salvar"
+            onClick={handleSubmit(handleCreateNote)}
+          />
         </div>
       </div>
     </StandardPage>
