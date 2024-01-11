@@ -5,9 +5,18 @@ import Image from "next/image";
 
 import { TbLogout } from "react-icons/tb";
 import { RiVipCrownFill } from "react-icons/ri";
+import { signout } from "@/services/auth/signout";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
   const { user } = useAuth();
+  const router = useRouter();
+
+  const handleSignout = async () => {
+    await signout();
+
+    router.push("/auth/login");
+  };
   if (!user)
     return (
       <StandardPage headerType="noSearch">
@@ -46,7 +55,10 @@ const ProfilePage = () => {
         Upgrade para o PRO!
       </a>
 
-      <button className="flex w-fit mt-10 items-center justify-center gap-2 group text-2xl text-secondary-500">
+      <button
+        onClick={handleSignout}
+        className="flex w-fit mt-10 items-center justify-center gap-2 group text-2xl text-secondary-500"
+      >
         <TbLogout className="text-danger transition group-hover:text-primary-500" />
         Sair
       </button>
