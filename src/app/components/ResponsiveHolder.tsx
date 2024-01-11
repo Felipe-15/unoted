@@ -43,7 +43,7 @@ const ResponsiveHolder = ({
       <button
         style={{ display: isMobile ? "flex" : "none" }}
         onClick={handleToggleOpen}
-        className="p-1 fixed flex items-center justify-center px-2 right-6 bottom-20 cursor-pointer transition rounded-full bg-background-700 hover:bg-primary-500 text-secondary-500"
+        className="p-1 absolute flex items-center justify-center px-2 right-6 bottom-[70px] cursor-pointer transition rounded-full bg-background-700 hover:bg-primary-500 text-secondary-500"
       >
         <ButtonIcon
           size={16}
