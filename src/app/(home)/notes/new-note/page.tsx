@@ -20,6 +20,7 @@ const NewNotePage = () => {
     categories,
     user,
     selectedCategory,
+    isLoading,
     register,
     setSelectedCategory,
     handleCreateNote,
@@ -71,7 +72,8 @@ const NewNotePage = () => {
         </button>
         <div className="max-w-[100px] w-full">
           <Button
-            disabled={!content || !title || !selectedCategory}
+            loading={isLoading}
+            disabled={!content || !title || !selectedCategory || isLoading}
             text="Salvar"
             onClick={handleSubmit(handleCreateNote)}
           />

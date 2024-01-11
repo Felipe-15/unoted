@@ -24,6 +24,7 @@ const NewTaskPage = () => {
     tasks,
     selectedCategory,
     user,
+    isLoading,
     handleAddTask,
     handleCheckTask,
     handleCreateTasks,
@@ -92,7 +93,8 @@ const NewTaskPage = () => {
         </button>
         <div className="max-w-[100px] w-full">
           <Button
-            disabled={!categories?.length || !selectedCategory}
+            loading={isLoading}
+            disabled={!categories?.length || !selectedCategory || isLoading}
             text="Salvar"
             onClick={handleCreateTasks}
           />

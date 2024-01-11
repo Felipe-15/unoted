@@ -10,6 +10,7 @@ export default function usePage(router: any) {
   const { user, setUser } = useAuth();
   const [categories, setCategories] = useState<ICategory[]>();
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, clearErrors, getValues } = useForm({
     defaultValues: {
@@ -28,6 +29,7 @@ export default function usePage(router: any) {
       toast.error("Por favor, selecione uma categoria para criar a nota!");
       return;
     }
+    setIsLoading(true);
     try {
       await createNote({
         title: data.title,
@@ -42,6 +44,8 @@ export default function usePage(router: any) {
         "Algum erro ocorreu enquanto ocorria a criação da nota, tente novamente!"
       );
     }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -52,6 +56,7 @@ export default function usePage(router: any) {
     categories,
     selectedCategory,
     user,
+    isLoading,
     register,
     handleSubmit,
     handleCreateNote,

@@ -16,6 +16,8 @@ export default function usePage(router: any) {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     handleGetCategories();
   }, [user]);
@@ -67,6 +69,7 @@ export default function usePage(router: any) {
       };
     });
 
+    setIsLoading(true);
     try {
       await createTasks(tasksWithData, user?.id || "");
       router.push("/tasks");
@@ -75,6 +78,7 @@ export default function usePage(router: any) {
         "Houve um erro enquanto eram criadas as tarefas, tente novamente!"
       );
     }
+    setIsLoading(false);
   };
 
   return {
@@ -83,6 +87,7 @@ export default function usePage(router: any) {
     date,
     tasks,
     user,
+    isLoading,
     setDate,
     setSelectedCategory,
     handleSelectDate,
