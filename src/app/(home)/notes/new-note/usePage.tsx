@@ -12,12 +12,15 @@ export default function usePage(router: any) {
   const [selectedCategory, setSelectedCategory] = useState<ICategory>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, clearErrors, getValues } = useForm({
+  const { register, handleSubmit, clearErrors, watch } = useForm({
     defaultValues: {
       title: "",
       content: "",
     },
   });
+
+  const contentWatcher = watch("content");
+  const titleWatcher = watch("title");
 
   const handleGetCategories = async () => {
     const categoriesRes = await getCategories(user?.id || "", "note");
@@ -56,11 +59,12 @@ export default function usePage(router: any) {
     categories,
     selectedCategory,
     user,
+    contentWatcher,
+    titleWatcher,
     isLoading,
     register,
     handleSubmit,
     handleCreateNote,
     setSelectedCategory,
-    getValues,
   };
 }

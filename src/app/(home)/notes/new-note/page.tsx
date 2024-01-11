@@ -21,14 +21,13 @@ const NewNotePage = () => {
     user,
     selectedCategory,
     isLoading,
+    contentWatcher,
+    titleWatcher,
     register,
     setSelectedCategory,
     handleCreateNote,
     handleSubmit,
-    getValues,
   } = usePage(router);
-
-  const { content, title } = getValues();
 
   return (
     <StandardPage headerType="noSearch" user={user}>
@@ -73,7 +72,9 @@ const NewNotePage = () => {
         <div className="max-w-[100px] w-full">
           <Button
             loading={isLoading}
-            disabled={!content || !title || !selectedCategory || isLoading}
+            disabled={
+              !contentWatcher || !titleWatcher || !selectedCategory || isLoading
+            }
             text="Salvar"
             onClick={handleSubmit(handleCreateNote)}
           />
