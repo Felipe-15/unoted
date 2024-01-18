@@ -20,7 +20,7 @@ const CategoryName = ({ defaultName, onUpdate }: Props) => {
       ref={inputRef}
       placeholder="Digite..."
       defaultValue={defaultName}
-      className="bg-transparent max-w-[200px] outline-none placeholder:text-secondary-500 text-secondary-500 text-3xl mr-2"
+      className="bg-transparent max-w-[200px] outline-none placeholder:text-secondary-500 text-secondary-500 text-2xl md:text-3xl mr-2"
       onBlur={(e) => {
         if (e.target.value !== defaultName) {
           onUpdate({ name: e.target.value });

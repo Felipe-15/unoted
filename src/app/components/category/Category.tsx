@@ -20,10 +20,10 @@ const Category = ({ name, color, onUpdate, onDelete }: Props) => {
   };
 
   return (
-    <div className="flex group w-[260px] shrink-0">
+    <div className="flex group w-[220px] md:w-[260px] shrink-0 items-center">
       <div
         style={{ backgroundColor: currentColor }}
-        className="peer mr-4 cursor-pointer transition-[border-radius_width] ease-in-out rounded-[50%] h-[32px] w-[32px] duration-300 hover:w-[64px] hover:rounded-md shrink-0"
+        className="peer mr-4 cursor-pointer transition-[border-radius_width] ease-in-out rounded-[50%] h-[24px] w-[24px] md:h-[32px] md:w-[32px] duration-300 hover:w-[64px] hover:rounded-md shrink-0"
       >
         <input
           type="color"
@@ -31,11 +31,6 @@ const Category = ({ name, color, onUpdate, onDelete }: Props) => {
           className="w-full h-full opacity-0 cursor-pointer"
           defaultValue={color}
           onBlur={handleEditColor}
-          onKeyUp={(e) => {
-            if (e.key === "Enter") {
-              handleEditColor();
-            }
-          }}
         />
       </div>
       <CategoryName defaultName={name} onUpdate={onUpdate} />
