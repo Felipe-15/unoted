@@ -3,15 +3,19 @@ import { useEffect, useRef } from "react";
 
 interface Props {
   defaultName: string;
+  isNew?: boolean;
   onUpdate: ({ name }: { name: string }) => void;
 }
 
-const CategoryName = ({ defaultName, onUpdate }: Props) => {
+const CategoryName = ({ defaultName, isNew, onUpdate }: Props) => {
   const inputRef = useRef({} as HTMLInputElement);
 
   useEffect(() => {
     if (inputRef) {
       inputRef.current.style.width = `${inputRef.current.value.length}ch`;
+    }
+    if (isNew) {
+      inputRef.current.focus();
     }
   }, []);
 

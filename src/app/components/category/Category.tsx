@@ -1,16 +1,17 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 import CategoryName from "./CategoryName";
 
 interface Props {
   name: string;
   color: string;
+  isNew?: boolean;
   onUpdate: (data: { color?: string; name?: string }) => void;
   onDelete: () => void;
 }
 
-const Category = ({ name, color, onUpdate, onDelete }: Props) => {
+const Category = ({ name, color, isNew, onUpdate, onDelete }: Props) => {
   const colorRef = useRef({} as HTMLInputElement);
   const [currentColor, setCurrentColor] = useState(color);
 
@@ -18,6 +19,8 @@ const Category = ({ name, color, onUpdate, onDelete }: Props) => {
     setCurrentColor(colorRef.current.value);
     onUpdate({ color: colorRef.current.value });
   };
+
+  useEffect(() => {});
 
   return (
     <div className="flex group w-[220px] md:w-[260px] shrink-0 items-center">
@@ -33,7 +36,7 @@ const Category = ({ name, color, onUpdate, onDelete }: Props) => {
           onBlur={handleEditColor}
         />
       </div>
-      <CategoryName defaultName={name} onUpdate={onUpdate} />
+      <CategoryName isNew={isNew} defaultName={name} onUpdate={onUpdate} />
       <button
         onClick={onDelete}
         className="flex opacity-0 peer-hover:-translate-x-6 peer-hover:opacity-0 -translate-x-6 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 items-center text-xl p-1 cursor-pointer text-secondary-500 hover:text-danger"

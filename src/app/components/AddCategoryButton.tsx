@@ -3,11 +3,13 @@ import { BsPlus } from "react-icons/bs";
 
 interface Props {
   onClick: () => void;
+  disabled?: boolean;
 }
 
-const AddCategoryButton = ({ onClick }: Props) => {
+const AddCategoryButton = ({ onClick, disabled }: Props) => {
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       className="flex flex-col gap-3 md:gap-4 items-center justify-center group"
     >

@@ -4,4 +4,5 @@ export interface ICategory {
   color: string;
   creator_id: string;
   type: "note" | "task";
+  isNew?: boolean;
 }
