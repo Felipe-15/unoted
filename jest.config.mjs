@@ -13,7 +13,7 @@ const config = {
 
   testEnvironment: "jest-environment-jsdom",
   collectCoverage: true,
-  collectCoverageFrom: ["src/**/*.ts*", "!src/stories/**/**.tsx"],
+  collectCoverageFrom: ["src/app/**/*.ts*"],
   coverageDirectory: "./src/coverage",
 };
 
