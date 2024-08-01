@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { BsFillTrashFill } from "react-icons/bs";
 import CategoryName from "./CategoryName";
 
@@ -19,8 +19,6 @@ const Category = ({ name, color, isNew, onUpdate, onDelete }: Props) => {
     setCurrentColor(colorRef.current.value);
     onUpdate({ color: colorRef.current.value });
   };
-
-  useEffect(() => {});
 
   return (
     <div className="flex group w-[220px] md:w-[260px] shrink-0 items-center">
