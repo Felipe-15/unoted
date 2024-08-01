@@ -8,6 +8,7 @@ import { updateTask } from "@/services/task/updateTask";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { deleteTask } from "@/services/task/deleteTask";
+import { DateTime } from "luxon";
 
 export default function usePage() {
   const { user } = useAuth();
@@ -16,13 +17,18 @@ export default function usePage() {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [filteredCategories, setFilteredCategories] = useState<ICategory[]>([]);
 
-  const [selectedDate, setSelectedDate] = useState<number | null>(0);
+  const [selectedDate, setSelectedDate] = useState<{
+    value: number;
+    text: string;
+  } | null>({ value: 0, text: "hoje" });
 
   const [search, setSearch] = useState("");
 
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
+
   const [showChecked, setShowChecked] = useState(false);
+  const [showLate, setShowLate] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,7 +62,15 @@ export default function usePage() {
     const tasksRes: any = await getTasks(user?.id || "");
     setTasks(tasksRes);
     if (!showChecked && tasksRes) {
-      setFilteredTasks(tasksRes.filter((t: any) => t.checked === false));
+      setFilteredTasks(
+        tasksRes.filter((t: any) => {
+          let formatedDate = t.expires_at.split("/");
+          formatedDate = `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0]}`;
+          const isNotLate =
+            DateTime.fromISO(formatedDate) >= DateTime.fromMillis(Date.now());
+          return t.checked === false && isNotLate;
+        })
+      );
     }
     setIsLoading(false);
   };
@@ -68,6 +82,33 @@ export default function usePage() {
       setFilteredTasks(tasks.filter((t) => t.checked === false));
     } else {
       setFilteredTasks(tasks);
+    }
+  };
+
+  const handleShowLate = () => {
+    setSelectedDate(null);
+    setShowLate((prev) => !prev);
+    if (showLate) {
+      setFilteredTasks(
+        tasks.filter((t) => {
+          let formatedDate = t.expires_at.split("/");
+          formatedDate = `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0]}`;
+          const isNotLate =
+            DateTime.fromISO(formatedDate) >= DateTime.fromMillis(Date.now());
+          return isNotLate;
+        })
+      );
+    } else {
+      setFilteredTasks(
+        tasks.filter((t) => {
+          let formatedDate = t.expires_at.split("/");
+          formatedDate = `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0]}`;
+          const isLate = !(
+            DateTime.fromISO(formatedDate) >= DateTime.fromMillis(Date.now())
+          );
+          return isLate;
+        })
+      );
     }
   };
 
@@ -109,10 +150,12 @@ export default function usePage() {
     filteredCategories,
     isLoading,
     showChecked,
+    showLate,
     setSelectedDate,
     handleToggleCheck,
     handleSearch,
     handleFilterChecked,
+    handleShowLate,
     handleNavigation,
     handleRemoveTask,
   };

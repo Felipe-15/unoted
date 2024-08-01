@@ -36,6 +36,8 @@ const TasksPage = () => {
     filteredCategories,
     filteredTasks,
     showChecked,
+    showLate,
+    handleShowLate,
     handleSearch,
     setSelectedDate,
     handleToggleCheck,
@@ -82,14 +84,19 @@ const TasksPage = () => {
 
   const footer = !!tasks?.length ? (
     <footer className="flex gap-3">
+      {!showLate && (
+        <button
+          className="text-primary-500 w-fit transition hover:text-primary-400"
+          onClick={handleFilterChecked}
+        >
+          {showChecked ? "Esconder concluídas" : "Mostrar concluídas"}
+        </button>
+      )}
       <button
-        className="text-primary-500 w-fit transition hover:text-primary-400"
-        onClick={handleFilterChecked}
+        onClick={handleShowLate}
+        className="text-danger w-fit transition hover:brightness-150"
       >
-        {showChecked ? "Esconder concluídas" : "Mostrar concluídas"}
-      </button>
-      <button className="text-danger w-fit transition hover:brightness-150">
-        Tarefas atrasadas
+        {showLate ? "Esconder tarefas atrasadas" : "Ver tarefas atrasadas"}
       </button>
     </footer>
   ) : (
@@ -101,28 +108,44 @@ const TasksPage = () => {
       <Toaster />
       <>
         <header className="flex w-full h-fit justify-between gap-3 items-center mb-4">
-          <FilterList>
-            <FilterSelector
-              text="Hoje"
-              onSelect={() => setSelectedDate(filterDates.today)}
-              isSelected={selectedDate === filterDates.today}
-            />
-            <FilterSelector
-              text="Amanhã"
-              onSelect={() => setSelectedDate(filterDates.tomorrow)}
-              isSelected={selectedDate === filterDates.tomorrow}
-            />
-            <FilterSelector
-              text="Próx. Semana"
-              onSelect={() => setSelectedDate(filterDates.nextWeek)}
-              isSelected={selectedDate === filterDates.nextWeek}
-            />
-            <FilterSelector
-              text="Todas"
-              onSelect={() => setSelectedDate(null)}
-              isSelected={selectedDate === null}
-            />
-          </FilterList>
+          {showLate ? (
+            <h3 className="text-secondary-500 text-xl">Tarefas atrasadas</h3>
+          ) : (
+            <FilterList>
+              <FilterSelector
+                text="Hoje"
+                onSelect={() =>
+                  setSelectedDate({ value: filterDates.today, text: "hoje" })
+                }
+                isSelected={selectedDate?.value === filterDates.today}
+              />
+              <FilterSelector
+                text="Amanhã"
+                onSelect={() =>
+                  setSelectedDate({
+                    value: filterDates.tomorrow,
+                    text: "amanhã",
+                  })
+                }
+                isSelected={selectedDate?.value === filterDates.tomorrow}
+              />
+              <FilterSelector
+                text="Próx. Semana"
+                onSelect={() =>
+                  setSelectedDate({
+                    value: filterDates.nextWeek,
+                    text: "próxima semana",
+                  })
+                }
+                isSelected={selectedDate?.value === filterDates.nextWeek}
+              />
+              <FilterSelector
+                text="Todas"
+                onSelect={() => setSelectedDate(null)}
+                isSelected={selectedDate === null}
+              />
+            </FilterList>
+          )}
           <button
             role="link"
             onClick={handleNavigation}

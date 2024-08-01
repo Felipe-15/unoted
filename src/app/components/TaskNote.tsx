@@ -9,7 +9,7 @@ import { formatDate } from "@/utils/formatDate";
 
 interface Props {
   categorieName: string;
-  expireAt: number | null;
+  expireAt: { value: number; text: string } | null;
   tasks: ITask[];
   color?: string;
   removeChecked: boolean;
@@ -28,11 +28,32 @@ const TaskNote = ({
 }: Props) => {
   let titleDate = "";
   if (!expireAt) {
-    console.log("zero");
     titleDate = formatDate(Date.now());
   } else {
-    titleDate = formatDate(Date.now() + expireAt);
+    titleDate = formatDate(Date.now() + expireAt.value);
   }
+
+  const filteredTasks = tasks
+    .filter((t) => {
+      let formatedDate = t.expires_at.split("/");
+      formatedDate = `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0]}`;
+
+      const stillOnDeadline =
+        expireAt !== null
+          ? DateTime.fromMillis(Date.now() + expireAt?.value).startOf("day") >=
+            DateTime.fromISO(formatedDate).startOf("day")
+          : true;
+      return stillOnDeadline;
+    })
+    .map((t) => (
+      <Task
+        {...t}
+        key={t.id}
+        animationOnRemove={removeChecked}
+        onToggleCheck={(checked) => onEditTask(checked, t.id)}
+        onDelete={() => onRemoveTask(t.id)}
+      />
+    ));
 
   return (
     <div
@@ -49,31 +70,16 @@ const TaskNote = ({
         )}
         <h4 className="text-xl text-secondary-500 mb-2">{categorieName}</h4>
         <ul className="flex flex-col pl-2 transition-all h-full overflow-x-hidden text-ellipsis overflow-y-auto ">
-          {tasks
-            .filter((t) => {
-              console.log(t.expires_at);
-              console.log("Data da task: ", DateTime.fromISO(t.expires_at));
-              console.log(
-                "Data de expiração máxima: ",
-                DateTime.fromMillis(expireAt || Date.now()),
-                expireAt
-              );
-              let formatedDate = t.expires_at.split("/");
-              formatedDate = `${formatedDate[2]}-${formatedDate[1]}-${formatedDate[0]}`;
-              return expireAt !== null
-                ? DateTime.fromMillis(Date.now() + expireAt).startOf("day") >=
-                    DateTime.fromISO(formatedDate).startOf("day")
-                : true;
-            })
-            .map((t) => (
-              <Task
-                {...t}
-                key={t.id}
-                animationOnRemove={removeChecked}
-                onToggleCheck={(checked) => onEditTask(checked, t.id)}
-                onDelete={() => onRemoveTask(t.id)}
-              />
-            ))}
+          {filteredTasks.length ? (
+            filteredTasks
+          ) : (
+            <p className="text-sm text-secondary-500 font-light">
+              Sem tasks com prazo até{" "}
+              <span className="font-bold text-primary-500">
+                {expireAt ? expireAt.text : "hoje"}! &#128526;
+              </span>
+            </p>
+          )}
         </ul>
       </div>
     </div>
