@@ -1,10 +1,5 @@
-import Image from "next/image";
-
-import SearchInput from "./SearchInput";
 import Header from "./Header";
-import SkeletonUser from "./Skeletons/single-skeletons/SkeletonUser";
 
-import { FiUser } from "react-icons/fi";
 import { User } from "@/interfaces/User";
 
 interface Props {
