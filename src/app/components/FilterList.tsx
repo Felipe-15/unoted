@@ -3,6 +3,8 @@ import "@/styles/scroll.css";
 import { ICategory } from "@/interfaces/Category";
 
 import FilterSelector from "./FilterSelector";
+import { useRef } from "react";
+import { useDraggable } from "react-use-draggable-scroll";
 
 interface Props {
   children: React.ReactNode;
@@ -14,6 +16,8 @@ interface Props {
 }
 
 const FilterList = ({ children, dinamicConfig }: Props) => {
+  const dragRef = useRef<HTMLUListElement>({} as any);
+  const { events } = useDraggable(dragRef, { applyRubberBandEffect: true });
   const generateFilters = () => {
     if (!dinamicConfig) return;
 
@@ -30,7 +34,11 @@ const FilterList = ({ children, dinamicConfig }: Props) => {
   };
 
   return (
-    <ul className="flex pb-3 h-fit max-w-full sm:max-w-[400px] overflow-x-auto gap-2">
+    <ul
+      className="flex cursor-grab active:cursor-grabbing pb-3 h-fit max-w-full sm:max-w-[400px] overflow-x-scroll gap-2 invisible-scroll"
+      {...events}
+      ref={dragRef}
+    >
       {children}
       {generateFilters()}
     </ul>
