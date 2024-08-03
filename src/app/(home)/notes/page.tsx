@@ -1,8 +1,9 @@
 "use client";
 import "@/styles/scroll.css";
 import emptyEmoji from "../../../../public/empty-emoji.png";
-import Link from "next/link";
 import usePage from "./usePage";
+
+import { motion } from "framer-motion";
 
 import StandardPage from "../../components/StandardPage";
 import FilterSelector from "../../components/FilterSelector";
@@ -16,6 +17,7 @@ import FilterList from "@/app/components/FilterList";
 import SkeletonNoteList from "@/app/components/Skeletons/SkeletonNoteList";
 import SkeletonFilterList from "@/app/components/Skeletons/SkeletonFilterList";
 import { Toaster } from "react-hot-toast";
+import { AnimatePresence } from "framer-motion";
 
 const NotePage = () => {
   const {
@@ -60,22 +62,25 @@ const NotePage = () => {
     </article>
   ) : (
     <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-      {filteredNotes.map((note) => {
-        return (
-          <Note
-            {...note}
-            key={note.id}
-            noteId={note.id}
-            color={
-              categories.filter(
-                (category) => category.id === note.category_id
-              )[0].color
-            }
-            createdAt={formatDate(note.created_at.toMillis())}
-            onDelete={() => handleDeleteNote(note.id)}
-          />
-        );
-      })}
+      <AnimatePresence>
+        {filteredNotes.map((note, index) => {
+          return (
+            <Note
+              {...note}
+              index={index}
+              key={note.id}
+              noteId={note.id}
+              color={
+                categories.filter(
+                  (category) => category.id === note.category_id
+                )[0].color
+              }
+              createdAt={formatDate(note.created_at.toMillis())}
+              onDelete={() => handleDeleteNote(note.id)}
+            />
+          );
+        })}
+      </AnimatePresence>
     </section>
   );
 

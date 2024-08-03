@@ -1,11 +1,14 @@
 import { openSans } from "../fonts";
 import Link from "next/link";
 
+import { motion } from "framer-motion";
+
 import { MdEdit } from "react-icons/md";
 import { BsFillTrashFill } from "react-icons/bs";
 
 interface Props {
   noteId: string;
+  index: number;
   title: string;
   createdAt: string;
   content: string;
@@ -15,6 +18,7 @@ interface Props {
 
 const Note = ({
   title,
+  index,
   noteId,
   content,
   createdAt,
@@ -22,7 +26,15 @@ const Note = ({
   onDelete,
 }: Props) => {
   return (
-    <article
+    <motion.article
+      layout
+      initial={{ y: 500, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -300, opacity: 0 }}
+      transition={{
+        type: "ease-in-out",
+        delay: 0.1 * (index + 1),
+      }}
       style={{ borderTopColor: color || "#ff9000" }}
       className="relative flex flex-col rounded-md border-t-4 bg-background-700 p-4 gap-2 max-w-[280px] min-w-[240px] h-[300px] group"
     >
@@ -49,7 +61,7 @@ const Note = ({
           <BsFillTrashFill />
         </button>
       </footer>
-    </article>
+    </motion.article>
   );
 };
 
