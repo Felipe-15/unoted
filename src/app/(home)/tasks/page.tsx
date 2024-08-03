@@ -1,23 +1,20 @@
 "use client";
 import "@/styles/scroll.css";
 import usePage from "./usePage";
-import Link from "next/link";
 
 import emptyEmoji from "../../../../public/empty-emoji.png";
 
 import StandardPage from "../../components/StandardPage";
 import FilterSelector from "../../components/FilterSelector";
-import Note from "../../components/Note";
 
 import { BsPlus } from "react-icons/bs";
 import TaskNote from "@/app/components/TaskNote";
-import { formatDate } from "@/utils/formatDate";
-import { FaTasks } from "react-icons/fa";
 import Image from "next/image";
 
 import FilterList from "@/app/components/FilterList";
 import SkeletonTaskList from "@/app/components/Skeletons/SkeletonTaskList";
 import { Toaster } from "react-hot-toast";
+import { AnimatePresence } from "framer-motion";
 
 const ONE_DAY_MILLIS = 1000 * 60 * 60 * 24;
 
@@ -57,28 +54,31 @@ const TasksPage = () => {
     </article>
   ) : (
     <section className="grid justify-center md:justify-start pr-4 grid-fit gap-4 overflow-y-auto overflow-x-hidden h-[calc(100%-10vh)]">
-      {filteredCategories?.length ? (
-        filteredCategories.map((c) => {
-          const currentTasks = filteredTasks?.length
-            ? filteredTasks.filter((t) => t.category_id === c.id)
-            : [];
-          if (!currentTasks?.length) return <></>;
-          return (
-            <TaskNote
-              {...c}
-              key={c.id}
-              onRemoveTask={handleRemoveTask}
-              expireAt={selectedDate}
-              categorieName={c.name}
-              tasks={currentTasks}
-              onEditTask={handleToggleCheck}
-              removeChecked={!showChecked}
-            />
-          );
-        })
-      ) : (
-        <></>
-      )}
+      <AnimatePresence>
+        {filteredCategories?.length ? (
+          filteredCategories.map((c, index) => {
+            const currentTasks = filteredTasks?.length
+              ? filteredTasks.filter((t) => t.category_id === c.id)
+              : [];
+            if (!currentTasks?.length) return <></>;
+            return (
+              <TaskNote
+                {...c}
+                index={index}
+                key={c.id}
+                onRemoveTask={handleRemoveTask}
+                expireAt={selectedDate}
+                categorieName={c.name}
+                tasks={currentTasks}
+                onEditTask={handleToggleCheck}
+                removeChecked={!showChecked}
+              />
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </AnimatePresence>
     </section>
   );
 

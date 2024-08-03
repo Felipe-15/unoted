@@ -1,17 +1,17 @@
 import { openSans } from "../fonts";
 
-import { MdEdit } from "react-icons/md";
-import { BsCheck, BsFillTrashFill } from "react-icons/bs";
 import Task from "./Task";
 import { ITask } from "@/interfaces/Task";
 import { DateTime } from "luxon";
 import { formatDate } from "@/utils/formatDate";
+import { motion } from "framer-motion";
 
 interface Props {
   categorieName: string;
   expireAt: { value: number; text: string } | null;
   tasks: ITask[];
   color?: string;
+  index: number;
   removeChecked: boolean;
   onEditTask: (checked: boolean, id: string) => void;
   onRemoveTask: (taskId: string) => Promise<void>;
@@ -23,6 +23,7 @@ const TaskNote = ({
   expireAt,
   color,
   removeChecked,
+  index,
   onEditTask,
   onRemoveTask,
 }: Props) => {
@@ -56,7 +57,15 @@ const TaskNote = ({
     ));
 
   return (
-    <div
+    <motion.article
+      layout
+      initial={{ y: 500, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -300, opacity: 0 }}
+      transition={{
+        type: "ease-in-out",
+        delay: 0.1 * (index + 1),
+      }}
       style={{ borderTopColor: color || "#ff9000" }}
       className="relative flex flex-col rounded-md border-t-4 bg-background-700 p-4 gap-2 max-w-[280px] min-w-[240px] h-[300px]"
     >
@@ -82,7 +91,7 @@ const TaskNote = ({
           )}
         </ul>
       </div>
-    </div>
+    </motion.article>
   );
 };
 
