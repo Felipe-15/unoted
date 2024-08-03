@@ -1,5 +1,4 @@
 import SideMenu from "../components/side-menu/SideMenu";
-import { useAuth } from "@/hooks/useAuth";
 
 export default function HomeLayout({
   children,
