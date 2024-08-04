@@ -5,6 +5,10 @@
 .grid-fit {
   grid-template-columns: repeat(auto-fit, minmax(240px, 280px));
 }
+.grid-fit-categories {
+  grid-template-columns: repeat(auto-fit, 220px);
+  column-gap: 4rem;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 6px;

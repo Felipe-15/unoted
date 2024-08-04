@@ -83,7 +83,7 @@ const CategoriesPage = () => {
       </h2>
       <ul
         id="note-categories"
-        className="flex overflow-x-auto p-4 items-center gap-8 mb-4 mx-6 overflow-y-hidden"
+        className="grid grid-rows-2 grid-flow-col grid-fit-categories justify-start w-full sm:flex overflow-x-auto p-4 items-center gap-8 mb-4 mx-6 sm:overflow-y-hidden"
       >
         <AddCategoryButton
           disabled={isLoading.value && !isLoading.isInitial}
@@ -96,7 +96,7 @@ const CategoriesPage = () => {
       </h2>
       <ul
         id="task-categories"
-        className="flex overflow-x-auto p-4 mx-6 items-center gap-8 overflow-y-hidden"
+        className="grid grid-rows-2 grid-flow-col grid-fit-categories justify-start w-full sm:flex overflow-x-auto p-4 items-center gap-8 mb-4 mx-6 sm:overflow-y-hidden"
       >
         <AddCategoryButton onClick={() => handleAddCategory("task")} />
         <AnimatePresence>{taskCategories}</AnimatePresence>
