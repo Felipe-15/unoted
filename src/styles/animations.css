@@ -82,3 +82,40 @@
     animation: fadeOut 0.5s ease-in-out;
   }
 }
+
+@keyframes pulseRight {
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.pulse-right {
+  animation: pulseRight 1s infinite alternate-reverse;
+}
+.pulse-right:hover {
+  animation: none;
+}
+@keyframes pulseLeft {
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.pulse-left {
+  animation: pulseLeft 1s infinite alternate-reverse;
+}
+.pulse-left:hover {
+  animation: none;
+}
