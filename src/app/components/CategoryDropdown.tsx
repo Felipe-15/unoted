@@ -45,15 +45,15 @@ const CategoryDropdown = ({
         <ul
           ref={listRef}
           data-testid="category-filter-list"
-          className={`absolute cursor-default flex flex-col  rounded-b-md transition-all w-full ${
+          className={`absolute cursor-default flex flex-col gap-1 rounded-t-sm rounded-b-md transition-all w-[150%] ${
             !isOpen
               ? "h-0 overflow-hidden bottom-0"
-              : "h-[96px] overflow-y-auto scale-y-100 bottom-[-100px]"
-          } bg-background-700`}
+              : "h-[160px] overflow-y-auto scale-y-100 bottom-[-160px] p-2 right-1"
+          } bg-secondary-500`}
         >
           {!categories?.length && (
             <li className="p-1 pt-2">
-              <p className="text-sm cursor-text text-secondary-500 font-semibold leading-tight">
+              <p className="text-sm cursor-text text-background-900 font-semibold leading-tight">
                 Sem categorias
               </p>
             </li>
@@ -68,9 +68,14 @@ const CategoryDropdown = ({
                   setTimeout(() => setIsOpen(false), 250);
                 }}
                 data-selected-category={selectedCategory?.id === category.id}
-                className={`p-1 w-full h-1/3 text-center  flex items-center justify-center border-b-[1px] overflow-x-hidden overflow-ellipsis data-[selected-category=true]:bg-background-800 data-[selected-category=true]:cursor-default data-[selected-category=false]:hover:bg-background-800/20 data-[selected-category=true]:text-primary-500 hover:text-primary-500 cursor-pointer text-secondary-500 border-b-zinc-400  transition  whitespace-nowrap text-sm`}
+                className={`w-full flex items-center text-background-900 pl-3 py-2 border-b-[1px] overflow-ellipsis data-[selected-category=true]:bg-background-600 data-[selected-category=true]:cursor-default data-[selected-category=false]:hover:bg-gray-100 data-[selected-category=true]:text-secondary-500  cursor-pointer hover:shadow-md hover:border-transparent justify-between border-b-background-900 hover:rounded-md data-[selected-category=true]:rounded-md  transition-all text-base group`}
               >
                 {category.name}
+                <div
+                  style={{ backgroundColor: category.color }}
+                  data-selected-category={selectedCategory?.id === category.id}
+                  className="p-2 rounded-md mr-2 shadow-sm transition-all group-hover:rounded-sm data-[selected-category=true]:rounded-sm"
+                ></div>
               </li>
             );
           })}
