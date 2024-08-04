@@ -54,16 +54,27 @@ const NewNotePage = () => {
         </ResponsiveHolder>
       </div>
       <div className="flex flex-col gap-3 justify-center items-center -ml-10 pt-12 h-full">
-        <input
-          {...register("title", { required: true })}
-          className="placeholder:text-gray-500 border-b-2 text-2xl md:text-3xl bg-transparent max-w-[180px] md:max-w-[240px] border-gray-500 pb-3 text-secondary-500 outline-none"
-          placeholder="Título"
-        />
+        <div className="flex flex-col gap-2">
+          <input
+            {...register("title", { required: true, maxLength: 25 })}
+            className="placeholder:text-gray-500 border-b-2 text-2xl md:text-3xl bg-transparent max-w-[180px] md:max-w-[240px] border-gray-500 pb-3 text-secondary-500 outline-none peer"
+            placeholder="Título"
+            maxLength={25}
+          />
+          <small className="hidden peer-focus:flex text-gray-300">
+            {titleWatcher.length}/25
+          </small>
+        </div>
+
         <textarea
-          {...register("content", { required: true })}
-          className={`${openSans.className} w-full resize-none placeholder:text-gray-500 text-secondary-500 max-h-[240px] max-w-[180px] md:max-w-[240px] h-full bg-transparent text-base outline-none`}
+          {...register("content", { required: true, maxLength: 400 })}
+          className={`${openSans.className} w-full resize-none placeholder:text-gray-500 text-secondary-500 max-h-[240px] max-w-[180px] md:max-w-[240px] h-full bg-transparent text-base outline-none peer`}
           placeholder="Digite aqui..."
+          maxLength={400}
         />
+        <small className="hidden peer-focus:flex text-left w-full max-w-[240px] text-gray-300">
+          {contentWatcher.length}/400
+        </small>
       </div>
       <div className="flex justify-between mt-auto w-full items-center">
         <button className="p-1 text-primary-500/70 transition hover:text-primary-500 text-2xl">
